@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alceste Li</title>
+<title>Alceste Li | Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,12 +16,13 @@
   --line: #e8e8e8;
   --hover: #f0f0f0;
   --blue: #0000ff;
+  --bg-soft: #f9f9f9;
 }
 
-html, body { height: 100%; overflow: hidden; background: var(--white); color: var(--black); }
-body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; }
+html, body { height: 100%; background: var(--white); color: var(--black); }
+body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; overflow: hidden; }
 
-/* CURSOR */
+/* CUSTOM CURSOR */
 #cur {
   position: fixed; width: 8px; height: 8px;
   background: var(--black); border-radius: 50%;
@@ -89,12 +90,12 @@ aside {
 .s-link:hover { color: var(--blue); background: var(--hover); }
 .s-link.on { color: var(--blue); background: var(--hover); }
 
-/* MAIN */
+/* MAIN CONTENT */
 main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .4s ease; }
 .page.on { opacity: 1; pointer-events: all; }
 
-/* HOME */
+/* HOME PAGE */
 #pg-home { height: 100%; overflow: hidden; }
 .h-track {
   display: flex; width: 100%; height: 100%;
@@ -105,11 +106,11 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .h-slide {
   flex-shrink: 0; width: 100%; height: 100%;
   scroll-snap-align: start; position: relative;
-  cursor: none; overflow: hidden; background: var(--line);
+  cursor: none; overflow: hidden; background: var(--bg-soft);
 }
 .h-slide-img {
-  width: 100%; height: 100%; display: block; object-fit: cover;
-  background: repeating-linear-gradient(45deg,#e8e8e8,#e8e8e8 16px,#ddd 16px,#ddd 32px);
+  width: 100%; height: 100%; display: block; 
+  object-fit: contain; /* Images shown fully without cropping */
   transition: transform .6s cubic-bezier(.16,1,.3,1);
 }
 .h-slide:hover .h-slide-img { transform: scale(1.015); }
@@ -117,39 +118,25 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
   position: absolute; bottom: 32px; left: 36px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px; font-style: italic; font-weight: 300;
-  color: rgba(255,255,255,.9); opacity: 0; transform: translateY(6px);
+  color: var(--black); opacity: 0; transform: translateY(6px);
   transition: opacity .35s, transform .35s; pointer-events: none;
-  text-shadow: 0 1px 8px rgba(0,0,0,.3);
 }
 .h-slide:hover .h-slide-title { opacity: 1; transform: none; }
 .h-counter {
   position: absolute; bottom: 32px; right: 36px;
   font-size: 9px; letter-spacing: .18em;
-  color: rgba(255,255,255,.45); pointer-events: none; transition: opacity .3s;
+  color: var(--gray); pointer-events: none; transition: opacity .3s;
 }
 
-/* PROJECT */
-#pg-project {
-  height: 100%; overflow-y: auto; overflow-x: hidden;
-  scrollbar-width: thin; scrollbar-color: var(--line) transparent;
-}
-#pg-project::-webkit-scrollbar { width: 3px; }
-#pg-project::-webkit-scrollbar-thumb { background: var(--line); }
+/* PROJECT PAGE */
+#pg-project { height: 100%; overflow-y: auto; overflow-x: hidden; }
+.proj-hero { width: 100%; height: 85vh; overflow: hidden; background: var(--bg-soft); }
+#proj-hero-inner { width: 100%; height: 100%; }
+#proj-hero-inner img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-.proj-hero { width: 100%; height: 100vh; overflow: hidden; }
-#proj-hero-inner {
-  width: 100%; height: 100%;
-  background: repeating-linear-gradient(45deg,#e8e8e8,#e8e8e8 14px,#ddd 14px,#ddd 28px);
-}
-
-.proj-imgs-rest { display: flex; flex-direction: column; gap: 3px; padding: 3px 0; }
-.proj-img-item { width: 100%; background: var(--line); overflow: hidden; }
-.proj-img-ph {
-  width: 100%; height: 100%; min-height: 320px;
-  background: repeating-linear-gradient(45deg,#eee,#eee 12px,#e4e4e4 12px,#e4e4e4 24px);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; letter-spacing: .2em; color: #bbb;
-}
+.proj-imgs-rest { display: flex; flex-direction: column; gap: 40px; padding: 40px 0; }
+.proj-img-item { width: 100%; background: var(--bg-soft); overflow: hidden; display: flex; justify-content: center; }
+.proj-img-item img { max-width: 100%; height: auto; object-fit: contain; display: block; }
 
 .proj-info { padding: 80px 64px 100px; border-top: 1px solid var(--line); }
 .proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
@@ -168,13 +155,8 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .meta-row:first-child { border-top: 1px solid var(--line); }
 .meta-lbl { color: var(--gray); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
 
-/* ABOUT */
-#pg-about {
-  height: 100%; overflow-y: auto; overflow-x: hidden;
-  scrollbar-width: thin; scrollbar-color: var(--line) transparent;
-}
-#pg-about::-webkit-scrollbar { width: 3px; }
-#pg-about::-webkit-scrollbar-thumb { background: var(--line); }
+/* ABOUT PAGE */
+#pg-about { height: 100%; overflow-y: auto; overflow-x: hidden; }
 .about-block { max-width: 640px; padding: 80px 64px 100px; }
 .about-ey { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
 .about-h {
@@ -188,13 +170,8 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
 
-/* CONTACT */
-#pg-contact {
-  height: 100%; overflow-y: auto; overflow-x: hidden;
-  scrollbar-width: thin; scrollbar-color: var(--line) transparent;
-}
-#pg-contact::-webkit-scrollbar { width: 3px; }
-#pg-contact::-webkit-scrollbar-thumb { background: var(--line); }
+/* CONTACT PAGE */
+#pg-contact { height: 100%; overflow-y: auto; overflow-x: hidden; }
 .contact-block { max-width: 640px; padding: 80px 64px 100px; }
 .contact-ey { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
 .contact-h {
@@ -221,6 +198,33 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .c-row-name { font-size: 12px; letter-spacing: .08em; }
 .c-row-arr { color: var(--gray); }
 
+/* MOBILE RESPONSIVE ADAPTATION */
+@media (max-width: 768px) {
+  body { flex-direction: column; overflow-y: auto; cursor: auto; }
+  #cur { display: none; }
+  
+  aside {
+    width: 100%; height: auto; min-width: 100%;
+    border-right: none; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0;
+  }
+  .s-nav { display: none; }
+  .s-logo { padding: 20px; }
+  .s-foot { display: flex; border-top: none; }
+  .s-link { flex: 1; border-bottom: none; border-left: 1px solid var(--line); justify-content: center; padding: 12px; font-size: 9px; }
+  .s-link:first-child { border-left: none; }
+
+  main { height: auto; overflow: visible; flex: none; }
+  .page { position: relative; opacity: 1; pointer-events: all; display: none; height: auto; }
+  .page.on { display: block; }
+  
+  .h-slide { height: 60vh; }
+  .proj-hero { height: 50vh; }
+  .proj-info { padding: 40px 24px; }
+  .proj-info-body { grid-template-columns: 1fr; gap: 32px; }
+  .about-block, .contact-block { padding: 40px 24px; }
+}
+
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--line); }
 </style>
@@ -235,13 +239,12 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
   </div>
   <div class="s-nav" id="s-nav"></div>
   <div class="s-foot">
-    <div class="s-link" id="sl-about" onclick="showPage('about')">About <span>&#8250;</span></div>
-    <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact <span>&#8250;</span></div>
+    <div class="s-link" id="sl-about" onclick="showPage('about')">About <span>&rarr;</span></div>
+    <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact <span>&rarr;</span></div>
   </div>
 </aside>
 
 <main>
-
   <div class="page on" id="pg-home">
     <div class="h-track" id="h-track"></div>
   </div>
@@ -269,7 +272,7 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
       <h2 class="about-h">Design<br><em>is a</em><br>language.</h2>
       <div class="about-body">
         <p>An independent design studio working across scenography, architecture, interiors, events, and graphic communication.</p>
-        <p>We believe design is a form of dialogue — with space, material, and the people who inhabit them. Each project is an exploration of where disciplines meet.</p>
+        <p>We believe design is a form of dialogue &mdash; with space, material, and the people who inhabit them. Each project is an exploration of where disciplines meet.</p>
         <p>We collaborate with cultural institutions, brands, theatre companies, and private clients. Open to commissions and creative partnerships.</p>
       </div>
       <div class="about-stats">
@@ -289,7 +292,7 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
         </div>
         <div>
           <div class="stat-lbl">Based in</div>
-          <div class="stat-item">Beijing · Shanghai</div>
+          <div class="stat-item">Beijing &bull; Shanghai</div>
         </div>
       </div>
     </div>
@@ -304,33 +307,26 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
         <div class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></div>
         <div class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></div>
         <div class="c-row"><span class="c-row-name">LinkedIn</span><span class="c-row-arr">&#8599;</span></div>
-        <div class="c-row"><span class="c-row-name">WeChat</span><span class="c-row-arr">&#8599;</span></div>
       </div>
     </div>
   </div>
-
 </main>
 
 <script>
+/* PROJECT DATA - ALL ENGLISH */
 var DATA = {
   scenography: {
     label: 'Scenography',
     items: [
       {
         title: 'The Border Town',
-        desc: 'A radically stripped-back stage design for a theatrical adaptation of Shen Congwen\'s classic novel. A bamboo pole, a wash of light, a single stone — absence as atmosphere.',
+        desc: 'A radically stripped-back stage design for a theatrical adaptation. A bamboo pole, a wash of light, a single stone &mdash; absence as atmosphere.',
         type: 'Stage Design', client: 'Independent Theatre Co.', year: '2024', imgs: 4, images: []
       },
       {
-        title: 'Loewe Window Display',
-        desc: 'Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.',
-        type: 'Window Display', client: 'Personal', year: '2026', imgs: 3, 
-        images: ['images/loewejungle.jpg','images/loewejungle2.jpg','images/loewejungle3.png']
-      },
-      {
         title: 'Hermes Window Display',
-        desc: 'The Winter\'s Tale inspired Hermes window display series draws from the poetic worlds of The Winter\'s Tale, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter of the story through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.\n\nWithin these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.',
-        type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
+        desc: 'Inspired by The Winter\'s Tale, transforming store windows into theatrical landscapes of imagination and travel through handcrafted paper sets.',
+        type: 'Window Display', client: 'Personal Project', year: '2026', imgs: 5,
         images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png','images/hermes4.jpg','images/hermes5.JPG']
       }
     ]
@@ -339,19 +335,9 @@ var DATA = {
     label: 'Architecture',
     items: [
       {
-        title: 'Courtyard Residence, Beijing',
-        desc: 'Renovation of a traditional hutong courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.',
+        title: 'Courtyard Residence',
+        desc: 'Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials.',
         type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
-      },
-      {
-        title: 'Cultural Centre Feasibility',
-        desc: 'Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.',
-        type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4, images: []
-      },
-      {
-        title: 'Studio and Residence',
-        desc: 'A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.',
-        type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4, images: []
       }
     ]
   },
@@ -359,252 +345,92 @@ var DATA = {
     label: 'Interior',
     items: [
       {
-        title: 'Tea House Interiors',
-        desc: 'Interior architecture for a specialty tea house in Shanghai. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.',
+        title: 'Specialty Tea House',
+        desc: 'Interior architecture focusing on slate, aged brass, and woven rattan to quietly reference the landscape of origin.',
         type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
-      },
-      {
-        title: 'Gallery Conversion',
-        desc: 'Transformation of a former industrial warehouse into a flexible exhibition space. The design preserves structural honesty while achieving museum-quality light conditions.',
-        type: 'Gallery / Cultural', client: 'Contemporary Art Centre', year: '2023', imgs: 3, images: []
-      },
-      {
-        title: 'Private Apartment, Shanghai',
-        desc: 'Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.',
-        type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5, images: []
-      }
-    ]
-  },
-  event: {
-    label: 'Event',
-    items: [
-      {
-        title: 'Brand Launch — Wuming',
-        desc: 'Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.',
-        type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3, images: []
-      },
-      {
-        title: 'Book Fair Installation',
-        desc: 'A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.',
-        type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4, images: []
-      },
-      {
-        title: 'Fashion Show Set Design',
-        desc: 'Set and spatial concept for a seasonal runway presentation. The show environment became an extension of the collection — geometric, silent, precise.',
-        type: 'Set Design', client: 'Fashion Label', year: '2023', imgs: 3, images: []
-      }
-    ]
-  },
-  graphic: {
-    label: 'Graphic',
-    items: [
-      {
-        title: 'Tea Mountain Brand Identity',
-        desc: 'A complete visual identity system for a Yunnan tea brand. From logotype to packaging and spatial wayfinding — a language that holds tradition and contemporary restraint in balance.',
-        type: 'Brand Identity / Packaging', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
-      },
-      {
-        title: 'City Festival Poster Series',
-        desc: 'A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.',
-        type: 'Poster Design', client: 'City Culture Festival', year: '2024', imgs: 3, images: []
-      },
-      {
-        title: 'Independent Publication',
-        desc: 'Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.',
-        type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3, images: []
-      },
-      {
-        title: 'Wayfinding System',
-        desc: 'A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.',
-        type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4, images: []
-      }
-    ]
-  },
-  others: {
-    label: 'Others',
-    items: [
-      {
-        title: 'Solar Terms Illustration Series',
-        desc: 'Twenty-four illustrations reinterpreting the traditional Chinese solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.',
-        type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5, images: []
-      },
-      {
-        title: 'Children\'s Book — Where Is the Cloud?',
-        desc: 'A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.',
-        type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4, images: []
-      },
-      {
-        title: 'Album Cover Series',
-        desc: 'Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.',
-        type: 'Illustration', client: 'Independent Musicians x5', year: '2023', imgs: 3, images: []
       }
     ]
   }
 };
 
-var CATS = ['scenography','architecture','interior','event','graphic','others'];
-
+/* SYSTEM LOGIC */
+var CATS = Object.keys(DATA);
 var FLAT = [];
-for (var ci = 0; ci < CATS.length; ci++) {
-  var cat = CATS[ci];
-  for (var ii = 0; ii < DATA[cat].items.length; ii++) {
-    FLAT.push({cat: cat, i: ii});
-  }
-}
-
-var curCat = null;
-var curIdx = 0;
+CATS.forEach(cat => DATA[cat].items.forEach((item, i) => FLAT.push({cat, i})));
 
 var FEATURED = [
-  {cat:'scenography',  idx:0},
+  {cat:'scenography', idx:1},
+  {cat:'scenography', idx:0},
   {cat:'architecture', idx:0},
-  {cat:'interior',     idx:0},
-  {cat:'event',        idx:0},
-  {cat:'graphic',      idx:0},
-  {cat:'scenography',  idx:1},
-  {cat:'architecture', idx:1},
-  {cat:'interior',     idx:1},
-  {cat:'event',        idx:1},
-  {cat:'graphic',      idx:1},
-  {cat:'others',       idx:0},
-  {cat:'scenography',  idx:2}
+  {cat:'interior', idx:0}
 ];
 
 /* BUILD SIDEBAR */
 var sNav = document.getElementById('s-nav');
-for (var ci = 0; ci < CATS.length; ci++) {
-  var cat = CATS[ci];
+CATS.forEach(cat => {
   var d = DATA[cat];
   var sec = document.createElement('div');
-  var itemsHtml = '';
-  for (var ii = 0; ii < d.items.length; ii++) {
-    itemsHtml += '<div class="s-item" id="si-' + cat + '-' + ii + '" onclick="openProject(\'' + cat + '\',' + ii + ')">' + d.items[ii].title + '</div>';
-  }
-  sec.innerHTML = '<div class="s-cat-head" onclick="toggleCat(this)">' + d.label + ' <span class="s-cat-arr">&#8250;</span></div><div class="s-items">' + itemsHtml + '</div>';
+  var itemsHtml = d.items.map((item, ii) => 
+    `<div class="s-item" id="si-${cat}-${ii}" onclick="openProject('${cat}',${ii})">${item.title}</div>`
+  ).join('');
+  sec.innerHTML = `<div class="s-cat-head" onclick="toggleCat(this)">${d.label} <span class="s-cat-arr">&#8250;</span></div><div class="s-items">${itemsHtml}</div>`;
   sNav.appendChild(sec);
-}
+});
 
 /* BUILD HOME SLIDES */
 var track = document.getElementById('h-track');
-var total = FEATURED.length;
-for (var fi = 0; fi < FEATURED.length; fi++) {
-  var f = FEATURED[fi];
+FEATURED.forEach((f, fi) => {
   var p = DATA[f.cat].items[f.idx];
   var slide = document.createElement('div');
   slide.className = 'h-slide';
-  var num = (fi + 1 < 10 ? '0' : '') + (fi + 1) + ' / ' + (total < 10 ? '0' : '') + total;
-  slide.innerHTML = '<div class="h-slide-img"></div><div class="h-slide-title">' + p.title + '</div><div class="h-counter">' + num + '</div>';
-  (function(cat, idx) {
-    slide.onclick = function() { openProject(cat, idx); };
-  })(f.cat, f.idx);
+  var num = `${(fi + 1 < 10 ? '0' : '') + (fi + 1)} / ${(FEATURED.length < 10 ? '0' : '') + FEATURED.length}`;
+  slide.innerHTML = `<div class="h-slide-img">${p.images[0] ? `<img src="${p.images[0]}" style="width:100%;height:100%;object-fit:contain;">` : ''}</div><div class="h-slide-title">${p.title}</div><div class="h-counter">${num}</div>`;
+  slide.onclick = () => openProject(f.cat, f.idx);
   track.appendChild(slide);
-}
+});
 
-function updateCounter() {
-  var idx = Math.round(track.scrollLeft / track.clientWidth);
-  var counters = track.querySelectorAll('.h-counter');
-  for (var i = 0; i < counters.length; i++) {
-    counters[i].style.opacity = (i === idx) ? '1' : '0';
-  }
-}
-track.addEventListener('scroll', updateCounter, {passive: true});
-updateCounter();
-
-/* PAGE SWITCHING */
+/* PAGE CONTROLS */
 function showPage(id) {
-  var pages = document.querySelectorAll('.page');
-  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('on');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + id).classList.add('on');
   document.getElementById('sl-about').classList.toggle('on', id === 'about');
   document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
-  if (id !== 'project') {
-    var items = document.querySelectorAll('.s-item');
-    for (var i = 0; i < items.length; i++) items[i].classList.remove('on');
-    curCat = null;
-  }
+  window.scrollTo(0,0);
 }
-function goHome() { showPage('home'); }
-
-/* OPEN PROJECT */
-var RATIOS = ['4/3','16/9','3/2','16/9','1/1'];
 
 function openProject(cat, idx) {
-  curCat = cat;
-  curIdx = idx;
   var p = DATA[cat].items[idx];
-
-  /* hero */
   var hero = document.getElementById('proj-hero-inner');
-  if (p.images && p.images.length > 0 && p.images[0] !== '') {
-    hero.innerHTML = '<img src="' + p.images[0] + '" style="width:100%;height:100%;object-fit:cover;display:block;">';
-  } else {
-    hero.innerHTML = '';
-    hero.style.background = 'repeating-linear-gradient(45deg,#e8e8e8,#e8e8e8 14px,#ddd 14px,#ddd 28px)';
-  }
+  hero.innerHTML = p.images[0] ? `<img src="${p.images[0]}">` : '';
 
-  /* remaining images */
   var rest = document.getElementById('proj-imgs-rest');
-  var html = '';
-  var extraCount = Math.max(0, p.imgs - 1);
-  for (var k = 0; k < extraCount; k++) {
-    var src = (p.images && p.images[k + 1]) ? p.images[k + 1] : '';
-    var inner = src
-      ? '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;display:block;">'
-      : '<div class="proj-img-ph">Image ' + (k + 2) + '</div>';
-    html += '<div class="proj-img-item" style="aspect-ratio:' + RATIOS[k % RATIOS.length] + '">' + inner + '</div>';
-  }
-  rest.innerHTML = html;
+  rest.innerHTML = p.images.slice(1).map(src => `<div class="proj-img-item"><img src="${src}"></div>`).join('') || '<div class="proj-img-item" style="padding:100px; color:#bbb;">Images coming soon</div>';
 
-  /* info */
   document.getElementById('pi-cat').textContent   = DATA[cat].label;
   document.getElementById('pi-title').textContent = p.title;
-  document.getElementById('pi-desc').innerHTML    = p.desc.replace(/\n\n/g, '<br><br>');
+  document.getElementById('pi-desc').innerHTML    = p.desc;
   document.getElementById('pi-type').textContent  = p.type;
   document.getElementById('pi-client').textContent = p.client;
   document.getElementById('pi-year').textContent  = p.year;
 
-  /* sidebar highlight */
-  var allItems = document.querySelectorAll('.s-item');
-  for (var i = 0; i < allItems.length; i++) allItems[i].classList.remove('on');
-  var el = document.getElementById('si-' + cat + '-' + idx);
-  if (el) el.classList.add('on');
-
-  document.getElementById('pg-project').scrollTop = 0;
   showPage('project');
 }
 
+function goHome() { showPage('home'); }
 function toggleCat(el) { el.classList.toggle('closed'); }
 
-/* KEYBOARD */
-document.addEventListener('keydown', function(e) {
-  var pg = document.querySelector('.page.on');
-  if (!pg) return;
-  if (pg.id === 'pg-home') {
-    var w = track.clientWidth;
-    if (e.key === 'ArrowRight') track.scrollBy({left: w, behavior: 'smooth'});
-    if (e.key === 'ArrowLeft')  track.scrollBy({left: -w, behavior: 'smooth'});
-  }
-  if (pg.id === 'pg-project') {
-    var fi = -1;
-    for (var i = 0; i < FLAT.length; i++) {
-      if (FLAT[i].cat === curCat && FLAT[i].i === curIdx) { fi = i; break; }
-    }
-    if (e.key === 'ArrowRight' && fi < FLAT.length - 1) openProject(FLAT[fi+1].cat, FLAT[fi+1].i);
-    if (e.key === 'ArrowLeft'  && fi > 0)               openProject(FLAT[fi-1].cat, FLAT[fi-1].i);
-  }
-});
-
-/* CURSOR */
+/* CURSOR LOGIC */
 var cur = document.getElementById('cur');
-document.addEventListener('mousemove', function(e) {
-  cur.style.left = e.clientX + 'px';
-  cur.style.top  = e.clientY + 'px';
+document.addEventListener('mousemove', e => {
+  if (window.innerWidth > 768) {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top  = e.clientY + 'px';
+  }
 });
-var hoverEls = document.querySelectorAll('[onclick], a, button, .h-slide, .s-item, .s-link, .c-row');
-for (var i = 0; i < hoverEls.length; i++) {
-  hoverEls[i].addEventListener('mouseenter', function() { cur.classList.add('h'); });
-  hoverEls[i].addEventListener('mouseleave', function() { cur.classList.remove('h'); });
-}
+document.querySelectorAll('[onclick], a, .s-item').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('h'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('h'));
+});
 </script>
 </body>
 </html>
