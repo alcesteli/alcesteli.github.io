@@ -261,26 +261,90 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 
 <script>
 const DATA = {
-  scenography: {
+   scenography: {
     label: 'Scenography',
     items: [
       {
         title: 'The Winter’s Tale',
-        desc: '<p>A deep exploration of Shakespeare’s final works, blending tragedy and comedy through a labyrinthine scenography.</p>',
-        type: 'Stage Design', client: 'Personal', year: '2025', 
-        images: ['images/SCENO/S-LCH1.jpg','images/SCENO/S-LCH2.jpg','images/SCENO/S-LCH3.jpg']
+        desc: `
+        <p>This play is one of Shakespeare’s final works, blending tragedy and comedy. In the end, the lost daughter is found, the lovers are reunited, and Leontes is forgiven. Yet this return to harmony feels almost too sudden, raising the question of whether such forgiveness was truly believable for audiences.</p>
+        <p>The story unfolds between two imagined worlds: Sicily, a palace bound by the rules and appearances of power, and Bohemia, a pastoral utopia filled with joyful peasants and abundant nature. After Time’s monologue, the play shifts into a lighter, almost magical tone. Yet in the end, the lovers must leave Bohemia and return to Sicily to find peace, subtly questioning the idea of utopia.</p>
+        <p>This paradox interests me. Can the stage itself become an imaginary utopia—a place where anything is possible? At the same time, the Italian-style theatre reflects a strict spatial hierarchy, almost like a monarchy. I also explore Leontes’ madness through the image of a labyrinth, representing his disordered thoughts and inviting the audience to experience his shifting state of mind through scenography.</p>
+          `,
+        type: 'Stage Design', client: 'Personal', year: '2025', imgs: 25, 
+        images: ['images/SCENO/S-LCH1.jpg','images/SCENO/S-LCH2.jpg','images/SCENO/S-LCH3.jpg','images/SCENO/S-LCH4.jpg','images/SCENO/S-LCH5.jpg','images/SCENO/S-LCH6.jpg','images/SCENO/S-LCH7.jpg','images/SCENO/S-LCH8.jpg','images/SCENO/S-LCH9.jpg','images/SCENO/S-LCH10.jpg','images/SCENO/S-LCH11.jpg','images/SCENO/S-LCH12.jpg','images/SCENO/S-LCH13.jpg','images/SCENO/S-LCH14.jpg','images/SCENO/S-LCH15.jpg','images/SCENO/S-LCH16.jpg','images/SCENO/S-LCH17.jpg','images/SCENO/S-LCH18.jpg','images/SCENO/S-LCH19.jpg','images/SCENO/S-LCH20.jpg','images/SCENO/S-LCH21.jpg','images/SCENO/S-LCH22.jpg','images/SCENO/S-LCH23.jpg','images/SCENO/S-LCH24.jpg','images/SCENO/S-LCH25.jpg']
       },
       {
         title: 'Loewe Window Display',
-        desc: '<p>Light as a second body on stage. Precise control of shadow geometry.</p>',
-        type: 'Window Display', client: 'Personal', year: '2026', 
+        desc: '<p>Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.</p>',
+        type: 'Window Display', client: 'Personal', year: '2026', imgs: 3, 
         images: ['images/loewejungle.jpg','images/loewejungle2.jpg','images/loewejungle3.png']
       },
       {
         title: 'Hermes Window Display',
-        desc: '<p>Theatrical landscapes of imagination through handcrafted paper sets.</p>',
-        type: 'Window Display', client: 'Personal', year: '2026',
-        images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png']
+        desc: '<p>The Winter’s Tale inspired Hermes window display series draws from the poetic worlds of the story, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.</p><p>Within these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.</p>',
+        type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
+        images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png','images/hermes4.jpg','images/hermes5.JPG']
+      }
+    ]
+  },
+  architecture: {
+    label: 'Architecture',
+    items: [
+      {
+        title: 'Courtyard Residence',
+        desc: '<p>Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.</p>',
+        type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
+      },
+      {
+        title: 'Cultural Centre Feasibility',
+        desc: '<p>Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.</p>',
+        type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4, images: []
+      },
+      {
+        title: 'Studio and Residence',
+        desc: '<p>A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.</p>',
+        type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4, images: []
+      }
+    ]
+  },
+  interior: {
+    label: 'Interior',
+    items: [
+      {
+        title: 'Tea House Interiors',
+        desc: '<p>Interior architecture for a specialty tea house. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.</p>',
+        type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
+      },
+      {
+        title: 'Gallery Conversion',
+        desc: '<p>Transformation of a former industrial warehouse into a flexible exhibition space. The design preserves structural honesty while achieving museum-quality light conditions.</p>',
+        type: 'Gallery / Cultural', client: 'Contemporary Art Centre', year: '2023', imgs: 3, images: []
+      },
+      {
+        title: 'Private Apartment',
+        desc: '<p>Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.</p>',
+        type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5, images: []
+      }
+    ]
+  },
+  event: {
+    label: 'Event',
+    items: [
+      {
+        title: 'Brand Launch — Wuming',
+        desc: '<p>Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.</p>',
+        type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3, images: []
+      },
+      {
+        title: 'Book Fair Installation',
+        desc: '<p>A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.</p>',
+        type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4, images: []
+      },
+      {
+        title: 'Fashion Show Set Design',
+        desc: '<p>Set and spatial concept for a seasonal runway presentation. The show environment became an extension of the collection &mdash; geometric, silent, precise.</p>',
+        type: 'Set Design', client: 'Fashion Label', year: '2023', imgs: 3, images: []
       }
     ]
   },
@@ -289,13 +353,48 @@ const DATA = {
     items: [
       {
         title: 'CAFArch 2015 show',
-        desc: '<p>Inspired by toy blocks forming a cube.</p>',
-        type: 'Poster Design', client: 'CAFA Architecture', year: '2015', 
+        desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
+        type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
         images: ['images/GRAPHIC/GR-CAFAEXPO2015.jpg']
+      },
+      {
+        title: 'CAFArch 2016 show',
+        desc: '<p>A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.</p>',
+        type: 'Poster Design', client: 'City Culture Festival', year: '2016', imgs: 1, 
+        images: ['images/GRAPHIC/GR-CAFAEXPO2016.jpg']
+      },
+      {
+        title: 'Independent Publication',
+        desc: '<p>Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.</p>',
+        type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3, images: []
+      },
+      {
+        title: 'Wayfinding System',
+        desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
+        type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4, images: []
+      }
+    ]
+  },
+  others: {
+    label: 'Others',
+    items: [
+      {
+        title: 'Solar Terms Illustration Series',
+        desc: '<p>Twenty-four illustrations reinterpreting the traditional solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.</p>',
+        type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5, images: []
+      },
+      {
+        title: 'Children\'s Book — Where Is the Cloud?',
+        desc: '<p>A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.</p>',
+        type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4, images: []
+      },
+      {
+        title: 'Album Cover Series',
+        desc: '<p>Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.</p>',
+        type: 'Illustration', client: 'Independent Musicians', year: '2023', imgs: 3, images: []
       }
     ]
   }
-  // Tu peux rajouter les autres catégories ici comme dans ton code initial...
 };
 
 const FEATURED = [
