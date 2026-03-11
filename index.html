@@ -20,14 +20,13 @@
 
 html, body { height: 100%; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
 body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; overflow: hidden; }
+body, body * { cursor: none !important; }
 
 /* CUSTOM CURSOR */
 #cur {
-  position: fixed; width: 8px; height: 8px; background: var(--black); border-radius: 50%;
-  pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
-  transition: width .2s, height .2s, background .2s, border .2s;
+  position: fixed; width: 8px; height: 8px; background: #0000ff; border-radius: 50%;
+  pointer-events: none; z-index: 10002; transform: translate(-50%,-50%);
 }
-#cur.h { width: 40px; height: 40px; background: transparent; border: 1px solid var(--blue); }
 
 /* SIDEBAR */
 aside {
@@ -271,20 +270,23 @@ const DATA = {
         <p>The story unfolds between two imagined worlds: Sicily, a palace bound by the rules and appearances of power, and Bohemia, a pastoral utopia filled with joyful peasants and abundant nature. After Time’s monologue, the play shifts into a lighter, almost magical tone. Yet in the end, the lovers must leave Bohemia and return to Sicily to find peace, subtly questioning the idea of utopia.</p>
         <p>This paradox interests me. Can the stage itself become an imaginary utopia—a place where anything is possible? At the same time, the Italian-style theatre reflects a strict spatial hierarchy, almost like a monarchy. I also explore Leontes’ madness through the image of a labyrinth, representing his disordered thoughts and inviting the audience to experience his shifting state of mind through scenography.</p>
           `,
-        type: 'Stage Design', client: 'Personal', year: '2025', imgs: 25, 
+        type: 'Stage Design', client: 'Personal', year: '2025', imgs: 25,
+        cover: 'images/SCENO/S-LCH14.jpg',
         images: ['images/SCENO/S-LCH1.jpg','images/SCENO/S-LCH2.jpg','images/SCENO/S-LCH3.jpg','images/SCENO/S-LCH4.jpg','images/SCENO/S-LCH5.jpg','images/SCENO/S-LCH6.jpg','images/SCENO/S-LCH7.jpg','images/SCENO/S-LCH8.jpg','images/SCENO/S-LCH9.jpg','images/SCENO/S-LCH10.jpg','images/SCENO/S-LCH11.jpg','images/SCENO/S-LCH12.jpg','images/SCENO/S-LCH13.jpg','images/SCENO/S-LCH14.jpg','images/SCENO/S-LCH15.jpg','images/SCENO/S-LCH16.jpg','images/SCENO/S-LCH17.jpg','images/SCENO/S-LCH18.jpg','images/SCENO/S-LCH19.jpg','images/SCENO/S-LCH20.jpg','images/SCENO/S-LCH21.jpg','images/SCENO/S-LCH22.jpg','images/SCENO/S-LCH23.jpg','images/SCENO/S-LCH24.jpg','images/SCENO/S-LCH25.jpg']
       },
       {
         title: 'Loewe Window Display',
         desc: '<p>Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.</p>',
-        type: 'Window Display', client: 'Personal', year: '2026', imgs: 3, 
+        type: 'Window Display', client: 'Personal', year: '2026', imgs: 3,
+        cover: 'images/SCENO/loewejungle3.png',
         images: ['images/SCENO/loewejungle.jpg','images/SCENO/loewejungle2.jpg','images/SCENO/loewejungle3.png']
       },
       {
         title: 'Hermes Window Display',
         desc: '<p>The Winter’s Tale inspired Hermes window display series draws from the poetic worlds of the story, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.</p><p>Within these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.</p>',
         type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
-        images: ['images/SCENO/hermes5.PNG','images/SCENO/hermes1.jpg','images/SCENO/hermes2.jpg','images/SCENO/hermes3.png','images/SCENO/hermes4.jpg']
+        cover: 'images/SCENO/hermes5.PNG',
+        images: ['images/SCENO/hermes1.jpg','images/SCENO/hermes2.jpg','images/SCENO/hermes3.png','images/SCENO/hermes4.jpg','images/SCENO/hermes5.PNG']
       }
     ]
   },
@@ -352,26 +354,28 @@ const DATA = {
     label: 'Graphic',
     items: [
       {
-        title: 'CAFArch 2015 show',
+        title: 'CAFArch 2015 Show',
         desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
         images: ['images/GRAPHIC/GR-CAFAEXPO2015.jpg']
       },
       {
-        title: 'CAFArch 2016 show',
+        title: 'CAFArch 2016 Show',
         desc: '<p>A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.</p>',
-        type: 'Poster Design', client: 'City Culture Festival', year: '2016', imgs: 1, 
+        type: 'Poster Design', client: 'CAFA Architecture School', year: '2016', imgs: 1, 
         images: ['images/GRAPHIC/GR-CAFAEXPO2016.jpg']
       },
       {
-        title: 'Independent Publication',
+        title: 'CAFArch Welcome',
         desc: '<p>Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.</p>',
-        type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3, images: []
+        type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
+        images: ['images/GRAPHIC/GR-CAFARCH.jpg']
       },
       {
-        title: 'Wayfinding System',
+        title: 'CAFArch 2015 Party',
         desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
-        type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4, images: []
+        type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
+        images: ['images/GRAPHIC/GR-FETE.jpg']
       }
     ]
   },
@@ -427,7 +431,8 @@ FEATURED.forEach((f, i) => {
   const item = DATA[f.cat].items[f.idx];
   const slide = document.createElement('div');
   slide.className = 'h-slide';
-  const imgSrc = (item.images && item.images.length > 0) ? `<img src="${item.images[0]}" />` : `<div class="ph">Coming Soon</div>`;
+  const cover = item.cover || (item.images && item.images[0]);
+  const imgSrc = cover ? `<img src="${cover}" />` : `<div class="ph">Coming Soon</div>`;
   slide.innerHTML = `<div class="h-slide-img-wrap">${imgSrc}</div><div class="h-slide-title">${item.title}</div>`;
   slide.onclick = () => openProject(f.cat, f.idx);
   track.appendChild(slide);
@@ -514,11 +519,6 @@ document.addEventListener('mousemove', e => {
     cur.style.left = e.clientX + 'px';
     cur.style.top = e.clientY + 'px';
   }
-});
-
-document.addEventListener('mouseover', e => {
-  if (e.target.closest('div[onclick], a, .s-item, img')) cur.classList.add('h');
-  else cur.classList.remove('h');
 });
 
 document.addEventListener('keydown', e => {
