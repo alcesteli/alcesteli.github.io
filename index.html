@@ -16,7 +16,6 @@
   --line: #efefef;
   --hover: #f7f7f7;
   --blue: #0000ff;
-  --bg-soft: #f9f9f9;
 }
 
 html, body { height: 100%; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
@@ -78,12 +77,12 @@ aside {
 .s-link:hover, .s-link.on { color: var(--blue); background: var(--hover); }
 
 /* MAIN CONTENT */
-main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
+main { flex: 1; height: 100vh; overflow: hidden; position: relative; background: var(--white); }
 .page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
 .page.on { opacity: 1; pointer-events: all; }
 
 /* HOME SLIDER */
-#pg-home { height: 100%; background: var(--bg-soft); }
+#pg-home { height: 100%; background: var(--white); }
 .h-track {
   display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x mandatory; scrollbar-width: none;
@@ -93,13 +92,14 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
   flex-shrink: 0; width: 100%; height: 100%; scroll-snap-align: start;
   position: relative; cursor: none; display: flex; align-items: center; justify-content: center;
 }
-.h-slide-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #eee; }
-.h-slide-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.h-slide-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.h-slide-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .h-slide-img-wrap .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; }
 
 .h-slide-title {
   position: absolute; bottom: 40px; left: 40px; font-family: 'Cormorant Garamond', serif;
   font-size: 18px; font-style: italic; opacity: 0; transform: translateY(10px); transition: all .4s;
+  color: var(--black); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 4px;
 }
 .h-slide:hover .h-slide-title { opacity: 1; transform: translateY(0); }
 
@@ -111,22 +111,26 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; transition: all .3s; }
 .dot.on { background: var(--blue); width: 20px; border-radius: 3px; }
 
-/* PROJECT DETAIL */
-#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; }
-.proj-hero { width: 100%; height: 85vh; background: var(--bg-soft); padding: 40px; display: flex; align-items: center; justify-content: center; }
-.proj-hero img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.proj-hero .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; }
+/* PROJECT DETAIL - SUPPRESSION DES VIDES */
+#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; background: var(--white); }
 
-.proj-gallery { display: flex; flex-direction: column; gap: 60px; padding: 60px 0; }
-.proj-img-wrap { width: 100%; display: flex; justify-content: center; background: var(--bg-soft); min-height: 400px; align-items: center; }
-.proj-img-wrap img { max-width: 100%; height: auto; object-fit: contain; display: block; }
-.proj-img-wrap .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; }
+.proj-hero { width: 100%; display: flex; padding: 0; margin: 0; }
+.proj-hero img { width: 100%; height: auto; display: block; object-fit: cover; }
+.proj-hero .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; padding: 60px; text-align: center; width: 100%; }
 
+.proj-gallery { display: flex; flex-direction: column; gap: 0; padding: 0; margin: 0; } /* gap: 0 supprime l'espace entre les images */
+.proj-img-wrap { width: 100%; display: flex; }
+.proj-img-wrap img { width: 100%; height: auto; display: block; object-fit: cover; }
+.proj-img-wrap .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; padding: 60px; text-align: center; width: 100%; }
+
+/* TEXTE DU PROJET */
 .proj-info { padding: 100px 60px; border-top: 1px solid var(--line); max-width: 1400px; margin: 0 auto; }
 .proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
 .proj-info-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 80px); font-style: italic; margin-bottom: 50px; }
 .proj-info-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; }
 .proj-desc { font-size: 14px; line-height: 1.8; color: #555; }
+.proj-desc p, .body-text { margin-bottom: 24px; }
+.proj-desc p:last-child, .body-text:last-child { margin-bottom: 0; }
 .proj-meta-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 11px; }
 .proj-meta-row:first-child { border-top: 1px solid var(--line); }
 .proj-meta-label { color: var(--gray); text-transform: uppercase; font-size: 9px; letter-spacing: .1em; }
@@ -136,7 +140,7 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .eyebrow { font-size: 9px; text-transform: uppercase; letter-spacing: .3em; color: var(--gray); margin-bottom: 30px; }
 .heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 70px); line-height: 1; margin-bottom: 40px; }
 .heading em { font-style: italic; color: var(--gray); }
-.body-text { font-size: 14px; line-height: 2; color: #555; margin-bottom: 20px; }
+
 .about-stats { margin-top: 64px; display: flex; flex-direction: column; gap: 44px; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
@@ -177,8 +181,12 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
   .page { position: relative; opacity: 1; pointer-events: all; display: none; height: auto; }
   .page.on { display: block; }
 
-  .h-slide-img-wrap { width: 100%; height: 100%; }
-  .proj-hero { height: 50vh; padding: 20px; }
+  .h-slide-img-wrap { width: 100%; height: 100%; } 
+  
+  /* Sur mobile, on garde aussi 0 espace */
+  .proj-hero { height: auto; padding: 0; margin: 0; }
+  .proj-gallery { gap: 0; padding: 0; margin: 0; }
+  
   .proj-info { padding: 50px 20px; }
   .proj-info-grid { grid-template-columns: 1fr; gap: 40px; }
   .content-block { padding: 60px 20px; }
@@ -268,7 +276,6 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 </main>
 
 <script>
-// FULL ORIGINAL DATA (Translated to English)
 const DATA = {
   scenography: {
     label: 'Scenography',
@@ -277,9 +284,7 @@ const DATA = {
         title: 'The Winter’s Tale',
         desc: `
         <p>This play is one of Shakespeare’s final works, blending tragedy and comedy. In the end, the lost daughter is found, the lovers are reunited, and Leontes is forgiven. Yet this return to harmony feels almost too sudden, raising the question of whether such forgiveness was truly believable for audiences.</p>
-        <br>
         <p>The story unfolds between two imagined worlds: Sicily, a palace bound by the rules and appearances of power, and Bohemia, a pastoral utopia filled with joyful peasants and abundant nature. After Time’s monologue, the play shifts into a lighter, almost magical tone. Yet in the end, the lovers must leave Bohemia and return to Sicily to find peace, subtly questioning the idea of utopia.</p>
-        <br>
         <p>This paradox interests me. Can the stage itself become an imaginary utopia—a place where anything is possible? At the same time, the Italian-style theatre reflects a strict spatial hierarchy, almost like a monarchy. I also explore Leontes’ madness through the image of a labyrinth, representing his disordered thoughts and inviting the audience to experience his shifting state of mind through scenography.</p>
           `,
         type: 'Stage Design', client: 'Personal', year: '2025', imgs: 25, 
@@ -287,13 +292,13 @@ const DATA = {
       },
       {
         title: 'Loewe Window Display',
-        desc: 'Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.',
+        desc: '<p>Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.</p>',
         type: 'Window Display', client: 'Personal', year: '2026', imgs: 3, 
         images: ['images/loewejungle.jpg','images/loewejungle2.jpg','images/loewejungle3.png']
       },
       {
         title: 'Hermes Window Display',
-        desc: 'The Winter’s Tale inspired Hermes window display series draws from the poetic worlds of the story, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.<br><br>Within these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.',
+        desc: '<p>The Winter’s Tale inspired Hermes window display series draws from the poetic worlds of the story, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.</p><p>Within these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.</p>',
         type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
         images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png','images/hermes4.jpg','images/hermes5.JPG']
       }
@@ -304,17 +309,17 @@ const DATA = {
     items: [
       {
         title: 'Courtyard Residence',
-        desc: 'Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.',
+        desc: '<p>Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.</p>',
         type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
       },
       {
         title: 'Cultural Centre Feasibility',
-        desc: 'Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.',
+        desc: '<p>Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.</p>',
         type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4, images: []
       },
       {
         title: 'Studio and Residence',
-        desc: 'A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.',
+        desc: '<p>A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.</p>',
         type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4, images: []
       }
     ]
@@ -324,17 +329,17 @@ const DATA = {
     items: [
       {
         title: 'Tea House Interiors',
-        desc: 'Interior architecture for a specialty tea house. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.',
+        desc: '<p>Interior architecture for a specialty tea house. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.</p>',
         type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
       },
       {
         title: 'Gallery Conversion',
-        desc: 'Transformation of a former industrial warehouse into a flexible exhibition space. The design preserves structural honesty while achieving museum-quality light conditions.',
+        desc: '<p>Transformation of a former industrial warehouse into a flexible exhibition space. The design preserves structural honesty while achieving museum-quality light conditions.</p>',
         type: 'Gallery / Cultural', client: 'Contemporary Art Centre', year: '2023', imgs: 3, images: []
       },
       {
         title: 'Private Apartment',
-        desc: 'Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.',
+        desc: '<p>Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.</p>',
         type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5, images: []
       }
     ]
@@ -344,17 +349,17 @@ const DATA = {
     items: [
       {
         title: 'Brand Launch — Wuming',
-        desc: 'Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.',
+        desc: '<p>Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.</p>',
         type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3, images: []
       },
       {
         title: 'Book Fair Installation',
-        desc: 'A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.',
+        desc: '<p>A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.</p>',
         type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4, images: []
       },
       {
         title: 'Fashion Show Set Design',
-        desc: 'Set and spatial concept for a seasonal runway presentation. The show environment became an extension of the collection &mdash; geometric, silent, precise.',
+        desc: '<p>Set and spatial concept for a seasonal runway presentation. The show environment became an extension of the collection &mdash; geometric, silent, precise.</p>',
         type: 'Set Design', client: 'Fashion Label', year: '2023', imgs: 3, images: []
       }
     ]
@@ -364,22 +369,22 @@ const DATA = {
     items: [
       {
         title: 'Tea Mountain Brand Identity',
-        desc: 'A complete visual identity system for a tea brand. From logotype to packaging and spatial wayfinding &mdash; a language that holds tradition and contemporary restraint in balance.',
+        desc: '<p>A complete visual identity system for a tea brand. From logotype to packaging and spatial wayfinding &mdash; a language that holds tradition and contemporary restraint in balance.</p>',
         type: 'Brand Identity / Packaging', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
       },
       {
         title: 'City Festival Poster Series',
-        desc: 'A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.',
+        desc: '<p>A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.</p>',
         type: 'Poster Design', client: 'City Culture Festival', year: '2024', imgs: 3, images: []
       },
       {
         title: 'Independent Publication',
-        desc: 'Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.',
+        desc: '<p>Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.</p>',
         type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3, images: []
       },
       {
         title: 'Wayfinding System',
-        desc: 'A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.',
+        desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
         type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4, images: []
       }
     ]
@@ -389,17 +394,17 @@ const DATA = {
     items: [
       {
         title: 'Solar Terms Illustration Series',
-        desc: 'Twenty-four illustrations reinterpreting the traditional solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.',
+        desc: '<p>Twenty-four illustrations reinterpreting the traditional solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.</p>',
         type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5, images: []
       },
       {
         title: 'Children\'s Book — Where Is the Cloud?',
-        desc: 'A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.',
+        desc: '<p>A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.</p>',
         type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4, images: []
       },
       {
         title: 'Album Cover Series',
-        desc: 'Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.',
+        desc: '<p>Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.</p>',
         type: 'Illustration', client: 'Independent Musicians', year: '2023', imgs: 3, images: []
       }
     ]
@@ -421,7 +426,7 @@ const FEATURED = [
   {cat:'scenography',  idx:2}
 ];
 
-// Initialize Sidebar Nav with ID generation
+// Initialize Sidebar Nav
 const sNav = document.getElementById('s-nav');
 Object.keys(DATA).forEach(catKey => {
   const cat = DATA[catKey];
@@ -443,7 +448,6 @@ FEATURED.forEach((f, i) => {
   const slide = document.createElement('div');
   slide.className = 'h-slide';
   
-  // Create placeholder or real image
   const imgSrc = (item.images && item.images.length > 0) ? `<img src="${item.images[0]}" />` : `<div class="ph">Image Coming Soon</div>`;
   
   slide.innerHTML = `
@@ -475,11 +479,9 @@ function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + id).classList.add('on');
   
-  // Update footer links highlight
   document.getElementById('sl-about').classList.toggle('on', id === 'about');
   document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
   
-  // Close mobile menu if open
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('menu-btn').innerText = 'Menu';
 
@@ -488,12 +490,10 @@ function showPage(id) {
 }
 
 function openProject(cat, idx) {
-  // Clear all highlights, then add to active
   document.querySelectorAll('.s-item').forEach(el => el.classList.remove('on'));
   const activeItem = document.getElementById(`si-${cat}-${idx}`);
   if (activeItem) {
     activeItem.classList.add('on');
-    // Ensure parent category is open
     const catHead = activeItem.closest('.s-items').previousElementSibling;
     if (catHead && catHead.classList.contains('closed')) catHead.classList.remove('closed');
   }
@@ -526,7 +526,6 @@ function openProject(cat, idx) {
 }
 
 function goHome() { 
-  // Clear highlights when going home
   document.querySelectorAll('.s-item').forEach(el => el.classList.remove('on'));
   showPage('home'); 
 }
