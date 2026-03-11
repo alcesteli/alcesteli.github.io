@@ -111,18 +111,68 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 .dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; transition: all .3s; }
 .dot.on { background: var(--blue); width: 20px; border-radius: 3px; }
 
-/* PROJECT DETAIL - SUPPRESSION DES VIDES */
-#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; background: var(--white); }
+/* PROJECT DETAIL - CORRIGÉ POUR SUPPRIMER LES VIDES */
+#pg-project { 
+  height: 100%; 
+  overflow-y: auto; 
+  scroll-behavior: smooth; 
+  background: var(--white); /* On force le fond en blanc partout */
+}
 
-.proj-hero { width: 100%; display: flex; padding: 0; margin: 0; }
-.proj-hero img { width: 100%; height: auto; display: block; object-fit: cover; }
-.proj-hero .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; padding: 60px; text-align: center; width: 100%; }
+.proj-hero { 
+  width: 100%; 
+  height: auto;      /* Hauteur automatique pour s'adapter à l'image */
+  background: none;  /* Supprime le fond gris */
+  padding: 0;        /* Supprime l'espace autour de l'image */
+  display: flex; 
+}
 
-.proj-gallery { display: flex; flex-direction: column; gap: 0; padding: 0; margin: 0; } /* gap: 0 supprime l'espace entre les images */
-.proj-img-wrap { width: 100%; display: flex; }
-.proj-img-wrap img { width: 100%; height: auto; display: block; object-fit: cover; }
-.proj-img-wrap .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; padding: 60px; text-align: center; width: 100%; }
+.proj-hero img { 
+  width: 100%; 
+  height: auto; 
+  display: block; 
+  object-fit: cover; 
+}
 
+.proj-gallery { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0;            /* Supprime l'espace entre les images de la galerie */
+  padding: 0; 
+}
+
+.proj-img-wrap { 
+  width: 100%; 
+  display: flex; 
+  background: none;  /* Supprime le fond gris */
+  min-height: auto;  /* Supprime la hauteur minimale qui créait du vide */
+}
+
+.proj-img-wrap img { 
+  width: 100%; 
+  height: auto; 
+  display: block; 
+}
+
+/* MODIFICATIONS SPÉCIFIQUES MOBILE */
+@media (max-width: 768px) {
+  /* ... vos autres styles mobile ... */
+
+  .proj-hero { 
+    height: auto; 
+    padding: 0; 
+  }
+  
+  .proj-gallery { 
+    gap: 0; 
+    padding: 0; 
+  }
+
+  .proj-img-wrap {
+    min-height: auto; /* Important pour éviter les sauts de page vides */
+  }
+}
+  
 /* TEXTE DU PROJET */
 .proj-info { padding: 100px 60px; border-top: 1px solid var(--line); max-width: 1400px; margin: 0 auto; }
 .proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
