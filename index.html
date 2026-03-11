@@ -9,255 +9,151 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --sw: 220px;
+  --sw: 240px;
   --black: #0d0d0d;
   --white: #ffffff;
   --gray: #9a9a9a;
-  --line: #e8e8e8;
-  --hover: #f0f0f0;
+  --line: #efefef;
+  --hover: #f7f7f7;
   --blue: #0000ff;
   --bg-soft: #f9f9f9;
 }
 
-html, body { height: 100%; background: var(--white); color: var(--black); }
+html, body { height: 100%; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
 body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; overflow: hidden; }
 
 /* CUSTOM CURSOR */
 #cur {
-  position: fixed; width: 8px; height: 8px;
-  background: var(--black); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: width .25s, height .25s, background .25s;
+  position: fixed; width: 8px; height: 8px; background: var(--black); border-radius: 50%;
+  pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s, border .2s;
 }
-#cur.h { width: 30px; height: 30px; background: transparent; border: 1px solid var(--blue); }
+#cur.h { width: 40px; height: 40px; background: transparent; border: 1px solid var(--blue); }
 
 /* SIDEBAR */
 aside {
-  width: var(--sw); min-width: var(--sw);
-  height: 100vh; border-right: 1px solid var(--line);
-  display: flex; flex-direction: column;
-  background: var(--white); z-index: 20;
+  width: var(--sw); min-width: var(--sw); height: 100vh; border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; background: var(--white); z-index: 100;
 }
-.s-logo {
-  padding: 32px 26px 26px;
-  border-bottom: 1px solid var(--line);
-  cursor: none;
-}
-.s-logo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px; font-style: italic; font-weight: 300; line-height: 1.25;
-}
-.s-logo-sub {
-  margin-top: 5px; font-size: 9px;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--gray);
-}
+.s-logo { padding: 40px 30px; border-bottom: 1px solid var(--line); cursor: none; }
+.s-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; line-height: 1.1; }
+.s-logo-sub { margin-top: 6px; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--gray); }
+
 .s-nav { flex: 1; overflow-y: auto; scrollbar-width: none; }
 .s-nav::-webkit-scrollbar { display: none; }
 
 .s-cat-head {
-  padding: 13px 26px 9px; font-size: 9px; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--gray);
-  display: flex; justify-content: space-between; align-items: center;
-  cursor: none; user-select: none; border-bottom: 1px solid var(--line);
+  padding: 16px 30px 10px; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray);
+  display: flex; justify-content: space-between; align-items: center; cursor: none; border-bottom: 1px solid var(--line);
 }
-.s-cat-arr { display: inline-block; transition: transform .3s; font-size: 12px; }
+.s-cat-arr { transition: transform .3s; font-size: 12px; }
 .s-cat-head.closed .s-cat-arr { transform: rotate(-90deg); }
-.s-items { overflow: hidden; transition: max-height .5s cubic-bezier(.16,1,.3,1); max-height: 600px; }
+.s-items { overflow: hidden; transition: max-height .5s ease; max-height: 800px; }
 .s-cat-head.closed + .s-items { max-height: 0; }
 
 .s-item {
-  padding: 9px 26px 9px 34px; font-size: 11px; letter-spacing: .02em;
-  line-height: 1.45; color: var(--black); cursor: none; position: relative;
-  transition: background .15s;
+  padding: 10px 30px 10px 40px; font-size: 11px; line-height: 1.4; color: var(--black); 
+  cursor: none; position: relative; transition: background .2s;
 }
 .s-item::before {
-  content: ''; position: absolute; left: 22px; top: 50%; transform: translateY(-50%);
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--line); transition: background .2s;
+  content: ''; position: absolute; left: 28px; top: 18px; width: 3px; height: 3px; 
+  border-radius: 50%; background: var(--line);
 }
 .s-item:hover { background: var(--hover); }
 .s-item.on { background: var(--blue); color: #fff; }
-.s-item.on::before { background: #fff; }
 
 .s-foot { border-top: 1px solid var(--line); }
 .s-link {
-  padding: 15px 26px; font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--gray); display: flex; justify-content: space-between;
-  cursor: none; transition: color .2s, background .15s; border-bottom: 1px solid var(--line);
+  padding: 18px 30px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gray); display: flex; justify-content: space-between; cursor: none;
+  transition: all .2s; border-bottom: 1px solid var(--line);
 }
-.s-link:last-child { border-bottom: none; }
 .s-link:hover { color: var(--blue); background: var(--hover); }
-.s-link.on { color: var(--blue); background: var(--hover); }
 
 /* MAIN CONTENT */
 main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
-.page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .4s ease; }
+.page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
 .page.on { opacity: 1; pointer-events: all; }
 
-/* HOME PAGE */
-#pg-home { height: 100%; overflow: hidden; }
+/* HOME SLIDER */
+#pg-home { height: 100%; background: var(--bg-soft); }
 .h-track {
-  display: flex; width: 100%; height: 100%;
-  overflow-x: auto; overflow-y: hidden;
+  display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x mandatory; scrollbar-width: none;
 }
 .h-track::-webkit-scrollbar { display: none; }
 .h-slide {
-  flex-shrink: 0; width: 100%; height: 100%;
-  scroll-snap-align: start; position: relative;
-  cursor: none; overflow: hidden; background: var(--bg-soft);
+  flex-shrink: 0; width: 100%; height: 100%; scroll-snap-align: start;
+  position: relative; cursor: none; display: flex; align-items: center; justify-content: center;
 }
-.h-slide-img {
-  width: 100%; height: 100%; display: block; 
-  object-fit: contain; /* Images shown fully without cropping */
-  transition: transform .6s cubic-bezier(.16,1,.3,1);
-}
-.h-slide:hover .h-slide-img { transform: scale(1.015); }
+.h-slide-img-wrap { width: 85%; height: 80%; }
+.h-slide-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+
 .h-slide-title {
-  position: absolute; bottom: 32px; left: 36px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px; font-style: italic; font-weight: 300;
-  color: var(--black); opacity: 0; transform: translateY(6px);
-  transition: opacity .35s, transform .35s; pointer-events: none;
+  position: absolute; bottom: 40px; left: 40px; font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-style: italic; opacity: 0; transform: translateY(10px); transition: all .4s;
 }
-.h-slide:hover .h-slide-title { opacity: 1; transform: none; }
-.h-counter {
-  position: absolute; bottom: 32px; right: 36px;
-  font-size: 9px; letter-spacing: .18em;
-  color: var(--gray); pointer-events: none; transition: opacity .3s;
-}
+.h-slide:hover .h-slide-title { opacity: 1; transform: translateY(0); }
 
-/* PROJECT PAGE */
-#pg-project { height: 100%; overflow-y: auto; overflow-x: hidden; }
-.proj-hero { width: 100%; height: 85vh; overflow: hidden; background: var(--bg-soft); }
-#proj-hero-inner { width: 100%; height: 100%; }
-#proj-hero-inner img { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* PAGINATION DOTS */
+.h-dots {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 10px; z-index: 10;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: all .3s; }
+.dot.on { background: var(--blue); width: 20px; border-radius: 3px; }
 
-.proj-imgs-rest { display: flex; flex-direction: column; gap: 40px; padding: 40px 0; }
-.proj-img-item { width: 100%; background: var(--bg-soft); overflow: hidden; display: flex; justify-content: center; }
-.proj-img-item img { max-width: 100%; height: auto; object-fit: contain; display: block; }
+/* PROJECT DETAIL */
+#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; }
+.proj-hero { width: 100%; height: 85vh; background: var(--bg-soft); padding: 40px; }
+.proj-hero img { width: 100%; height: 100%; object-fit: contain; }
 
-.proj-info { padding: 80px 64px 100px; border-top: 1px solid var(--line); }
-.proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
-.proj-info-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(40px, 5vw, 72px); font-weight: 300;
-  line-height: 1; letter-spacing: -.01em; font-style: italic; margin-bottom: 48px;
-}
-.proj-info-body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-.proj-info-desc { font-size: 13px; line-height: 2; color: #666; letter-spacing: .04em; }
-.proj-info-meta { display: flex; flex-direction: column; }
-.meta-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 11px; letter-spacing: .06em; padding: 14px 0; border-bottom: 1px solid var(--line);
-}
-.meta-row:first-child { border-top: 1px solid var(--line); }
-.meta-lbl { color: var(--gray); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
+.proj-gallery { display: flex; flex-direction: column; gap: 60px; padding: 60px 0; }
+.proj-img-wrap { width: 100%; display: flex; justify-content: center; background: var(--bg-soft); }
+.proj-img-wrap img { max-width: 100%; height: auto; object-fit: contain; }
 
-/* ABOUT PAGE */
-#pg-about { height: 100%; overflow-y: auto; overflow-x: hidden; }
-.about-block { max-width: 640px; padding: 80px 64px 100px; }
-.about-ey { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
-.about-h {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(42px, 5vw, 72px); font-weight: 300;
-  line-height: .96; letter-spacing: -.01em; margin-bottom: 40px;
-}
-.about-h em { font-style: italic; color: var(--gray); }
-.about-body p { font-size: 12px; line-height: 2; color: #666; letter-spacing: .04em; margin-bottom: 18px; }
-.about-stats { margin-top: 64px; display: flex; flex-direction: column; gap: 44px; }
-.stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
-.stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.proj-info { padding: 100px 60px; border-top: 1px solid var(--line); max-width: 1400px; margin: 0 auto; }
+.proj-info-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 80px); font-style: italic; margin-bottom: 50px; }
+.proj-info-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; }
+.proj-desc { font-size: 14px; line-height: 1.8; color: #555; }
+.proj-meta-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 11px; }
+.proj-meta-label { color: var(--gray); text-transform: uppercase; font-size: 9px; letter-spacing: .1em; }
 
-/* CONTACT PAGE */
-#pg-contact { height: 100%; overflow-y: auto; overflow-x: hidden; }
-.contact-block { max-width: 640px; padding: 80px 64px 100px; }
-.contact-ey { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
-.contact-h {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(38px, 5vw, 68px); font-weight: 300;
-  line-height: .96; letter-spacing: -.01em; margin-bottom: 52px;
-}
-.contact-h em { font-style: italic; color: var(--gray); }
-.contact-email {
-  font-family: 'Cormorant Garamond', serif; font-size: clamp(17px, 2vw, 26px);
-  font-style: italic; color: var(--black); text-decoration: none;
-  border-bottom: 1px solid var(--black); padding-bottom: 3px;
-  transition: color .2s; width: fit-content; display: block; margin-bottom: 72px;
-}
-.contact-email:hover { color: var(--blue); }
-.contact-links { display: flex; flex-direction: column; }
-.c-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px 0; border-bottom: 1px solid var(--line);
-  cursor: none; transition: padding-left .2s;
-}
-.c-row:first-child { border-top: 1px solid var(--line); }
-.c-row:hover { padding-left: 10px; }
-.c-row-name { font-size: 12px; letter-spacing: .08em; }
-.c-row-arr { color: var(--gray); }
+/* ABOUT & CONTACT */
+.content-block { padding: 100px 60px; max-width: 800px; }
+.eyebrow { font-size: 9px; text-transform: uppercase; letter-spacing: .3em; color: var(--gray); margin-bottom: 30px; }
+.heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 70px); line-height: 1; margin-bottom: 40px; }
+.heading em { font-style: italic; color: var(--gray); }
+.body-text { font-size: 14px; line-height: 2; color: #555; margin-bottom: 20px; }
 
-/* MOBILE RESPONSIVE ADAPTATION */
+/* MOBILE STYLES */
 @media (max-width: 768px) {
-  body { 
-    flex-direction: column; 
-    overflow-y: auto; 
-    overflow-x: hidden;
-    cursor: auto; 
-  }
+  body { flex-direction: column; cursor: auto; overflow-y: auto; }
   #cur { display: none; }
   
   aside {
-    width: 100%; height: auto; min-width: 100%;
-    border-right: none; border-bottom: 1px solid var(--line);
-    position: sticky; top: 0; background: var(--white);
+    width: 100%; height: auto; min-width: 100%; border-right: none; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0;
   }
   .s-nav { display: none; }
-  .s-logo { padding: 15px 20px; }
+  .s-logo { padding: 20px; }
   .s-foot { display: flex; border-top: none; }
-  .s-link { 
-    flex: 1; border-bottom: none; border-left: 1px solid var(--line); 
-    justify-content: center; padding: 12px; font-size: 10px; 
-  }
+  .s-link { flex: 1; border-left: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; }
   .s-link:first-child { border-left: none; }
 
   main { height: auto; overflow: visible; flex: none; }
-  
-  /* Fixed Home Page Height for Slides */
-  #pg-home { 
-    display: none; 
-    height: 70vh; /* This ensures the slides have space to show up */
-    width: 100%;
-    position: relative;
-  }
+  #pg-home { height: 70vh; display: none; } /* Explicit height for mobile slider */
   #pg-home.on { display: block; }
-  
-  /* Ensure the track allows horizontal scrolling on touch */
-  .h-track {
-    display: flex !important;
-    height: 100%;
-    width: 100%;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .h-slide { 
-    width: 100vw; 
-    height: 100%; 
-    flex-shrink: 0; 
-  }
 
   .page { position: relative; opacity: 1; pointer-events: all; display: none; height: auto; }
   .page.on { display: block; }
-  
-  .proj-hero { height: 50vh; }
-  .proj-info { padding: 40px 24px; }
-  .proj-info-body { grid-template-columns: 1fr; gap: 32px; }
-  .about-block, .contact-block { padding: 40px 24px; }
+
+  .h-slide-img-wrap { width: 90%; height: 70%; }
+  .proj-hero { height: 50vh; padding: 20px; }
+  .proj-info { padding: 50px 20px; }
+  .proj-info-grid { grid-template-columns: 1fr; gap: 40px; }
+  .content-block { padding: 60px 20px; }
 }
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-thumb { background: var(--line); }
 </style>
 </head>
 <body>
@@ -266,207 +162,163 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 <aside>
   <div class="s-logo" onclick="goHome()">
     <div class="s-logo-name">Alceste<br>Li</div>
-    <div class="s-logo-sub">Portfolio</div>
+    <div class="s-logo-sub">Studio</div>
   </div>
   <div class="s-nav" id="s-nav"></div>
   <div class="s-foot">
-    <div class="s-link" id="sl-about" onclick="showPage('about')">About <span>&rarr;</span></div>
-    <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact <span>&rarr;</span></div>
+    <div class="s-link" onclick="showPage('about')">About</div>
+    <div class="s-link" onclick="showPage('contact')">Contact</div>
   </div>
 </aside>
 
 <main>
   <div class="page on" id="pg-home">
-    <div class="h-track" id="h-track"></div>
+    <div class="h-track" id="h-track" onscroll="updateDots()"></div>
+    <div class="h-dots" id="h-dots"></div>
   </div>
 
   <div class="page" id="pg-project">
-    <div class="proj-hero"><div id="proj-hero-inner"></div></div>
-    <div class="proj-imgs-rest" id="proj-imgs-rest"></div>
+    <div class="proj-hero" id="p-hero"></div>
+    <div class="proj-gallery" id="p-gallery"></div>
     <div class="proj-info">
-      <div class="proj-info-eyebrow" id="pi-cat"></div>
-      <div class="proj-info-title" id="pi-title"></div>
-      <div class="proj-info-body">
-        <p class="proj-info-desc" id="pi-desc"></p>
-        <div class="proj-info-meta">
-          <div class="meta-row"><span class="meta-lbl">Type</span><span id="pi-type"></span></div>
-          <div class="meta-row"><span class="meta-lbl">Client</span><span id="pi-client"></span></div>
-          <div class="meta-row"><span class="meta-lbl">Year</span><span id="pi-year"></span></div>
-        </div>
+      <h1 class="proj-info-title" id="p-title"></h1>
+      <div class="proj-info-grid">
+        <div class="proj-desc" id="p-desc"></div>
+        <div class="proj-meta" id="p-meta"></div>
       </div>
     </div>
   </div>
 
   <div class="page" id="pg-about">
-    <div class="about-block">
-      <p class="about-ey">About</p>
-      <h2 class="about-h">Design<br><em>is a</em><br>language.</h2>
-      <div class="about-body">
-        <p>An independent design studio working across scenography, architecture, interiors, events, and graphic communication.</p>
-        <p>We believe design is a form of dialogue &mdash; with space, material, and the people who inhabit them. Each project is an exploration of where disciplines meet.</p>
-        <p>We collaborate with cultural institutions, brands, theatre companies, and private clients. Open to commissions and creative partnerships.</p>
-      </div>
-      <div class="about-stats">
-        <div>
-          <div class="stat-lbl">Disciplines</div>
-          <div class="stat-item">Scenography</div>
-          <div class="stat-item">Architecture</div>
-          <div class="stat-item">Interior Design</div>
-          <div class="stat-item">Event Design</div>
-          <div class="stat-item">Graphic Design</div>
-        </div>
-        <div>
-          <div class="stat-lbl">Clients include</div>
-          <div class="stat-item">Cultural Institutions</div>
-          <div class="stat-item">Theatre Companies</div>
-          <div class="stat-item">Brands &amp; Publishers</div>
-        </div>
-        <div>
-          <div class="stat-lbl">Based in</div>
-          <div class="stat-item">Beijing &bull; Shanghai</div>
-        </div>
-      </div>
+    <div class="content-block">
+      <p class="eyebrow">Biography</p>
+      <h2 class="heading">Creating <em>spatial</em> narratives.</h2>
+      <p class="body-text">Alceste Li is a multi-disciplinary designer specializing in scenography and interior architecture. Based between Beijing and Shanghai, the studio focuses on the intersection of physical space and theatrical storytelling.</p>
     </div>
   </div>
 
   <div class="page" id="pg-contact">
-    <div class="contact-block">
-      <p class="contact-ey">Get in Touch</p>
-      <h2 class="contact-h">Let's<br><em>work</em><br>together.</h2>
-      <a href="mailto:hello@designer.com" class="contact-email">hello@designer.com</a>
-      <div class="contact-links">
-        <div class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></div>
-        <div class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></div>
-        <div class="c-row"><span class="c-row-name">LinkedIn</span><span class="c-row-arr">&#8599;</span></div>
-      </div>
+    <div class="content-block">
+      <p class="eyebrow">Contact</p>
+      <h2 class="heading">Let's <em>talk</em>.</h2>
+      <p class="body-text">Currently accepting new commissions and collaborations.</p>
+      <p class="body-text"><a href="mailto:hello@alcesteli.com" style="color:var(--blue)">hello@alcesteli.com</a></p>
     </div>
   </div>
 </main>
 
 <script>
-/* PROJECT DATA - ALL ENGLISH */
-var DATA = {
+const DATA = {
   scenography: {
     label: 'Scenography',
     items: [
-      {
-        title: 'The Border Town',
-        desc: 'A radically stripped-back stage design for a theatrical adaptation. A bamboo pole, a wash of light, a single stone &mdash; absence as atmosphere.',
-        type: 'Stage Design', client: 'Independent Theatre Co.', year: '2024', imgs: 4, images: []
+      { 
+        title: 'Hermes Window Display', 
+        desc: 'A series of handcrafted paper landscapes commissioned for seasonal window displays. The concept explores the "Winter\'s Tale" through intricate layering.',
+        type: 'Window Display', client: 'Hermes', year: '2024',
+        images: ['https://via.placeholder.com/1200x800/f0f0f0/888?text=Hermes+1', 'https://via.placeholder.com/800x1200/f0f0f0/888?text=Hermes+2'] 
       },
-       {
-        title: 'Loewe Window Display',
-        desc: 'Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.',
-        type: 'Window Display', client: 'Personal', year: '2026', imgs: 3, 
-        images: ['images/loewejungle.jpg','images/loewejungle2.jpg','images/loewejungle3.png']
-      },
-      {
-        title: 'Hermes Window Display',
-        desc: 'Inspired by The Winter\'s Tale, transforming store windows into theatrical landscapes of imagination and travel through handcrafted paper sets.',
-        type: 'Window Display', client: 'Personal Project', year: '2026', imgs: 5,
-        images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png','images/hermes4.jpg','images/hermes5.JPG']
-      }
-    ]
-  },
-  architecture: {
-    label: 'Architecture',
-    items: [
-      {
-        title: 'Courtyard Residence',
-        desc: 'Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials.',
-        type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
+      { 
+        title: 'The Border Town', 
+        desc: 'Minimalist stage design for an avant-garde adaptation of Shen Congwen\'s classic novel.',
+        type: 'Stage Design', client: 'Theatre Group', year: '2023',
+        images: ['https://via.placeholder.com/1200x800/f0f0f0/888?text=Stage+Design'] 
       }
     ]
   },
   interior: {
     label: 'Interior',
     items: [
-      {
-        title: 'Specialty Tea House',
-        desc: 'Interior architecture focusing on slate, aged brass, and woven rattan to quietly reference the landscape of origin.',
-        type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
+      { 
+        title: 'Cha Shan Tea House', 
+        desc: 'A modern sanctuary for tea culture, utilizing raw stone and aged timber to create a meditative atmosphere.',
+        type: 'F&B Interior', client: 'Cha Shan', year: '2024',
+        images: ['https://via.placeholder.com/1200x800/f0f0f0/888?text=Tea+House'] 
       }
     ]
   }
 };
 
-/* SYSTEM LOGIC */
-var CATS = Object.keys(DATA);
-var FLAT = [];
-CATS.forEach(cat => DATA[cat].items.forEach((item, i) => FLAT.push({cat, i})));
-
-var FEATURED = [
-  {cat:'scenography', idx:1},
+const FEATURED = [
   {cat:'scenography', idx:0},
-  {cat:'architecture', idx:0},
+  {cat:'scenography', idx:1},
   {cat:'interior', idx:0}
 ];
 
-/* BUILD SIDEBAR */
-var sNav = document.getElementById('s-nav');
-CATS.forEach(cat => {
-  var d = DATA[cat];
-  var sec = document.createElement('div');
-  var itemsHtml = d.items.map((item, ii) => 
-    `<div class="s-item" id="si-${cat}-${ii}" onclick="openProject('${cat}',${ii})">${item.title}</div>`
-  ).join('');
-  sec.innerHTML = `<div class="s-cat-head" onclick="toggleCat(this)">${d.label} <span class="s-cat-arr">&#8250;</span></div><div class="s-items">${itemsHtml}</div>`;
-  sNav.appendChild(sec);
+// Initialize Sidebar
+const sNav = document.getElementById('s-nav');
+Object.keys(DATA).forEach(catKey => {
+  const cat = DATA[catKey];
+  const group = document.createElement('div');
+  group.innerHTML = `
+    <div class="s-cat-head" onclick="this.classList.toggle('closed')">${cat.label} <span class="s-cat-arr">▾</span></div>
+    <div class="s-items">
+      ${cat.items.map((item, i) => `<div class="s-item" onclick="openProject('${catKey}', ${i})">${item.title}</div>`).join('')}
+    </div>
+  `;
+  sNav.appendChild(group);
 });
 
-/* BUILD HOME SLIDES */
-var track = document.getElementById('h-track');
-FEATURED.forEach((f, fi) => {
-  var p = DATA[f.cat].items[f.idx];
-  var slide = document.createElement('div');
+// Initialize Home Slider
+const track = document.getElementById('h-track');
+const dots = document.getElementById('h-dots');
+FEATURED.forEach((f, i) => {
+  const item = DATA[f.cat].items[f.idx];
+  const slide = document.createElement('div');
   slide.className = 'h-slide';
-  var num = `${(fi + 1 < 10 ? '0' : '') + (fi + 1)} / ${(FEATURED.length < 10 ? '0' : '') + FEATURED.length}`;
-  slide.innerHTML = `<div class="h-slide-img">${p.images[0] ? `<img src="${p.images[0]}" style="width:100%;height:100%;object-fit:contain;">` : ''}</div><div class="h-slide-title">${p.title}</div><div class="h-counter">${num}</div>`;
+  slide.innerHTML = `
+    <div class="h-slide-img-wrap"><img src="${item.images[0]}" /></div>
+    <div class="h-slide-title">${item.title}</div>
+  `;
   slide.onclick = () => openProject(f.cat, f.idx);
   track.appendChild(slide);
+
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' on' : '');
+  dots.appendChild(dot);
 });
 
-/* PAGE CONTROLS */
+function updateDots() {
+  const i = Math.round(track.scrollLeft / track.clientWidth);
+  document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('on', idx === i));
+}
+
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + id).classList.add('on');
-  document.getElementById('sl-about').classList.toggle('on', id === 'about');
-  document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
+  if(id === 'project') document.getElementById('pg-project').scrollTop = 0;
 }
 
 function openProject(cat, idx) {
-  var p = DATA[cat].items[idx];
-  var hero = document.getElementById('proj-hero-inner');
-  hero.innerHTML = p.images[0] ? `<img src="${p.images[0]}">` : '';
-
-  var rest = document.getElementById('proj-imgs-rest');
-  rest.innerHTML = p.images.slice(1).map(src => `<div class="proj-img-item"><img src="${src}"></div>`).join('') || '<div class="proj-img-item" style="padding:100px; color:#bbb;">Images coming soon</div>';
-
-  document.getElementById('pi-cat').textContent   = DATA[cat].label;
-  document.getElementById('pi-title').textContent = p.title;
-  document.getElementById('pi-desc').innerHTML    = p.desc;
-  document.getElementById('pi-type').textContent  = p.type;
-  document.getElementById('pi-client').textContent = p.client;
-  document.getElementById('pi-year').textContent  = p.year;
-
+  const p = DATA[cat].items[idx];
+  document.getElementById('p-hero').innerHTML = `<img src="${p.images[0]}" />`;
+  document.getElementById('p-gallery').innerHTML = p.images.slice(1).map(src => `<div class="proj-img-wrap"><img src="${src}" /></div>`).join('');
+  document.getElementById('p-title').innerText = p.title;
+  document.getElementById('p-desc').innerText = p.desc;
+  document.getElementById('p-meta').innerHTML = `
+    <div class="proj-meta-row"><span class="proj-meta-label">Type</span><span>${p.type}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">Client</span><span>${p.client}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${p.year}</span></div>
+  `;
   showPage('project');
 }
 
 function goHome() { showPage('home'); }
-function toggleCat(el) { el.classList.toggle('closed'); }
 
-/* CURSOR LOGIC */
-var cur = document.getElementById('cur');
+// Cursor Movement
+const cur = document.getElementById('cur');
 document.addEventListener('mousemove', e => {
   if (window.innerWidth > 768) {
     cur.style.left = e.clientX + 'px';
-    cur.style.top  = e.clientY + 'px';
+    cur.style.top = e.clientY + 'px';
   }
 });
-document.querySelectorAll('[onclick], a, .s-item').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('h'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('h'));
+
+// Hover Effect
+document.addEventListener('mouseover', e => {
+  if (e.target.closest('div[onclick], a, .s-item')) cur.classList.add('h');
+  else cur.classList.remove('h');
 });
 </script>
 </body>
