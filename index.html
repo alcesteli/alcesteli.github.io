@@ -267,7 +267,9 @@ const DATA = {
         title: 'The Winter’s Tale',
         desc: `
         <p>This play is one of Shakespeare’s final works, blending tragedy and comedy. In the end, the lost daughter is found, the lovers are reunited, and Leontes is forgiven. Yet this return to harmony feels almost too sudden, raising the question of whether such forgiveness was truly believable for audiences.</p>
+        <br>
         <p>The story unfolds between two imagined worlds: Sicily, a palace bound by the rules and appearances of power, and Bohemia, a pastoral utopia filled with joyful peasants and abundant nature. After Time’s monologue, the play shifts into a lighter, almost magical tone. Yet in the end, the lovers must leave Bohemia and return to Sicily to find peace, subtly questioning the idea of utopia.</p>
+        <br>
         <p>This paradox interests me. Can the stage itself become an imaginary utopia—a place where anything is possible? At the same time, the Italian-style theatre reflects a strict spatial hierarchy, almost like a monarchy. I also explore Leontes’ madness through the image of a labyrinth, representing his disordered thoughts and inviting the audience to experience his shifting state of mind through scenography.</p>
           `,
         type: 'Stage Design', client: 'Personal', year: '2025', imgs: 25,
@@ -294,9 +296,19 @@ const DATA = {
     label: 'Architecture',
     items: [
       {
-        title: 'Courtyard Residence',
-        desc: '<p>Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.</p>',
-        type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
+        title: 'Monument Valley',
+        desc: `
+        <p>Located in a valley crossed by a river, the Ninfeo Bramante is hidden near the center of the town. It is one of the most well-known architectural landmarks for its Renaissance style. However, the monument has not been well preserved: the structure has been deformed over time, and graffiti can be found on some walls. This project aims to transform the ruin into a theater surrounded by a garden.</p>
+        <br>
+        <p>The original project was conceived as a quiet place to rest during the summer, but it was never completed. Therefore, we decided to preserve its classical and natural atmosphere. We created an axis that extends from the center of the hall toward the garden. This axis begins at the entrance: standing in front of the door, visitors can see the entire landscape through the central arch. Finally, a rectangular pool guides the view toward nature. The main path includes a gift shop and a sequence of passages that alternate between indoor and outdoor spaces. As visitors walk through the ruins, a “dark box” is placed along the descent toward the garden. Inside this box, there is only a small window facing the lower part of the river. Once on the ground floor, the architecture opens completely toward the garden. Visitors do not need to enter the building to admire the interior, which reveals a dialogue between new materials and historical traces.</p>
+        <br>
+        <p>We conceived three different configurations for the theater in order to accommodate various types of performances: one for small plays, one for concerts, and a temporary configuration for large-scale performances such as theater festivals or opera. In addition, there is an outdoor stage located in the center of the garden. Actors perform in front of the pool, while the audience sits on the slightly elevated lawn facing the stage. Thanks to these flexible uses, the theater can operate efficiently both during the day and at night.</p>
+        <br>
+        <p>Several small structures were designed to connect the different parts of the garden, including a broken pilaster from the existing architecture. The proposal encourages visitors to explore the garden through minimal interventions. We believe that this project will bring new life to the Renaissance ruin while providing a high-quality performance space for both visitors and local residents.</p>
+        `,
+        type: 'Culture', client: 'Competition', year: '2022', imgs: 7, 
+        cover: 'images/ARCHI/ROMA1.png',
+        images: ['images/ARCHI/ROMA1.png','images/ARCHI/ROMA2.png','images/ARCHI/ROMA3.png','images/ARCHI/ROMA4.png','images/ARCHI/ROMA5.png','images/ARCHI/ROMA6.png','images/ARCHI/ROMA7.png']
       },
       {
         title: 'Cultural Centre Feasibility',
@@ -357,6 +369,7 @@ const DATA = {
         title: 'CAFArch 2015 Show',
         desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
+        cover: 'images/GRAPHIC/GR-CAFAEXPO2016.jpg',
         images: ['images/GRAPHIC/GR-CAFAEXPO2015.jpg']
       },
       {
@@ -376,6 +389,24 @@ const DATA = {
         desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
         images: ['images/GRAPHIC/GR-FETE.jpg']
+      },
+      {
+        title: 'CAFA Fashion Show',
+        desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
+        type: 'Poster Design', client: 'CAFA', year: '2015', imgs: 1, 
+        images: ['images/GRAPHIC/GR-MODE.jpg']
+      },
+      {
+        title: 'CAFArch Conference',
+        desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
+        type: 'Poster Design', client: 'CAFA Architecture School', year: '2013-2018', imgs: 1, 
+        images: ['images/GRAPHIC/GR-YZ1.jpg']
+      },
+      {
+        title: 'InVision Conference',
+        desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
+        type: 'Poster Design', client: 'InVision Education', year: '2020', imgs: 1, 
+        images: ['images/GRAPHIC/GR-LINE.jpg']
       }
     ]
   },
@@ -404,7 +435,8 @@ const DATA = {
 const FEATURED = [
   {cat:'scenography',  idx:0},
   {cat:'scenography',  idx:1},
-  {cat:'graphic',      idx:0}
+  {cat:'graphic',      idx:0},
+  {cat:'architecture', idx:0}
 ];
 
 let currentProjImages = [];
@@ -416,7 +448,7 @@ Object.keys(DATA).forEach(catKey => {
   const cat = DATA[catKey];
   const group = document.createElement('div');
   group.innerHTML = `
-    <div class="s-cat-head" onclick="this.classList.toggle('closed')">${cat.label} <span class="s-cat-arr">▾</span></div>
+    <div class="s-cat-head closed" data-cat="${catKey}" onclick="this.classList.toggle('closed')">${cat.label} <span class="s-cat-arr">▾</span></div>
     <div class="s-items">
       ${cat.items.map((item, i) => `<div class="s-item" id="si-${catKey}-${i}" onclick="openProject('${catKey}', ${i})">${item.title}</div>`).join('')}
     </div>
@@ -467,6 +499,13 @@ function openProject(cat, idx) {
   const p = DATA[cat].items[idx];
   currentProjImages = p.images || [];
 
+  // Highlight sidebar item and expand its category
+  document.querySelectorAll('.s-item.on').forEach(el => el.classList.remove('on'));
+  const activeItem = document.getElementById(`si-${cat}-${idx}`);
+  if (activeItem) activeItem.classList.add('on');
+  const catHead = document.querySelector(`.s-cat-head[data-cat="${cat}"]`);
+  if (catHead) catHead.classList.remove('closed');
+
   // Hero Image (cliquable index 0)
   document.getElementById('p-hero').innerHTML = currentProjImages.length > 0 
     ? `<img src="${currentProjImages[0]}" onclick="openLightbox(0)" />` 
@@ -484,6 +523,7 @@ function openProject(cat, idx) {
   document.getElementById('p-desc').innerHTML = p.desc;
   document.getElementById('p-meta').innerHTML = `
     <div class="proj-meta-row"><span class="proj-meta-label">Type</span><span>${p.type}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">Client</span><span>${p.client}</span></div>
     <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${p.year}</span></div>
   `;
   showPage('project');
