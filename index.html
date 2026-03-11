@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alceste Li — Portfolio</title>
+<title>Alceste Li</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,12 +15,13 @@
   --gray: #9a9a9a;
   --line: #e8e8e8;
   --hover: #f0f0f0;
+  --blue: #0000ff;
 }
 
 html, body { height: 100%; overflow: hidden; background: var(--white); color: var(--black); }
 body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; }
 
-/* ─── CURSOR ─── */
+/* CURSOR */
 #cur {
   position: fixed; width: 8px; height: 8px;
   background: var(--black); border-radius: 50%;
@@ -28,16 +29,15 @@ body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; curso
   transform: translate(-50%,-50%);
   transition: width .25s, height .25s, background .25s;
 }
-#cur.h { width: 30px; height: 30px; background: transparent; border: 1px solid #0000ff; }
+#cur.h { width: 30px; height: 30px; background: transparent; border: 1px solid var(--blue); }
 
-/* ─── SIDEBAR ─── */
+/* SIDEBAR */
 aside {
   width: var(--sw); min-width: var(--sw);
   height: 100vh; border-right: 1px solid var(--line);
   display: flex; flex-direction: column;
   background: var(--white); z-index: 20;
 }
-
 .s-logo {
   padding: 32px 26px 26px;
   border-bottom: 1px solid var(--line);
@@ -51,7 +51,6 @@ aside {
   margin-top: 5px; font-size: 9px;
   letter-spacing: .2em; text-transform: uppercase; color: var(--gray);
 }
-
 .s-nav { flex: 1; overflow-y: auto; scrollbar-width: none; }
 .s-nav::-webkit-scrollbar { display: none; }
 
@@ -63,7 +62,6 @@ aside {
 }
 .s-cat-arr { display: inline-block; transition: transform .3s; font-size: 12px; }
 .s-cat-head.closed .s-cat-arr { transform: rotate(-90deg); }
-
 .s-items { overflow: hidden; transition: max-height .5s cubic-bezier(.16,1,.3,1); max-height: 600px; }
 .s-cat-head.closed + .s-items { max-height: 0; }
 
@@ -78,8 +76,8 @@ aside {
   background: var(--line); transition: background .2s;
 }
 .s-item:hover { background: var(--hover); }
-.s-item.on { background: #0000ff; color: #ffffff; }
-.s-item.on::before { background: #ffffff; }
+.s-item.on { background: var(--blue); color: #fff; }
+.s-item.on::before { background: #fff; }
 
 .s-foot { border-top: 1px solid var(--line); }
 .s-link {
@@ -88,67 +86,49 @@ aside {
   cursor: none; transition: color .2s, background .15s; border-bottom: 1px solid var(--line);
 }
 .s-link:last-child { border-bottom: none; }
-.s-link:hover { color: #0000ff; background: var(--hover); }
-.s-link.on { color: #0000ff; background: var(--hover); }
+.s-link:hover { color: var(--blue); background: var(--hover); }
+.s-link.on { color: var(--blue); background: var(--hover); }
 
-/* ─── MAIN ─── */
+/* MAIN */
 main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
-
-.page {
-  position: absolute; inset: 0;
-  opacity: 0; pointer-events: none;
-  transition: opacity .4s ease;
-}
+.page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .4s ease; }
 .page.on { opacity: 1; pointer-events: all; }
 
-/* ════════════════════════════════════════
-   HOME — full-screen horizontal slides
-════════════════════════════════════════ */
+/* HOME */
 #pg-home { height: 100%; overflow: hidden; }
-
 .h-track {
   display: flex; width: 100%; height: 100%;
   overflow-x: auto; overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
 }
 .h-track::-webkit-scrollbar { display: none; }
-
 .h-slide {
   flex-shrink: 0; width: 100%; height: 100%;
   scroll-snap-align: start; position: relative;
   cursor: none; overflow: hidden; background: var(--line);
 }
 .h-slide-img {
-  width: 100%; height: 100%; display: block;
-  background: repeating-linear-gradient(45deg,#e5e4df,#e5e4df 16px,#d9d8d3 16px,#d9d8d3 32px);
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  background: repeating-linear-gradient(45deg,#e8e8e8,#e8e8e8 16px,#ddd 16px,#ddd 32px);
   transition: transform .6s cubic-bezier(.16,1,.3,1);
 }
 .h-slide:hover .h-slide-img { transform: scale(1.015); }
-
 .h-slide-title {
   position: absolute; bottom: 32px; left: 36px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px; font-style: italic; font-weight: 300;
-  color: rgba(255,255,255,.9);
-  opacity: 0; transform: translateY(6px);
-  transition: opacity .35s, transform .35s;
-  pointer-events: none;
+  color: rgba(255,255,255,.9); opacity: 0; transform: translateY(6px);
+  transition: opacity .35s, transform .35s; pointer-events: none;
   text-shadow: 0 1px 8px rgba(0,0,0,.3);
 }
 .h-slide:hover .h-slide-title { opacity: 1; transform: none; }
-
 .h-counter {
   position: absolute; bottom: 32px; right: 36px;
   font-size: 9px; letter-spacing: .18em;
-  color: rgba(255,255,255,.45);
-  pointer-events: none;
-  transition: opacity .3s;
+  color: rgba(255,255,255,.45); pointer-events: none; transition: opacity .3s;
 }
 
-/* ════════════════════════════════════════
-   PROJECT — pure vertical scroll
-════════════════════════════════════════ */
+/* PROJECT */
 #pg-project {
   height: 100%; overflow-y: auto; overflow-x: hidden;
   scrollbar-width: thin; scrollbar-color: var(--line) transparent;
@@ -157,65 +137,50 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 #pg-project::-webkit-scrollbar-thumb { background: var(--line); }
 
 .proj-hero { width: 100%; height: 100vh; overflow: hidden; }
-.proj-hero-ph {
+#proj-hero-inner {
   width: 100%; height: 100%;
-  background: repeating-linear-gradient(45deg,#e5e4df,#e5e4df 14px,#d9d8d3 14px,#d9d8d3 28px);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; letter-spacing: .2em; color: #bbb;
+  background: repeating-linear-gradient(45deg,#e8e8e8,#e8e8e8 14px,#ddd 14px,#ddd 28px);
 }
 
 .proj-imgs-rest { display: flex; flex-direction: column; gap: 3px; padding: 3px 0; }
 .proj-img-item { width: 100%; background: var(--line); overflow: hidden; }
 .proj-img-ph {
   width: 100%; height: 100%; min-height: 320px;
-  background: repeating-linear-gradient(45deg,#e8e7e2,#e8e7e2 12px,#dddcd7 12px,#dddcd7 24px);
+  background: repeating-linear-gradient(45deg,#eee,#eee 12px,#e4e4e4 12px,#e4e4e4 24px);
   display: flex; align-items: center; justify-content: center;
   font-size: 10px; letter-spacing: .2em; color: #bbb;
 }
 
 .proj-info { padding: 80px 64px 100px; border-top: 1px solid var(--line); }
-.proj-info-eyebrow {
-  font-size: 9px; letter-spacing: .22em;
-  text-transform: uppercase; color: var(--gray); margin-bottom: 20px;
-}
+.proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
 .proj-info-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(40px, 5vw, 72px); font-weight: 300;
-  line-height: 1; letter-spacing: -.01em; font-style: italic;
-  margin-bottom: 48px;
+  line-height: 1; letter-spacing: -.01em; font-style: italic; margin-bottom: 48px;
 }
-.proj-info-body {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
-}
+.proj-info-body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
 .proj-info-desc { font-size: 13px; line-height: 2; color: #666; letter-spacing: .04em; }
 .proj-info-meta { display: flex; flex-direction: column; }
 .meta-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 11px; letter-spacing: .06em;
-  padding: 14px 0; border-bottom: 1px solid var(--line);
+  font-size: 11px; letter-spacing: .06em; padding: 14px 0; border-bottom: 1px solid var(--line);
 }
 .meta-row:first-child { border-top: 1px solid var(--line); }
 .meta-lbl { color: var(--gray); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
 
-/* ════════════════════════════════════════
-   ABOUT
-════════════════════════════════════════ */
+/* ABOUT */
 #pg-about {
   height: 100%; overflow-y: auto; overflow-x: hidden;
   scrollbar-width: thin; scrollbar-color: var(--line) transparent;
 }
 #pg-about::-webkit-scrollbar { width: 3px; }
 #pg-about::-webkit-scrollbar-thumb { background: var(--line); }
-
-.about-block {
-  max-width: 640px;
-  padding: 80px 64px 100px;
-}
+.about-block { max-width: 640px; padding: 80px 64px 100px; }
 .about-ey { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
 .about-h {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(42px, 5vw, 72px); font-weight: 300;
-  line-height: .96; letter-spacing: -.01em; margin-bottom: 48px;
+  line-height: .96; letter-spacing: -.01em; margin-bottom: 40px;
 }
 .about-h em { font-style: italic; color: var(--gray); }
 .about-body p { font-size: 12px; line-height: 2; color: #666; letter-spacing: .04em; margin-bottom: 18px; }
@@ -223,20 +188,14 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
 
-/* ════════════════════════════════════════
-   CONTACT
-════════════════════════════════════════ */
+/* CONTACT */
 #pg-contact {
   height: 100%; overflow-y: auto; overflow-x: hidden;
   scrollbar-width: thin; scrollbar-color: var(--line) transparent;
 }
 #pg-contact::-webkit-scrollbar { width: 3px; }
 #pg-contact::-webkit-scrollbar-thumb { background: var(--line); }
-
-.contact-block {
-  max-width: 640px;
-  padding: 80px 64px 100px;
-}
+.contact-block { max-width: 640px; padding: 80px 64px 100px; }
 .contact-ey { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
 .contact-h {
   font-family: 'Cormorant Garamond', serif;
@@ -250,7 +209,7 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
   border-bottom: 1px solid var(--black); padding-bottom: 3px;
   transition: color .2s; width: fit-content; display: block; margin-bottom: 72px;
 }
-.contact-email:hover { color: #0000ff; }
+.contact-email:hover { color: var(--blue); }
 .contact-links { display: flex; flex-direction: column; }
 .c-row {
   display: flex; justify-content: space-between; align-items: center;
@@ -269,32 +228,26 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 <body>
 <div id="cur"></div>
 
-<!-- ══════════════ SIDEBAR ══════════════ -->
 <aside>
   <div class="s-logo" onclick="goHome()">
-    <div class="s-logo-name">Designer<br>Studio</div>
+    <div class="s-logo-name">Alceste<br>Li</div>
     <div class="s-logo-sub">Portfolio</div>
   </div>
   <div class="s-nav" id="s-nav"></div>
   <div class="s-foot">
-    <div class="s-link" id="sl-about" onclick="showPage('about')">About <span>›</span></div>
-    <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact <span>›</span></div>
+    <div class="s-link" id="sl-about" onclick="showPage('about')">About <span>&#8250;</span></div>
+    <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact <span>&#8250;</span></div>
   </div>
 </aside>
 
-<!-- ══════════════ MAIN ══════════════ -->
 <main>
 
-  <!-- HOME -->
   <div class="page on" id="pg-home">
     <div class="h-track" id="h-track"></div>
   </div>
 
-  <!-- PROJECT -->
   <div class="page" id="pg-project">
-    <div class="proj-hero">
-      <div class="proj-hero-ph" id="proj-hero-ph">Image 1</div>
-    </div>
+    <div class="proj-hero"><div id="proj-hero-inner"></div></div>
     <div class="proj-imgs-rest" id="proj-imgs-rest"></div>
     <div class="proj-info">
       <div class="proj-info-eyebrow" id="pi-cat"></div>
@@ -310,10 +263,9 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
     </div>
   </div>
 
-  <!-- ABOUT -->
   <div class="page" id="pg-about">
     <div class="about-block">
-      <p class="about-ey">About the Studio</p>
+      <p class="about-ey">About</p>
       <h2 class="about-h">Design<br><em>is a</em><br>language.</h2>
       <div class="about-body">
         <p>An independent design studio working across scenography, architecture, interiors, events, and graphic communication.</p>
@@ -343,17 +295,16 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
     </div>
   </div>
 
-  <!-- CONTACT -->
   <div class="page" id="pg-contact">
     <div class="contact-block">
       <p class="contact-ey">Get in Touch</p>
       <h2 class="contact-h">Let's<br><em>work</em><br>together.</h2>
       <a href="mailto:hello@designer.com" class="contact-email">hello@designer.com</a>
       <div class="contact-links">
-        <div class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">↗</span></div>
-        <div class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">↗</span></div>
-        <div class="c-row"><span class="c-row-name">LinkedIn</span><span class="c-row-arr">↗</span></div>
-        <div class="c-row"><span class="c-row-name">WeChat</span><span class="c-row-arr">↗</span></div>
+        <div class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></div>
+        <div class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></div>
+        <div class="c-row"><span class="c-row-name">LinkedIn</span><span class="c-row-arr">&#8599;</span></div>
+        <div class="c-row"><span class="c-row-name">WeChat</span><span class="c-row-arr">&#8599;</span></div>
       </div>
     </div>
   </div>
@@ -361,28 +312,26 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 </main>
 
 <script>
-/* ══════════════════════════════════════════
-   DATA
-══════════════════════════════════════════ */
-const DATA = {
+var DATA = {
   scenography: {
     label: 'Scenography',
     items: [
       {
         title: 'The Border Town',
         desc: 'A radically stripped-back stage design for a theatrical adaptation of Shen Congwen\'s classic novel. A bamboo pole, a wash of light, a single stone — absence as atmosphere.',
-        type: 'Stage Design', client: 'Independent Theatre Co.', year: '2024', imgs: 4
+        type: 'Stage Design', client: 'Independent Theatre Co.', year: '2024', imgs: 4, images: []
       },
       {
         title: 'Gravity — Contemporary Dance',
         desc: 'Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.',
-        type: 'Lighting Design', client: 'Contemporary Dance Company', year: '2024', imgs: 3
+        type: 'Lighting Design', client: 'Contemporary Dance Company', year: '2024', imgs: 3, images: []
       },
       {
-        title: 'Folds of Memory',
-        desc: 'An immersive installation using translucent fabric, layered sound and light to create a spatial field between dream and reality. On view for 30 days.',
-        type: 'Immersive Installation', client: 'Arts Festival Commission', year: '2023', imgs: 5
-      },
+        title: 'Hermes Window Display',
+        desc: 'The Winter\'s Tale inspired Hermes window display series draws from the poetic worlds of The Winter\'s Tale, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter of the story through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.\n\nWithin these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.',
+        type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
+        images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png','images/hermes4.jpg','images/hermes5.JPG']
+      }
     ]
   },
   architecture: {
@@ -391,18 +340,18 @@ const DATA = {
       {
         title: 'Courtyard Residence, Beijing',
         desc: 'Renovation of a traditional hutong courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.',
-        type: 'Residential', client: 'Private Client', year: '2024', imgs: 5
+        type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
       },
       {
         title: 'Cultural Centre Feasibility',
         desc: 'Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.',
-        type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4
+        type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4, images: []
       },
       {
-        title: 'Studio & Residence',
+        title: 'Studio and Residence',
         desc: 'A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.',
-        type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4
-      },
+        type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4, images: []
+      }
     ]
   },
   interior: {
@@ -411,18 +360,18 @@ const DATA = {
       {
         title: 'Tea House Interiors',
         desc: 'Interior architecture for a specialty tea house in Shanghai. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.',
-        type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4
+        type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
       },
       {
         title: 'Gallery Conversion',
         desc: 'Transformation of a former industrial warehouse into a flexible exhibition space. The design preserves structural honesty while achieving museum-quality light conditions.',
-        type: 'Gallery / Cultural', client: 'Contemporary Art Centre', year: '2023', imgs: 3
+        type: 'Gallery / Cultural', client: 'Contemporary Art Centre', year: '2023', imgs: 3, images: []
       },
       {
         title: 'Private Apartment, Shanghai',
-        desc: 'Complete interior of a 180m² apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.',
-        type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5
-      },
+        desc: 'Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.',
+        type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5, images: []
+      }
     ]
   },
   event: {
@@ -431,18 +380,18 @@ const DATA = {
       {
         title: 'Brand Launch — Wuming',
         desc: 'Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.',
-        type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3
+        type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3, images: []
       },
       {
         title: 'Book Fair Installation',
         desc: 'A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.',
-        type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4
+        type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4, images: []
       },
       {
         title: 'Fashion Show Set Design',
         desc: 'Set and spatial concept for a seasonal runway presentation. The show environment became an extension of the collection — geometric, silent, precise.',
-        type: 'Set Design', client: 'Fashion Label', year: '2023', imgs: 3
-      },
+        type: 'Set Design', client: 'Fashion Label', year: '2023', imgs: 3, images: []
+      }
     ]
   },
   graphic: {
@@ -451,23 +400,23 @@ const DATA = {
       {
         title: 'Tea Mountain Brand Identity',
         desc: 'A complete visual identity system for a Yunnan tea brand. From logotype to packaging and spatial wayfinding — a language that holds tradition and contemporary restraint in balance.',
-        type: 'Brand Identity / Packaging', client: 'Cha Shan Brand', year: '2024', imgs: 4
+        type: 'Brand Identity / Packaging', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
       },
       {
         title: 'City Festival Poster Series',
         desc: 'A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.',
-        type: 'Poster Design', client: 'City Culture Festival', year: '2024', imgs: 3
+        type: 'Poster Design', client: 'City Culture Festival', year: '2024', imgs: 3, images: []
       },
       {
         title: 'Independent Publication',
         desc: 'Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.',
-        type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3
+        type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3, images: []
       },
       {
         title: 'Wayfinding System',
         desc: 'A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.',
-        type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4
-      },
+        type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4, images: []
+      }
     ]
   },
   others: {
@@ -476,124 +425,148 @@ const DATA = {
       {
         title: 'Solar Terms Illustration Series',
         desc: 'Twenty-four illustrations reinterpreting the traditional Chinese solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.',
-        type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5
+        type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5, images: []
       },
       {
-        title: "Children's Book — Where Is the Cloud?",
+        title: 'Children\'s Book — Where Is the Cloud?',
         desc: 'A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.',
-        type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4
+        type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4, images: []
       },
       {
         title: 'Album Cover Series',
         desc: 'Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.',
-        type: 'Illustration', client: 'Independent Musicians ×5', year: '2023', imgs: 3
-      },
+        type: 'Illustration', client: 'Independent Musicians x5', year: '2023', imgs: 3, images: []
+      }
     ]
   }
 };
 
-const CATS = ['scenography','architecture','interior','event','graphic','others'];
-const FLAT = [];
-CATS.forEach(cat => DATA[cat].items.forEach((_,i) => FLAT.push({cat,i})));
-let curCat = null, curIdx = 0;
+var CATS = ['scenography','architecture','interior','event','graphic','others'];
 
-/* ── FEATURED SLIDES
-   Edit this array to control which projects appear on the home page
-   and in what order. Format: { cat, idx }                           */
-const FEATURED = [
-  { cat:'scenography',  idx:0 },
-  { cat:'architecture', idx:0 },
-  { cat:'interior',     idx:0 },
-  { cat:'event',        idx:0 },
-  { cat:'graphic',      idx:0 },
-  { cat:'scenography',  idx:1 },
-  { cat:'architecture', idx:1 },
-  { cat:'interior',     idx:1 },
-  { cat:'event',        idx:1 },
-  { cat:'graphic',      idx:1 },
-  { cat:'others',       idx:0 },
-  { cat:'scenography',  idx:2 },
+var FLAT = [];
+for (var ci = 0; ci < CATS.length; ci++) {
+  var cat = CATS[ci];
+  for (var ii = 0; ii < DATA[cat].items.length; ii++) {
+    FLAT.push({cat: cat, i: ii});
+  }
+}
+
+var curCat = null;
+var curIdx = 0;
+
+var FEATURED = [
+  {cat:'scenography',  idx:0},
+  {cat:'architecture', idx:0},
+  {cat:'interior',     idx:0},
+  {cat:'event',        idx:0},
+  {cat:'graphic',      idx:0},
+  {cat:'scenography',  idx:1},
+  {cat:'architecture', idx:1},
+  {cat:'interior',     idx:1},
+  {cat:'event',        idx:1},
+  {cat:'graphic',      idx:1},
+  {cat:'others',       idx:0},
+  {cat:'scenography',  idx:2}
 ];
 
-/* ── BUILD SIDEBAR ── */
-const sNav = document.getElementById('s-nav');
-CATS.forEach(cat => {
-  const d = DATA[cat];
-  const sec = document.createElement('div');
-  sec.innerHTML = `
-    <div class="s-cat-head" onclick="toggleCat(this)">${d.label} <span class="s-cat-arr">›</span></div>
-    <div class="s-items">
-      ${d.items.map((p,i) =>
-        `<div class="s-item" id="si-${cat}-${i}" onclick="openProject('${cat}',${i})">${p.title}</div>`
-      ).join('')}
-    </div>`;
+/* BUILD SIDEBAR */
+var sNav = document.getElementById('s-nav');
+for (var ci = 0; ci < CATS.length; ci++) {
+  var cat = CATS[ci];
+  var d = DATA[cat];
+  var sec = document.createElement('div');
+  var itemsHtml = '';
+  for (var ii = 0; ii < d.items.length; ii++) {
+    itemsHtml += '<div class="s-item" id="si-' + cat + '-' + ii + '" onclick="openProject(\'' + cat + '\',' + ii + ')">' + d.items[ii].title + '</div>';
+  }
+  sec.innerHTML = '<div class="s-cat-head" onclick="toggleCat(this)">' + d.label + ' <span class="s-cat-arr">&#8250;</span></div><div class="s-items">' + itemsHtml + '</div>';
   sNav.appendChild(sec);
-});
-
-/* ── BUILD HOME SLIDES ── */
-const track = document.getElementById('h-track');
-const total = FEATURED.length;
-
-FEATURED.forEach(({cat,idx}, si) => {
-  const p = DATA[cat].items[idx];
-  const slide = document.createElement('div');
-  slide.className = 'h-slide';
-  slide.innerHTML = `
-    <div class="h-slide-img"></div>
-    <div class="h-slide-title">${p.title}</div>
-    <div class="h-counter">${String(si+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}</div>`;
-  slide.onclick = () => openProject(cat, idx);
-  track.appendChild(slide);
-});
-
-/* show only active counter */
-function updateCounter() {
-  const idx = Math.round(track.scrollLeft / track.clientWidth);
-  track.querySelectorAll('.h-counter').forEach((c,i) => {
-    c.style.opacity = i === idx ? '1' : '0';
-  });
 }
-track.addEventListener('scroll', updateCounter, { passive: true });
+
+/* BUILD HOME SLIDES */
+var track = document.getElementById('h-track');
+var total = FEATURED.length;
+for (var fi = 0; fi < FEATURED.length; fi++) {
+  var f = FEATURED[fi];
+  var p = DATA[f.cat].items[f.idx];
+  var slide = document.createElement('div');
+  slide.className = 'h-slide';
+  var num = (fi + 1 < 10 ? '0' : '') + (fi + 1) + ' / ' + (total < 10 ? '0' : '') + total;
+  slide.innerHTML = '<div class="h-slide-img"></div><div class="h-slide-title">' + p.title + '</div><div class="h-counter">' + num + '</div>';
+  (function(cat, idx) {
+    slide.onclick = function() { openProject(cat, idx); };
+  })(f.cat, f.idx);
+  track.appendChild(slide);
+}
+
+function updateCounter() {
+  var idx = Math.round(track.scrollLeft / track.clientWidth);
+  var counters = track.querySelectorAll('.h-counter');
+  for (var i = 0; i < counters.length; i++) {
+    counters[i].style.opacity = (i === idx) ? '1' : '0';
+  }
+}
+track.addEventListener('scroll', updateCounter, {passive: true});
 updateCounter();
 
-/* ── PAGE SWITCHING ── */
+/* PAGE SWITCHING */
 function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('on');
   document.getElementById('pg-' + id).classList.add('on');
   document.getElementById('sl-about').classList.toggle('on', id === 'about');
   document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
   if (id !== 'project') {
-    document.querySelectorAll('.s-item').forEach(n => n.classList.remove('on'));
+    var items = document.querySelectorAll('.s-item');
+    for (var i = 0; i < items.length; i++) items[i].classList.remove('on');
     curCat = null;
   }
 }
 function goHome() { showPage('home'); }
 
-/* ── OPEN PROJECT ── */
-const RATIOS = ['4/3','16/9','3/2','16/9','1/1'];
+/* OPEN PROJECT */
+var RATIOS = ['4/3','16/9','3/2','16/9','1/1'];
 
 function openProject(cat, idx) {
-  curCat = cat; curIdx = idx;
-  const p = DATA[cat].items[idx];
+  curCat = cat;
+  curIdx = idx;
+  var p = DATA[cat].items[idx];
 
-  document.getElementById('proj-hero-ph').textContent = 'Image 1 — replace with your photo';
+  /* hero */
+  var hero = document.getElementById('proj-hero-inner');
+  if (p.images && p.images.length > 0 && p.images[0] !== '') {
+    hero.innerHTML = '<img src="' + p.images[0] + '" style="width:100%;height:100%;object-fit:cover;display:block;">';
+  } else {
+    hero.innerHTML = '';
+    hero.style.background = 'repeating-linear-gradient(45deg,#e8e8e8,#e8e8e8 14px,#ddd 14px,#ddd 28px)';
+  }
 
-  const rest = document.getElementById('proj-imgs-rest');
-  rest.innerHTML = Array.from({length: Math.max(0, p.imgs - 1)}, (_,k) =>
-    `<div class="proj-img-item" style="aspect-ratio:${RATIOS[k % RATIOS.length]}">
-       <div class="proj-img-ph">Image ${k+2} — replace with your photo</div>
-     </div>`
-  ).join('');
+  /* remaining images */
+  var rest = document.getElementById('proj-imgs-rest');
+  var html = '';
+  var extraCount = Math.max(0, p.imgs - 1);
+  for (var k = 0; k < extraCount; k++) {
+    var src = (p.images && p.images[k + 1]) ? p.images[k + 1] : '';
+    var inner = src
+      ? '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;display:block;">'
+      : '<div class="proj-img-ph">Image ' + (k + 2) + '</div>';
+    html += '<div class="proj-img-item" style="aspect-ratio:' + RATIOS[k % RATIOS.length] + '">' + inner + '</div>';
+  }
+  rest.innerHTML = html;
 
-  document.getElementById('pi-cat').textContent    = DATA[cat].label;
-  document.getElementById('pi-title').textContent  = p.title;
-  document.getElementById('pi-desc').textContent   = p.desc;
-  document.getElementById('pi-type').textContent   = p.type;
+  /* info */
+  document.getElementById('pi-cat').textContent   = DATA[cat].label;
+  document.getElementById('pi-title').textContent = p.title;
+  document.getElementById('pi-desc').innerHTML    = p.desc.replace(/\n\n/g, '<br><br>');
+  document.getElementById('pi-type').textContent  = p.type;
   document.getElementById('pi-client').textContent = p.client;
-  document.getElementById('pi-year').textContent   = p.year;
+  document.getElementById('pi-year').textContent  = p.year;
 
-  document.querySelectorAll('.s-item').forEach(n => n.classList.remove('on'));
-  document.getElementById(`si-${cat}-${idx}`).classList.add('on');
+  /* sidebar highlight */
+  var allItems = document.querySelectorAll('.s-item');
+  for (var i = 0; i < allItems.length; i++) allItems[i].classList.remove('on');
+  var el = document.getElementById('si-' + cat + '-' + idx);
+  if (el) el.classList.add('on');
 
   document.getElementById('pg-project').scrollTop = 0;
   showPage('project');
@@ -601,32 +574,36 @@ function openProject(cat, idx) {
 
 function toggleCat(el) { el.classList.toggle('closed'); }
 
-/* ── KEYBOARD ── */
-document.addEventListener('keydown', e => {
-  const pg = document.querySelector('.page.on');
+/* KEYBOARD */
+document.addEventListener('keydown', function(e) {
+  var pg = document.querySelector('.page.on');
   if (!pg) return;
   if (pg.id === 'pg-home') {
-    const w = track.clientWidth;
-    if (e.key === 'ArrowRight') track.scrollBy({left:  w, behavior:'smooth'});
-    if (e.key === 'ArrowLeft')  track.scrollBy({left: -w, behavior:'smooth'});
+    var w = track.clientWidth;
+    if (e.key === 'ArrowRight') track.scrollBy({left: w, behavior: 'smooth'});
+    if (e.key === 'ArrowLeft')  track.scrollBy({left: -w, behavior: 'smooth'});
   }
   if (pg.id === 'pg-project') {
-    const fi = FLAT.findIndex(f => f.cat === curCat && f.i === curIdx);
-    if (e.key === 'ArrowRight' && fi < FLAT.length-1) openProject(FLAT[fi+1].cat, FLAT[fi+1].i);
-    if (e.key === 'ArrowLeft'  && fi > 0)             openProject(FLAT[fi-1].cat, FLAT[fi-1].i);
+    var fi = -1;
+    for (var i = 0; i < FLAT.length; i++) {
+      if (FLAT[i].cat === curCat && FLAT[i].i === curIdx) { fi = i; break; }
+    }
+    if (e.key === 'ArrowRight' && fi < FLAT.length - 1) openProject(FLAT[fi+1].cat, FLAT[fi+1].i);
+    if (e.key === 'ArrowLeft'  && fi > 0)               openProject(FLAT[fi-1].cat, FLAT[fi-1].i);
   }
 });
 
-/* ── CURSOR ── */
-const cur = document.getElementById('cur');
-document.addEventListener('mousemove', e => {
+/* CURSOR */
+var cur = document.getElementById('cur');
+document.addEventListener('mousemove', function(e) {
   cur.style.left = e.clientX + 'px';
   cur.style.top  = e.clientY + 'px';
 });
-document.querySelectorAll('[onclick], a, button, .h-slide, .s-item, .s-link, .c-row').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('h'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('h'));
-});
+var hoverEls = document.querySelectorAll('[onclick], a, button, .h-slide, .s-item, .s-link, .c-row');
+for (var i = 0; i < hoverEls.length; i++) {
+  hoverEls[i].addEventListener('mouseenter', function() { cur.classList.add('h'); });
+  hoverEls[i].addEventListener('mouseleave', function() { cur.classList.remove('h'); });
+}
 </script>
 </body>
 </html>
