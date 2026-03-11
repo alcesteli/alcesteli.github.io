@@ -200,31 +200,62 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; }
 
 /* MOBILE RESPONSIVE ADAPTATION */
 @media (max-width: 768px) {
-  body { flex-direction: column; overflow-y: auto; cursor: auto; }
+  body { 
+    flex-direction: column; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    cursor: auto; 
+  }
   #cur { display: none; }
   
   aside {
     width: 100%; height: auto; min-width: 100%;
     border-right: none; border-bottom: 1px solid var(--line);
-    position: sticky; top: 0;
+    position: sticky; top: 0; background: var(--white);
   }
   .s-nav { display: none; }
-  .s-logo { padding: 20px; }
+  .s-logo { padding: 15px 20px; }
   .s-foot { display: flex; border-top: none; }
-  .s-link { flex: 1; border-bottom: none; border-left: 1px solid var(--line); justify-content: center; padding: 12px; font-size: 9px; }
+  .s-link { 
+    flex: 1; border-bottom: none; border-left: 1px solid var(--line); 
+    justify-content: center; padding: 12px; font-size: 10px; 
+  }
   .s-link:first-child { border-left: none; }
 
   main { height: auto; overflow: visible; flex: none; }
+  
+  /* Fixed Home Page Height for Slides */
+  #pg-home { 
+    display: none; 
+    height: 70vh; /* This ensures the slides have space to show up */
+    width: 100%;
+    position: relative;
+  }
+  #pg-home.on { display: block; }
+  
+  /* Ensure the track allows horizontal scrolling on touch */
+  .h-track {
+    display: flex !important;
+    height: 100%;
+    width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .h-slide { 
+    width: 100vw; 
+    height: 100%; 
+    flex-shrink: 0; 
+  }
+
   .page { position: relative; opacity: 1; pointer-events: all; display: none; height: auto; }
   .page.on { display: block; }
   
-  .h-slide { height: 60vh; }
   .proj-hero { height: 50vh; }
   .proj-info { padding: 40px 24px; }
   .proj-info-body { grid-template-columns: 1fr; gap: 32px; }
   .about-block, .contact-block { padding: 40px 24px; }
 }
-
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--line); }
 </style>
