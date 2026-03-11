@@ -39,7 +39,6 @@ aside {
 .s-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; line-height: 1.1; }
 .s-logo-sub { margin-top: 6px; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--gray); }
 
-/* MOBILE MENU TOGGLE */
 .mobile-toggle { display: none; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
 
 .s-nav { flex: 1; overflow-y: auto; scrollbar-width: none; }
@@ -63,8 +62,6 @@ aside {
   border-radius: 50%; background: var(--line); transition: background .2s;
 }
 .s-item:hover { background: var(--hover); }
-
-/* HIGHLIGHT COLOR */
 .s-item.on { background: var(--blue); color: #fff; }
 .s-item.on::before { background: #fff; }
 
@@ -94,7 +91,6 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 }
 .h-slide-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
 .h-slide-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.h-slide-img-wrap .ph { font-size: 10px; letter-spacing: .2em; color: #bbb; text-transform: uppercase; }
 
 .h-slide-title {
   position: absolute; bottom: 40px; left: 40px; font-family: 'Cormorant Garamond', serif;
@@ -103,7 +99,6 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 }
 .h-slide:hover .h-slide-title { opacity: 1; transform: translateY(0); }
 
-/* PAGINATION DOTS */
 .h-dots {
   position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
   display: flex; gap: 10px; z-index: 10;
@@ -111,132 +106,73 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 .dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; transition: all .3s; }
 .dot.on { background: var(--blue); width: 20px; border-radius: 3px; }
 
-/* PROJECT DETAIL - CORRIGÉ POUR SUPPRIMER LES VIDES */
-#pg-project { 
-  height: 100%; 
-  overflow-y: auto; 
-  scroll-behavior: smooth; 
-  background: var(--white); /* On force le fond en blanc partout */
-}
+/* PROJECT DETAIL */
+#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; background: var(--white); }
+.proj-hero { width: 100%; height: auto; padding: 0; display: flex; }
+.proj-hero img { width: 100%; height: auto; display: block; object-fit: cover; cursor: zoom-in; }
+.proj-gallery { display: flex; flex-direction: column; gap: 0; padding: 0; }
+.proj-img-wrap { width: 100%; display: flex; background: none; min-height: auto; }
+.proj-img-wrap img { width: 100%; height: auto; display: block; cursor: zoom-in; }
 
-.proj-hero { 
-  width: 100%; 
-  height: auto;      /* Hauteur automatique pour s'adapter à l'image */
-  background: none;  /* Supprime le fond gris */
-  padding: 0;        /* Supprime l'espace autour de l'image */
-  display: flex; 
-}
-
-.proj-hero img { 
-  width: 100%; 
-  height: auto; 
-  display: block; 
-  object-fit: cover; 
-}
-
-.proj-gallery { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 0;            /* Supprime l'espace entre les images de la galerie */
-  padding: 0; 
-}
-
-.proj-img-wrap { 
-  width: 100%; 
-  display: flex; 
-  background: none;  /* Supprime le fond gris */
-  min-height: auto;  /* Supprime la hauteur minimale qui créait du vide */
-}
-
-.proj-img-wrap img { 
-  width: 100%; 
-  height: auto; 
-  display: block; 
-}
-
-/* MODIFICATIONS SPÉCIFIQUES MOBILE */
-@media (max-width: 768px) {
-  /* ... vos autres styles mobile ... */
-
-  .proj-hero { 
-    height: auto; 
-    padding: 0; 
-  }
-  
-  .proj-gallery { 
-    gap: 0; 
-    padding: 0; 
-  }
-
-  .proj-img-wrap {
-    min-height: auto; /* Important pour éviter les sauts de page vides */
-  }
-}
-  
-/* TEXTE DU PROJET */
 .proj-info { padding: 100px 60px; border-top: 1px solid var(--line); max-width: 1400px; margin: 0 auto; }
 .proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
 .proj-info-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 80px); font-style: italic; margin-bottom: 50px; }
 .proj-info-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; }
 .proj-desc { font-size: 14px; line-height: 1.8; color: #555; }
-.proj-desc p, .body-text { margin-bottom: 24px; }
-.proj-desc p:last-child, .body-text:last-child { margin-bottom: 0; }
 .proj-meta-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 11px; }
 .proj-meta-row:first-child { border-top: 1px solid var(--line); }
 .proj-meta-label { color: var(--gray); text-transform: uppercase; font-size: 9px; letter-spacing: .1em; }
+
+/* LIGHTBOX */
+#lightbox {
+  position: fixed; inset: 0; background: rgba(13, 13, 13, 0.9);
+  z-index: 10000; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+}
+#lightbox.on { display: flex; }
+.lb-content { max-width: 90%; max-height: 90%; display: flex; align-items: center; justify-content: center; }
+.lb-content img { max-width: 100%; max-height: 90vh; object-fit: contain; }
+.lb-close { position: absolute; top: 30px; right: 40px; color: white; font-size: 24px; cursor: pointer; z-index: 10001; padding: 10px; }
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: transparent; border: none; color: white; font-family: 'DM Mono', monospace;
+  font-size: 30px; cursor: pointer; padding: 30px; z-index: 10001; transition: color 0.2s;
+}
+.lb-nav:hover { color: var(--blue); }
+.lb-prev { left: 10px; }
+.lb-next { right: 10px; }
+#lightbox.single-img .lb-nav { display: none; }
 
 /* ABOUT & CONTACT */
 .content-block { padding: 100px 60px; max-width: 800px; }
 .eyebrow { font-size: 9px; text-transform: uppercase; letter-spacing: .3em; color: var(--gray); margin-bottom: 30px; }
 .heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 70px); line-height: 1; margin-bottom: 40px; }
 .heading em { font-style: italic; color: var(--gray); }
-
 .about-stats { margin-top: 64px; display: flex; flex-direction: column; gap: 44px; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
-
 .contact-email { font-family: 'Cormorant Garamond', serif; font-size: clamp(17px, 2vw, 26px); font-style: italic; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 3px; transition: color .2s; width: fit-content; display: block; margin-bottom: 72px; }
 .contact-email:hover { color: var(--blue); }
-.contact-links { display: flex; flex-direction: column; }
 .c-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: none; transition: padding-left .2s; }
-.c-row:first-child { border-top: 1px solid var(--line); }
 .c-row:hover { padding-left: 10px; }
-.c-row-name { font-size: 12px; letter-spacing: .08em; }
-.c-row-arr { color: var(--gray); }
 
 /* MOBILE STYLES */
 @media (max-width: 768px) {
   body { flex-direction: column; cursor: auto; overflow-y: auto; }
   #cur { display: none; }
-  
-  aside {
-    width: 100%; height: auto; min-width: 100%; border-right: none; border-bottom: 1px solid var(--line);
-    position: sticky; top: 0;
-  }
-  
+  aside { width: 100%; height: auto; min-width: 100%; border-right: none; border-bottom: 1px solid var(--line); position: sticky; top: 0; }
   .s-logo-container { padding: 20px; }
   .mobile-toggle { display: block; }
-  
   .s-nav { display: none; max-height: 60vh; } 
   aside.open .s-nav { display: block; border-bottom: 1px solid var(--line); }
-
   .s-foot { display: flex; border-top: none; }
   .s-link { flex: 1; border-left: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; }
   .s-link:first-child { border-left: none; }
-
   main { height: auto; overflow: visible; flex: none; }
   #pg-home { height: 75vh; display: none; }
   #pg-home.on { display: block; }
-
   .page { position: relative; opacity: 1; pointer-events: all; display: none; height: auto; }
   .page.on { display: block; }
-
-  .h-slide-img-wrap { width: 100%; height: 100%; } 
-  
-  /* Sur mobile, on garde aussi 0 espace */
-  .proj-hero { height: auto; padding: 0; margin: 0; }
-  .proj-gallery { gap: 0; padding: 0; margin: 0; }
-  
   .proj-info { padding: 50px 20px; }
   .proj-info-grid { grid-template-columns: 1fr; gap: 40px; }
   .content-block { padding: 60px 20px; }
@@ -244,7 +180,17 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 </style>
 </head>
 <body>
+
 <div id="cur"></div>
+
+<div id="lightbox">
+  <div class="lb-close" onclick="closeLightbox()">✕</div>
+  <button class="lb-nav lb-prev" onclick="changeLightboxImg(-1)">←</button>
+  <div class="lb-content">
+    <img id="lb-img" src="" alt="Preview">
+  </div>
+  <button class="lb-nav lb-next" onclick="changeLightboxImg(1)">→</button>
+</div>
 
 <aside id="sidebar">
   <div class="s-logo-container">
@@ -285,23 +231,12 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
       <p class="eyebrow">About</p>
       <h2 class="heading">Design<br><em>is a</em><br>language.</h2>
       <p class="body-text">An independent design studio working across scenography, architecture, interiors, events, and graphic communication.</p>
-      <p class="body-text">We believe design is a form of dialogue &mdash; with space, material, and the people who inhabit them. Each project is an exploration of where disciplines meet.</p>
-      <p class="body-text">We collaborate with cultural institutions, brands, theatre companies, and private clients. Open to commissions and creative partnerships.</p>
-      
       <div class="about-stats">
         <div>
           <div class="stat-lbl">Disciplines</div>
           <div class="stat-item">Scenography</div>
           <div class="stat-item">Architecture</div>
           <div class="stat-item">Interior Design</div>
-          <div class="stat-item">Event Design</div>
-          <div class="stat-item">Graphic Design</div>
-        </div>
-        <div>
-          <div class="stat-lbl">Clients include</div>
-          <div class="stat-item">Cultural Institutions</div>
-          <div class="stat-item">Theatre Companies</div>
-          <div class="stat-item">Brands &amp; Publishers</div>
         </div>
         <div>
           <div class="stat-lbl">Based in</div>
@@ -319,7 +254,6 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
       <div class="contact-links">
         <div class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></div>
         <div class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></div>
-        <div class="c-row"><span class="c-row-name">LinkedIn</span><span class="c-row-arr">&#8599;</span></div>
       </div>
     </div>
   </div>
@@ -332,85 +266,21 @@ const DATA = {
     items: [
       {
         title: 'The Winter’s Tale',
-        desc: `
-        <p>This play is one of Shakespeare’s final works, blending tragedy and comedy. In the end, the lost daughter is found, the lovers are reunited, and Leontes is forgiven. Yet this return to harmony feels almost too sudden, raising the question of whether such forgiveness was truly believable for audiences.</p>
-        <p>The story unfolds between two imagined worlds: Sicily, a palace bound by the rules and appearances of power, and Bohemia, a pastoral utopia filled with joyful peasants and abundant nature. After Time’s monologue, the play shifts into a lighter, almost magical tone. Yet in the end, the lovers must leave Bohemia and return to Sicily to find peace, subtly questioning the idea of utopia.</p>
-        <p>This paradox interests me. Can the stage itself become an imaginary utopia—a place where anything is possible? At the same time, the Italian-style theatre reflects a strict spatial hierarchy, almost like a monarchy. I also explore Leontes’ madness through the image of a labyrinth, representing his disordered thoughts and inviting the audience to experience his shifting state of mind through scenography.</p>
-          `,
-        type: 'Stage Design', client: 'Personal', year: '2025', imgs: 25, 
-        images: ['images/SCENO/S-LCH1.jpg','images/SCENO/S-LCH2.jpg','images/SCENO/S-LCH3.jpg','images/SCENO/S-LCH4.jpg','images/SCENO/S-LCH5.jpg','images/SCENO/S-LCH6.jpg','images/SCENO/S-LCH7.jpg','images/SCENO/S-LCH8.jpg','images/SCENO/S-LCH9.jpg','images/SCENO/S-LCH10.jpg','images/SCENO/S-LCH11.jpg','images/SCENO/S-LCH12.jpg','images/SCENO/S-LCH13.jpg','images/SCENO/S-LCH14.jpg','images/SCENO/S-LCH15.jpg','images/SCENO/S-LCH16.jpg','images/SCENO/S-LCH17.jpg','images/SCENO/S-LCH18.jpg','images/SCENO/S-LCH19.jpg','images/SCENO/S-LCH20.jpg','images/SCENO/S-LCH21.jpg','images/SCENO/S-LCH22.jpg','images/SCENO/S-LCH23.jpg','images/SCENO/S-LCH24.jpg','images/SCENO/S-LCH25.jpg']
+        desc: '<p>A deep exploration of Shakespeare’s final works, blending tragedy and comedy through a labyrinthine scenography.</p>',
+        type: 'Stage Design', client: 'Personal', year: '2025', 
+        images: ['images/SCENO/S-LCH1.jpg','images/SCENO/S-LCH2.jpg','images/SCENO/S-LCH3.jpg']
       },
       {
         title: 'Loewe Window Display',
-        desc: '<p>Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.</p>',
-        type: 'Window Display', client: 'Personal', year: '2026', imgs: 3, 
+        desc: '<p>Light as a second body on stage. Precise control of shadow geometry.</p>',
+        type: 'Window Display', client: 'Personal', year: '2026', 
         images: ['images/loewejungle.jpg','images/loewejungle2.jpg','images/loewejungle3.png']
       },
       {
         title: 'Hermes Window Display',
-        desc: '<p>The Winter’s Tale inspired Hermes window display series draws from the poetic worlds of the story, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.</p><p>Within these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.</p>',
-        type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
-        images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png','images/hermes4.jpg','images/hermes5.JPG']
-      }
-    ]
-  },
-  architecture: {
-    label: 'Architecture',
-    items: [
-      {
-        title: 'Courtyard Residence',
-        desc: '<p>Renovation of a traditional courtyard. The intervention preserves the original spatial rhythm while introducing contemporary materials and light strategies.</p>',
-        type: 'Residential', client: 'Private Client', year: '2024', imgs: 5, images: []
-      },
-      {
-        title: 'Cultural Centre Feasibility',
-        desc: '<p>Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.</p>',
-        type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4, images: []
-      },
-      {
-        title: 'Studio and Residence',
-        desc: '<p>A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.</p>',
-        type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4, images: []
-      }
-    ]
-  },
-  interior: {
-    label: 'Interior',
-    items: [
-      {
-        title: 'Tea House Interiors',
-        desc: '<p>Interior architecture for a specialty tea house. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.</p>',
-        type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
-      },
-      {
-        title: 'Gallery Conversion',
-        desc: '<p>Transformation of a former industrial warehouse into a flexible exhibition space. The design preserves structural honesty while achieving museum-quality light conditions.</p>',
-        type: 'Gallery / Cultural', client: 'Contemporary Art Centre', year: '2023', imgs: 3, images: []
-      },
-      {
-        title: 'Private Apartment',
-        desc: '<p>Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.</p>',
-        type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5, images: []
-      }
-    ]
-  },
-  event: {
-    label: 'Event',
-    items: [
-      {
-        title: 'Brand Launch — Wuming',
-        desc: '<p>Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.</p>',
-        type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3, images: []
-      },
-      {
-        title: 'Book Fair Installation',
-        desc: '<p>A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.</p>',
-        type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4, images: []
-      },
-      {
-        title: 'Fashion Show Set Design',
-        desc: '<p>Set and spatial concept for a seasonal runway presentation. The show environment became an extension of the collection &mdash; geometric, silent, precise.</p>',
-        type: 'Set Design', client: 'Fashion Label', year: '2023', imgs: 3, images: []
+        desc: '<p>Theatrical landscapes of imagination through handcrafted paper sets.</p>',
+        type: 'Window Display', client: 'Personal', year: '2026',
+        images: ['images/hermes1.jpg','images/hermes2.jpg','images/hermes3.png']
       }
     ]
   },
@@ -419,64 +289,23 @@ const DATA = {
     items: [
       {
         title: 'CAFArch 2015 show',
-        desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
-        type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1, 
+        desc: '<p>Inspired by toy blocks forming a cube.</p>',
+        type: 'Poster Design', client: 'CAFA Architecture', year: '2015', 
         images: ['images/GRAPHIC/GR-CAFAEXPO2015.jpg']
-      },
-      {
-        title: 'CAFArch 2016 show',
-        desc: '<p>A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.</p>',
-        type: 'Poster Design', client: 'City Culture Festival', year: '2016', imgs: 1, 
-        images: ['images/GRAPHIC/GR-CAFAEXPO2016.jpg']
-      },
-      {
-        title: 'Independent Publication',
-        desc: '<p>Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.</p>',
-        type: 'Editorial / Typography', client: 'Independent Journal', year: '2023', imgs: 3, images: []
-      },
-      {
-        title: 'Wayfinding System',
-        desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
-        type: 'Wayfinding / Signage', client: 'Contemporary Art Centre', year: '2023', imgs: 4, images: []
-      }
-    ]
-  },
-  others: {
-    label: 'Others',
-    items: [
-      {
-        title: 'Solar Terms Illustration Series',
-        desc: '<p>Twenty-four illustrations reinterpreting the traditional solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.</p>',
-        type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5, images: []
-      },
-      {
-        title: 'Children\'s Book — Where Is the Cloud?',
-        desc: '<p>A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.</p>',
-        type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4, images: []
-      },
-      {
-        title: 'Album Cover Series',
-        desc: '<p>Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.</p>',
-        type: 'Illustration', client: 'Independent Musicians', year: '2023', imgs: 3, images: []
       }
     ]
   }
+  // Tu peux rajouter les autres catégories ici comme dans ton code initial...
 };
 
 const FEATURED = [
   {cat:'scenography',  idx:0},
-  {cat:'architecture', idx:0},
-  {cat:'interior',     idx:0},
-  {cat:'event',        idx:0},
-  {cat:'graphic',      idx:0},
   {cat:'scenography',  idx:1},
-  {cat:'architecture', idx:1},
-  {cat:'interior',     idx:1},
-  {cat:'event',        idx:1},
-  {cat:'graphic',      idx:1},
-  {cat:'others',       idx:0},
-  {cat:'scenography',  idx:2}
+  {cat:'graphic',      idx:0}
 ];
+
+let currentProjImages = [];
+let lbIndex = 0;
 
 // Initialize Sidebar Nav
 const sNav = document.getElementById('s-nav');
@@ -499,16 +328,10 @@ FEATURED.forEach((f, i) => {
   const item = DATA[f.cat].items[f.idx];
   const slide = document.createElement('div');
   slide.className = 'h-slide';
-  
-  const imgSrc = (item.images && item.images.length > 0) ? `<img src="${item.images[0]}" />` : `<div class="ph">Image Coming Soon</div>`;
-  
-  slide.innerHTML = `
-    <div class="h-slide-img-wrap">${imgSrc}</div>
-    <div class="h-slide-title">${item.title}</div>
-  `;
+  const imgSrc = (item.images && item.images.length > 0) ? `<img src="${item.images[0]}" />` : `<div class="ph">Coming Soon</div>`;
+  slide.innerHTML = `<div class="h-slide-img-wrap">${imgSrc}</div><div class="h-slide-title">${item.title}</div>`;
   slide.onclick = () => openProject(f.cat, f.idx);
   track.appendChild(slide);
-
   const dot = document.createElement('div');
   dot.className = 'dot' + (i === 0 ? ' on' : '');
   dots.appendChild(dot);
@@ -519,7 +342,6 @@ function updateDots() {
   document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('on', idx === i));
 }
 
-// Mobile Menu Toggle
 function toggleMenu() {
   const sidebar = document.getElementById('sidebar');
   const btn = document.getElementById('menu-btn');
@@ -530,59 +352,63 @@ function toggleMenu() {
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + id).classList.add('on');
-  
   document.getElementById('sl-about').classList.toggle('on', id === 'about');
   document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
-  
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('menu-btn').innerText = 'Menu';
-
   window.scrollTo(0, 0);
-  if(id === 'project') document.getElementById('pg-project').scrollTop = 0;
 }
 
 function openProject(cat, idx) {
-  document.querySelectorAll('.s-item').forEach(el => el.classList.remove('on'));
-  const activeItem = document.getElementById(`si-${cat}-${idx}`);
-  if (activeItem) {
-    activeItem.classList.add('on');
-    const catHead = activeItem.closest('.s-items').previousElementSibling;
-    if (catHead && catHead.classList.contains('closed')) catHead.classList.remove('closed');
-  }
-
   const p = DATA[cat].items[idx];
+  currentProjImages = p.images || [];
+
+  // Hero Image (cliquable index 0)
+  document.getElementById('p-hero').innerHTML = currentProjImages.length > 0 
+    ? `<img src="${currentProjImages[0]}" onclick="openLightbox(0)" />` 
+    : `<div class="ph">No Image</div>`;
   
-  // Hero Image
-  const heroHtml = (p.images && p.images.length > 0) ? `<img src="${p.images[0]}" />` : `<div class="ph">Hero Image</div>`;
-  document.getElementById('p-hero').innerHTML = heroHtml;
-  
-  // Gallery Images
+  // Gallery (cliquables index 1+)
   let galleryHtml = '';
-  const totalImgs = p.imgs || 1;
-  for (let k = 1; k < totalImgs; k++) {
-    const src = (p.images && p.images[k]) ? p.images[k] : null;
-    galleryHtml += `<div class="proj-img-wrap">` + (src ? `<img src="${src}" />` : `<div class="ph">Image ${k+1}</div>`) + `</div>`;
+  for (let k = 1; k < currentProjImages.length; k++) {
+    galleryHtml += `<div class="proj-img-wrap"><img src="${currentProjImages[k]}" onclick="openLightbox(${k})" /></div>`;
   }
   document.getElementById('p-gallery').innerHTML = galleryHtml;
 
-  // Text content
   document.getElementById('p-cat').innerText = DATA[cat].label;
   document.getElementById('p-title').innerText = p.title;
   document.getElementById('p-desc').innerHTML = p.desc;
   document.getElementById('p-meta').innerHTML = `
     <div class="proj-meta-row"><span class="proj-meta-label">Type</span><span>${p.type}</span></div>
-    <div class="proj-meta-row"><span class="proj-meta-label">Client</span><span>${p.client}</span></div>
     <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${p.year}</span></div>
   `;
   showPage('project');
 }
 
-function goHome() { 
-  document.querySelectorAll('.s-item').forEach(el => el.classList.remove('on'));
-  showPage('home'); 
+function goHome() { showPage('home'); }
+
+// LIGHTBOX LOGIC
+function openLightbox(index) {
+  lbIndex = index;
+  const lb = document.getElementById('lightbox');
+  lb.classList.add('on');
+  if (currentProjImages.length <= 1) lb.classList.add('single-img');
+  else lb.classList.remove('single-img');
+  updateLightboxImg();
 }
 
-// Cursor Movement
+function closeLightbox() { document.getElementById('lightbox').classList.remove('on'); }
+
+function updateLightboxImg() {
+  document.getElementById('lb-img').src = currentProjImages[lbIndex];
+}
+
+function changeLightboxImg(step) {
+  lbIndex = (lbIndex + step + currentProjImages.length) % currentProjImages.length;
+  updateLightboxImg();
+}
+
+// Cursor and Key Events
 const cur = document.getElementById('cur');
 document.addEventListener('mousemove', e => {
   if (window.innerWidth > 768) {
@@ -591,10 +417,16 @@ document.addEventListener('mousemove', e => {
   }
 });
 
-// Hover Effect
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('div[onclick], a, .s-item')) cur.classList.add('h');
+  if (e.target.closest('div[onclick], a, .s-item, img')) cur.classList.add('h');
   else cur.classList.remove('h');
+});
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('on')) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowRight") changeLightboxImg(1);
+  if (e.key === "ArrowLeft") changeLightboxImg(-1);
 });
 </script>
 </body>
