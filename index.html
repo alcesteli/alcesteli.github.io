@@ -162,9 +162,9 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
   aside { width: 100%; height: auto; min-width: 100%; border-right: none; border-bottom: 1px solid var(--line); position: sticky; top: 0; }
   .s-logo-container { padding: 20px; }
   .mobile-toggle { display: block; }
-  .s-nav { display: none; max-height: 60vh; } 
+  .s-nav { display: none; max-height: 60vh; overflow-y: auto; } 
   aside.open .s-nav { display: block; border-bottom: 1px solid var(--line); }
-  .s-foot { display: flex; border-top: none; }
+  .s-foot { display: flex; border-top: none; position: sticky; bottom: 0; background: var(--white); z-index: 2; }
   .s-link { flex: 1; border-left: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; }
   .s-link:first-child { border-left: none; }
   main { height: auto; overflow: visible; flex: none; }
@@ -311,14 +311,32 @@ const DATA = {
         images: ['images/ARCHI/ROMA1.png','images/ARCHI/ROMA2.png','images/ARCHI/ROMA3.png','images/ARCHI/ROMA4.png','images/ARCHI/ROMA5.png','images/ARCHI/ROMA6.png','images/ARCHI/ROMA7.png']
       },
       {
-        title: 'Cultural Centre Feasibility',
-        desc: '<p>Concept design for a multi-use cultural centre on the urban fringe. The scheme proposes a series of linked pavilions organised around a shared garden.</p>',
-        type: 'Cultural / Public', client: 'City Bureau of Culture', year: '2023', imgs: 4, images: []
+        title: 'Rehabilitation of Saint-Ouen Flea Market',
+        desc: `
+        <p>The Saint-Ouen Flea Market, located north of Paris, is composed of seven distinct markets. The construction of the Paris ring road divided the urban fabric and exposed many buildings along its edge. Unlike planned developments, the flea market grew spontaneously over time, forming a collection of individual markets established mainly in the late 20th century.</p>
+        <br>
+        <p>In this context, the project proposes a top-down spatial system that reflects the historical presence of the ring road while creating a physical connection within this bottom-up commercial community. The goal is to improve circulation, visibility, and shared public spaces.</p>
+        <br>
+        <p>For local residents, the main concern is not tourism but safety. Interviews with inhabitants revealed that some poorly organized spaces between markets have become gathering points and are not clearly used by merchants, tourists, or residents. The project therefore reorganizes these open spaces to improve accessibility and everyday use.</p>
+        <br>
+        <p>For visitors, navigating the seven markets without guidance can be difficult. The proposed system helps identify each market and guides visitors through the community’s open spaces. Integrated into the existing urban fabric and running parallel to the ring road, the intervention adapts to each market’s structure, sometimes creating new entrances and connections.</p>
+        <br>
+        <p>For example, the Biron Market, previously accessible only from its two ends, gains additional access points. At Serpette Market, the rooftop parking area is transformed into a public space connected to a newly created courtyard. These interventions create new pathways, improving circulation for both tourists and local residents.</p>
+        `,
+        type: 'Public', client: 'Personal', year: '2018', imgs: 8, 
+        images: ['images/ARCHI/ST1.png','images/ARCHI/ST2.png','images/ARCHI/ST3.png','images/ARCHI/ST4.png','images/ARCHI/ST5.png','images/ARCHI/ST6.png','images/ARCHI/ST7.png','images/ARCHI/ST8.png']
       },
       {
-        title: 'Studio and Residence',
+        title: 'Bobigny - A History Of Urbanism',
         desc: '<p>A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.</p>',
-        type: 'Residential / Studio', client: 'Private Client', year: '2023', imgs: 4, images: []
+        type: 'Urbanism', client: 'Personal', year: '2021', imgs: 11, 
+        images: ['images/ARCHI/BOBIGNY1.png','images/ARCHI/BOBIGNY2.png','images/ARCHI/BOBIGNY3.png','images/ARCHI/BOBIGNY4.png','images/ARCHI/BOBIGNY5.png','images/ARCHI/BOBIGNY6.png','images/ARCHI/BOBIGNY7.png','images/ARCHI/BOBIGNY8.png','images/ARCHI/BOBIGNY9.png','images/ARCHI/BOBIGNY10.png','images/ARCHI/BOBIGNY11.png']
+      },
+      {
+        title: 'Roubaix - Plugin intervention',
+        desc: '<p>A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.</p>',
+        type: 'Urbanism', client: 'Personal', year: '2020', imgs: 10, 
+        images: ['images/ARCHI/ROUBAIX1.png','images/ARCHI/ROUBAIX2.png','images/ARCHI/ROUBAIX3.png','images/ARCHI/ROUBAIX4.png','images/ARCHI/ROUBAIX5.png','images/ARCHI/ROUBAIX6.png','images/ARCHI/ROUBAIX7.png','images/ARCHI/ROUBAIX8.png','images/ARCHI/ROUBAIX9.png','images/ARCHI/ROUBAIX10.png']
       }
     ]
   },
@@ -346,14 +364,19 @@ const DATA = {
     label: 'Event',
     items: [
       {
-        title: 'Brand Launch — Wuming',
-        desc: '<p>Spatial design for the launch event of a new luxury lifestyle brand. An intimate environment for 200 guests, choreographing movement through a series of distinct atmospheric zones.</p>',
-        type: 'Brand Event', client: 'Wuming Studio', year: '2024', imgs: 3, images: []
+        title: 'INSIDE - Festival Everybody',
+        desc: `
+        <p>This project is inspired by a bodily exploration of the intestines—essential yet often overlooked organs that work continuously inside our bodies. Although largely invisible, they play a fundamental role in everyday life. In this installation, the intestines become a metaphor for transformation: they digest and assimilate, just as we constantly process emotions, experiences, and our surrounding environment.</p>
+        <br>
+        <p>The installation is composed of stretched threads forming an organic labyrinth that evokes the inner structures of the body. Inspired by the apparent disorder of organic tissues, the space reveals a hidden order within irregularity. Bathed in deep purple tones and animated by light and texture, this immersive architecture invites visitors to move through a sensory environment and reconnect with their inner world.</p>
+        `,
+        type: 'Culture Event', client: 'Personal', year: '2025', imgs: 5, 
+        images: ['images/EVENT/EVERYBODY1.png','images/EVENT/EVERYBODY2.png','images/EVENT/EVERYBODY3.png','images/EVENT/EVERYBODY4.png','images/EVENT/EVERYBODY5.png']
       },
       {
-        title: 'Book Fair Installation',
-        desc: '<p>A temporary reading pavilion for an independent book fair. Built entirely from reclaimed timber, dismantled and reassembled across three cities.</p>',
-        type: 'Temporary Installation', client: 'Independent Book Fair', year: '2024', imgs: 4, images: []
+        title: 'Moutai Coktail Stand',
+        desc: '<p>Built entirely from reclaimed timber.</p>',
+        type: 'Temporary Installation', client: 'Moutai', year: '2019', imgs: 1, images: ['images/EVENT/MOUTAI.jpg']
       },
       {
         title: 'Fashion Show Set Design',
@@ -365,6 +388,12 @@ const DATA = {
   graphic: {
     label: 'Graphic',
     items: [
+      {
+        title: 'Just Another Creation Myth',
+        desc: '<p>This poster was designed for a show in which I participated as a set designer. Created before the construction of the set, it combines reference images with the atmosphere of the performance to produce a manifesto image that captures the visual identity of the project.</p>',
+        type: 'Poster Design', client: 'Interrobang', year: '2026', imgs: 1, 
+        images: ['images/GRAPHIC/INTERROBANG26.jpg']
+      },
       {
         title: 'CAFArch 2015 Show',
         desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
@@ -414,19 +443,25 @@ const DATA = {
     label: 'Others',
     items: [
       {
-        title: 'Solar Terms Illustration Series',
-        desc: '<p>Twenty-four illustrations reinterpreting the traditional solar calendar. Fine-line drawings that place seasonal phenomena in conversation with contemporary life. Published as a calendar.</p>',
-        type: 'Illustration', client: 'Self-initiated', year: '2024', imgs: 5, images: []
+        title: 'Floating',
+        desc: '<p>This series of screen prints is inspired by a dream in which I felt as if I were floating inside a bottle of eye drops. The mint essence created a refreshing sensation, evoking the calm of a summer moment. In this work, I imagine a scaled world where a human figure floats inside everyday objects, transforming ordinary spaces into surreal environments.</p>',
+        type: 'Screen printing', client: 'Self-initiated', year: '2015', imgs: 3, 
+        images: ['images/OTHERS/SP1.jpeg','images/OTHERS/SP2.jpeg','images/OTHERS/SP3.jpeg']
       },
       {
-        title: 'Children\'s Book — Where Is the Cloud?',
-        desc: '<p>A picture book about imagination and the natural world. A restrained palette and reduced forms construct a world that is gentle and quietly poetic. Exhibited at multiple book fairs.</p>',
-        type: 'Illustration / Publishing', client: 'Publisher Commission', year: '2023', imgs: 4, images: []
+        title: 'Louis Vuitton Conquest',
+        desc: `
+        <p>Today, online shopping has become an essential part of everyday life. Products ordered online can be delivered within days, supported by global infrastructures connecting the world through maritime routes and air traffic. These networks reveal how closely our economies and societies are interconnected.</p>
+        <br>
+        <p>Based on this context, we analyzed the brand Louis Vuitton, the French luxury fashion house known for its iconic logo and high-end products. Our research explored its branding, marketing strategies, and its strong dependence on maritime transport, as well as its historical connections to colonial trade and global capitalism. Inspired by board games such as Monopoly and War, we created a game that narrates the history of Louis Vuitton, inviting players to discover how its commercial empire was established and expanded.</p>
+        `,
+        type: 'Board game', client: 'Personal', year: '2020', imgs: 3, 
+        images: ['images/OTHERS/LVMONO1.png','images/OTHERS/LVMONO2.png','images/OTHERS/LVMONO3.png']
       },
       {
-        title: 'Album Cover Series',
-        desc: '<p>Cover illustrations for five independent musicians. The work translates emotional register into visual language, exploring resonance between sound and image.</p>',
-        type: 'Illustration', client: 'Independent Musicians', year: '2023', imgs: 3, images: []
+        title: 'Louis Vuitton Express',
+        desc: '<p>Louis Vuitton is a luxury brand that offers almost everything a wealthy lifestyle might require. Today, however, the meaning of luxury is evolving: the possession of goods is no longer the only symbol of wealth. The ability to travel quickly and reach new horizons has become a new form of luxury. Based on this idea, we imagined a rocket service through which Louis Vuitton could take its clients on a journey to the Moon.</p>',
+        type: 'Fiction Poster', client: 'Personal', year: '2020', imgs: 1, images: ['images/OTHERS/LVEXPRESS.jpg']
       }
     ]
   }
