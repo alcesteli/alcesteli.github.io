@@ -19,7 +19,7 @@
 }
 
 html, body { height: 100%; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
-body { font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; overflow: hidden; }
+body { min-height: 100vh; min-height: 100dvh; font-family: 'DM Mono', monospace; font-weight: 300; display: flex; cursor: none; overflow: hidden; }
 body, body * { cursor: none !important; }
 
 /* CUSTOM CURSOR */
@@ -30,7 +30,7 @@ body, body * { cursor: none !important; }
 
 /* SIDEBAR */
 aside {
-  width: var(--sw); min-width: var(--sw); height: 100vh; border-right: 1px solid var(--line);
+  width: var(--sw); min-width: var(--sw); height: 100vh; height: 100dvh; border-right: 1px solid var(--line);
   display: flex; flex-direction: column; background: var(--white); z-index: 100;
 }
 .s-logo-container { padding: 40px 30px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
@@ -73,10 +73,10 @@ aside {
 .s-link:hover, .s-link.on { color: var(--blue); background: var(--hover); }
 
 /* MAIN CONTENT */
-main { flex: 1; height: 100vh; overflow: hidden; position: relative; background: var(--white); }
+main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relative; background: var(--white); }
 .page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
 .page.on { opacity: 1; pointer-events: all; }
-#pg-about, #pg-contact { height: 100%; overflow-y: auto; }
+#pg-about, #pg-contact { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
 /* HOME SLIDER */
 #pg-home { height: 100%; background: var(--white); }
@@ -107,7 +107,7 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 .dot.on { background: var(--blue); width: 20px; border-radius: 3px; }
 
 /* PROJECT DETAIL */
-#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; background: var(--white); }
+#pg-project { height: 100%; overflow-y: auto; scroll-behavior: smooth; background: var(--white); -webkit-overflow-scrolling: touch; }
 .proj-hero { width: 100%; height: auto; padding: 0; display: flex; }
 .proj-hero img { width: 100%; height: auto; display: block; object-fit: cover; cursor: zoom-in; }
 .proj-gallery { display: flex; flex-direction: column; gap: 0; padding: 0; }
