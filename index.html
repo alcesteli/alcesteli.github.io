@@ -76,6 +76,7 @@ aside {
 main { flex: 1; height: 100vh; overflow: hidden; position: relative; background: var(--white); }
 .page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
 .page.on { opacity: 1; pointer-events: all; }
+#pg-about, #pg-contact { height: 100%; overflow-y: auto; }
 
 /* HOME SLIDER */
 #pg-home { height: 100%; background: var(--white); }
@@ -148,6 +149,8 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
 .heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 70px); line-height: 1; margin-bottom: 40px; }
 .heading em { font-style: italic; color: var(--gray); }
 .about-stats { margin-top: 64px; display: flex; flex-direction: column; gap: 44px; }
+.about-copy { display: flex; flex-direction: column; gap: 22px; max-width: 760px; }
+.about-copy p { font-size: 13px; line-height: 1.9; color: #555; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .contact-email { font-family: 'Cormorant Garamond', serif; font-size: clamp(17px, 2vw, 26px); font-style: italic; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 3px; transition: color .2s; width: fit-content; display: block; margin-bottom: 72px; }
@@ -228,19 +231,12 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
   <div class="page" id="pg-about">
     <div class="content-block">
       <p class="eyebrow">About</p>
-      <h2 class="heading">Design<br><em>is a</em><br>language.</h2>
-      <p class="body-text">An independent design studio working across scenography, architecture, interiors, events, and graphic communication.</p>
-      <div class="about-stats">
-        <div>
-          <div class="stat-lbl">Disciplines</div>
-          <div class="stat-item">Scenography</div>
-          <div class="stat-item">Architecture</div>
-          <div class="stat-item">Interior Design</div>
-        </div>
-        <div>
-          <div class="stat-lbl">Based in</div>
-          <div class="stat-item">Beijing &bull; Shanghai</div>
-        </div>
+      <div class="about-copy">
+        <p>I am a Paris-based scenographer and French state-certified architect, originally from China. My practice explores the intersection between architecture and performance, with a particular focus on how space, light, and movement can shape narrative and perception.</p>
+        <p>I was trained in architecture at ENSA Paris-Malaquais and China Central Academy of Fine Arts, where I developed a strong foundation in spatial design and project management, and later completed a degree in scenography at Sorbonne Nouvelle and École Duperré. This dual background allows me to approach projects at different scales, from built environments to stage design, always with attention to both concept and execution.</p>
+        <p>Professionally, I have worked as an architect and project manager, coordinating with clients and engineering teams on complex projects. At the same time, I expanded my practice into the performing arts through internships in the lighting departments of the Odéon Théâtre de l'Europe and Théâtre des Champs-Élysées, as well as within the design office of the Opéra national de Paris. These experiences strengthened my understanding of technical constraints while deepening my interest in atmosphere, dramaturgy, and the expressive potential of light.</p>
+        <p>My approach is both rigorous and intuitive, combining technical precision with a sensitivity to visual storytelling. I am interested in creating spaces that are not only functional, but also immersive and evocative, where architecture becomes a medium for experience.</p>
+        <p>Outside of my professional work, I draw inspiration from opera, dance, and visual arts, which continue to inform my approach to rhythm, composition, and scenographic thinking.</p>
       </div>
     </div>
   </div>
@@ -249,7 +245,7 @@ main { flex: 1; height: 100vh; overflow: hidden; position: relative; background:
     <div class="content-block">
       <p class="eyebrow">Get in Touch</p>
       <h2 class="heading">Let's<br><em>work</em><br>together.</h2>
-      <a href="mailto:hello@designer.com" class="contact-email">hello@designer.com</a>
+      <a href="mailto:contact@hidden.invalid" class="contact-email">contact@hidden.invalid</a>
       <div class="contact-links">
         <div class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></div>
         <div class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></div>
@@ -333,20 +329,40 @@ const DATA = {
         images: ['images/ARCHI/BOBIGNY1.png','images/ARCHI/BOBIGNY2.png','images/ARCHI/BOBIGNY3.png','images/ARCHI/BOBIGNY4.png','images/ARCHI/BOBIGNY5.png','images/ARCHI/BOBIGNY6.png','images/ARCHI/BOBIGNY7.png','images/ARCHI/BOBIGNY8.png','images/ARCHI/BOBIGNY9.png','images/ARCHI/BOBIGNY10.png','images/ARCHI/BOBIGNY11.png']
       },
       {
-        title: 'Roubaix - Plugin intervention',
+        title: 'Cube',
+        desc: '<p>A modular structure composed of 64 cubic units, integrating living, working, and exhibition spaces, located within the historic hutong district of Beijing. Two and a half levels rise above ground, while the rest are embedded below. Designed to be fully demountable, each unit can function independently and be placed within public spaces. Its bamboo-steel structure ensures lightness and ease of mobility.</p>',
+        type: 'Mix', client: 'Personal', year: '2016', imgs: 4, 
+        images: ['images/ARCHI/CUBE1.png','images/ARCHI/CUBE2.png','images/ARCHI/CUBE3.png','images/ARCHI/CUBE4.png']
+      },
+        {
+        title: 'Plug-In',
         desc: '<p>A combined live-work building for an artist. Raw concrete, exposed timber, and generous north-facing glazing frame a quietly dramatic everyday environment.</p>',
         type: 'Urbanism', client: 'Personal', year: '2020', imgs: 10, 
         images: ['images/ARCHI/ROUBAIX1.png','images/ARCHI/ROUBAIX2.png','images/ARCHI/ROUBAIX3.png','images/ARCHI/ROUBAIX4.png','images/ARCHI/ROUBAIX5.png','images/ARCHI/ROUBAIX6.png','images/ARCHI/ROUBAIX7.png','images/ARCHI/ROUBAIX8.png','images/ARCHI/ROUBAIX9.png','images/ARCHI/ROUBAIX10.png']
+      },
+      {
+        title: 'A Villa In Mountains',
+        desc: '<p>A two-story residence nestled in the mountainous outskirts of Beijing.</p>',
+        type: 'Residential', client: 'Personal', year: '2014', imgs: 3, 
+        images: ['images/ARCHI/MONT1.jpg','images/ARCHI/MONT2.jpg','images/ARCHI/MONT3.jpg']
       }
+
     ]
   },
   interior: {
     label: 'Interior',
     items: [
       {
-        title: 'Tea House Interiors',
-        desc: '<p>Interior architecture for a specialty tea house. Materials were sourced locally; the palette of slate, aged brass, and woven rattan quietly references the landscape of origin.</p>',
-        type: 'F&B Interior', client: 'Cha Shan Brand', year: '2024', imgs: 4, images: []
+        title: 'Underground Light',
+        desc: `
+        <p>As the capital of China, Beijing has long attracted a large population of migrant workers with relatively higher wages. Many of them are employed in low-end sectors and, to reduce living costs, often reside in poorly conditioned basements. On November 18, 2017, a major basement fire caused 19 deaths and 8 injuries. In response, the city launched a 40-day safety campaign, leading to the eviction of many migrant residents from underground spaces. Since then, numerous basements once used for housing have remained vacant.</p>
+        <br>
+        <p>The question of how to repurpose these spaces has since emerged. Initiatives such as Digua Community have explored ways to transform them into much-needed public facilities, offering services to local residents in a city lacking communal spaces.</p>
+        <br>
+        <p>This project is located on the basement level of a residential building, characterized by a large and complex layout. By introducing an artificial lighting atmosphere along the main circulation path and embracing the inherent darkness of the space, I reorganized it into three distinct zones, each providing different types of community-oriented services.</p>
+        `,
+        type: 'Interior', client: 'Personal', year: '2016', imgs: 9, 
+        images: ['images/INTERIOR/SS0.png','images/INTERIOR/SS1.png','images/INTERIOR/SS2.png','images/INTERIOR/SS3.png','images/INTERIOR/SS4.png','images/INTERIOR/SS5.png','images/INTERIOR/SS6.png','images/INTERIOR/SS7.png','images/INTERIOR/SS8.png']
       },
       {
         title: 'Gallery Conversion',
@@ -355,8 +371,9 @@ const DATA = {
       },
       {
         title: 'Private Apartment',
-        desc: '<p>Complete interior of a 180sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.</p>',
-        type: 'Residential Interior', client: 'Private Client', year: '2023', imgs: 5, images: []
+        desc: '<p>Complete interior of a 80sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.</p>',
+        type: 'Residential Interior', client: 'Private Client', year: '2022', imgs: 2, 
+        images: ['images/INTERIOR/PP1.png','images/INTERIOR/PP2.png']
       }
     ]
   },
