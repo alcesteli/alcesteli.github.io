@@ -1,17 +1,6 @@
 let currentLang = localStorage.getItem('lang') || 'fr';
 let translations = {};
 
-// Load translations and apply immediately
-async function initLanguageSystem() {
-  try {
-    const response = await fetch(`/data/${currentLang}.json`);
-    translations = await response.json();
-    applyTranslations();
-  } catch (error) {
-    console.error('Translation error:', error);
-  }
-}
-
 function switchLanguage(lang) {
   if (currentLang === lang) return;
   currentLang = lang;
@@ -110,7 +99,6 @@ function createLanguageSwitcher() {
   // Create switcher div and add to footer
   const switcher = document.createElement('div');
   switcher.id = 'lang-switcher';
-  switcher.style.cssText = 'display: flex; gap: 10px; padding: 12px 30px; border-top: 1px solid var(--line); justify-content: center;';
   
   switcher.innerHTML = `
     <button class="lang-btn ${currentLang === 'fr' ? 'active' : ''}" onclick="window.switchLanguage('fr')">FR</button>
@@ -168,8 +156,25 @@ window.openProject = function(cat, idx) {
 };
 
 // Initialize when page is fully loaded
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initLanguageSystem);
-} else {
-  initLanguageSystem();
+function initLanguageSystem() {
+  // Make sure DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(loadLanguage, 100);
+    });
+  } else {
+    setTimeout(loadLanguage, 100);
+  }
 }
+
+function loadLanguage() {
+  fetch(`/data/${currentLang}.json`)
+    .then(r => r.json())
+    .then(data => {
+      translations = data;
+      applyTranslations();
+    })
+    .catch(err => console.error('Translation error:', err));
+}
+
+initLanguageSystem();
