@@ -70,6 +70,7 @@ aside {
   color: var(--gray); display: flex; justify-content: space-between; cursor: none;
   transition: all .2s; border-bottom: 1px solid var(--line); flex: 1;
 }
+.s-link:last-child { border-bottom: none; }
 .s-link:hover, .s-link.on { color: var(--blue); background: var(--hover); }
 
 /* MAIN CONTENT */
@@ -168,7 +169,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   color: var(--gray); cursor: none; transition: color .2s;
   font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 0;
 }
-.lang-btn:first-child::after { content: " | "; display: inline; }
+.lang-btn:first-child::after { content: " | "; display: inline; margin: 0 8px; }
 .lang-btn.active { color: var(--blue); }
 .lang-btn:hover { color: var(--blue); }
 
