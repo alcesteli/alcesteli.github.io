@@ -1,53 +1,44 @@
-let currentLang = localStorage.getItem('lang') || 'fr'; // Default: French
+let currentLang = localStorage.getItem('lang') || 'fr';
 let translations = {};
-let isApplying = false;
 
-// Load translations
-async function loadTranslations() {
-  if (isApplying) return;
-  isApplying = true;
-  
+// Load translations and apply immediately
+async function initLanguageSystem() {
   try {
     const response = await fetch(`/data/${currentLang}.json`);
     translations = await response.json();
-    
-    // Ensure we apply translations after a short delay to let DOM settle
-    setTimeout(applyTranslations, 100);
+    applyTranslations();
   } catch (error) {
-    console.error('Error loading translations:', error);
-    isApplying = false;
+    console.error('Translation error:', error);
   }
 }
 
-// Switch language
 function switchLanguage(lang) {
-  if (currentLang === lang) return; // Already in this language
+  if (currentLang === lang) return;
   currentLang = lang;
   localStorage.setItem('lang', lang);
-  isApplying = false;
-  loadTranslations();
+  
+  fetch(`/data/${lang}.json`)
+    .then(r => r.json())
+    .then(data => {
+      translations = data;
+      applyTranslations();
+    });
 }
 
-// Apply translations to DOM
 function applyTranslations() {
-  if (!translations || Object.keys(translations).length === 0) {
-    isApplying = false;
-    return;
-  }
-  
-  // Update sidebar buttons text
+  // Update sidebar text
   const aboutBtn = document.getElementById('sl-about');
   const contactBtn = document.getElementById('sl-contact');
   const menuBtn = document.getElementById('menu-btn');
   
-  if (aboutBtn) aboutBtn.textContent = translations.sidebar.about;
-  if (contactBtn) contactBtn.textContent = translations.sidebar.contact;
-  if (menuBtn) menuBtn.textContent = translations.sidebar.menu;
+  if (aboutBtn) aboutBtn.textContent = translations.sidebar?.about || 'About';
+  if (contactBtn) contactBtn.textContent = translations.sidebar?.contact || 'Contact';
+  if (menuBtn) menuBtn.textContent = translations.sidebar?.menu || 'Menu';
   
-  // Update About page
-  const aboutSection = document.getElementById('pg-about');
-  if (aboutSection) {
-    aboutSection.innerHTML = `
+  // Update About page content
+  const aboutPage = document.getElementById('pg-about');
+  if (aboutPage && translations.about) {
+    aboutPage.innerHTML = `
       <div class="content-block">
         <p class="eyebrow">${translations.about.heading}</p>
         <div class="about-copy">
@@ -57,10 +48,10 @@ function applyTranslations() {
     `;
   }
   
-  // Update Contact page
-  const contactSection = document.getElementById('pg-contact');
-  if (contactSection) {
-    contactSection.innerHTML = `
+  // Update Contact page content  
+  const contactPage = document.getElementById('pg-contact');
+  if (contactPage && translations.contact) {
+    contactPage.innerHTML = `
       <div class="content-block">
         <p class="eyebrow">Get in Touch</p>
         <h2 class="heading">${translations.contact.heading}</h2>
@@ -73,16 +64,39 @@ function applyTranslations() {
     `;
   }
   
-  // Create/update language switcher
+  // Update sidebar project titles and categories
+  updateSidebarText();
+  
+  // Create language switcher
   createLanguageSwitcher();
-  
-  // Rebuild sidebar with translations
-  rebuildSidebar();
-  
-  isApplying = false;
 }
 
-// Create language switcher
+function updateSidebarText() {
+  // Get all sidebar items and update their text
+  document.querySelectorAll('.s-item').forEach(item => {
+    const catAttr = item.parentElement?.previousElementSibling?.getAttribute('data-cat');
+    const itemIndex = Array.from(item.parentElement.children).indexOf(item);
+    
+    if (catAttr && translations.projects && translations.projects[catAttr]) {
+      const transItem = translations.projects[catAttr].items[itemIndex];
+      if (transItem && transItem.title) {
+        item.textContent = transItem.title;
+      }
+    }
+  });
+  
+  // Update category labels
+  document.querySelectorAll('.s-cat-head').forEach(head => {
+    const catKey = head.getAttribute('data-cat');
+    if (catKey && translations.categories && translations.categories[catKey]) {
+      // Get the orig label before the arrow
+      const arrow = head.querySelector('.s-cat-arr');
+      head.textContent = translations.categories[catKey] + ' ';
+      head.appendChild(arrow);
+    }
+  });
+}
+
 function createLanguageSwitcher() {
   let switcher = document.getElementById('lang-switcher');
   if (!switcher) {
@@ -92,108 +106,50 @@ function createLanguageSwitcher() {
   }
   
   switcher.innerHTML = `
-    <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" onclick="switchLanguage('en')">EN</button>
-    <button class="lang-btn ${currentLang === 'fr' ? 'active' : ''}" onclick="switchLanguage('fr')">FR</button>
+    <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" onclick="window.switchLanguage('en')">EN</button>
+    <button class="lang-btn ${currentLang === 'fr' ? 'active' : ''}" onclick="window.switchLanguage('fr')">FR</button>
   `;
 }
 
-// Rebuild sidebar with translated categories and items
-function rebuildSidebar() {
-  const sNav = document.getElementById('s-nav');
-  if (!sNav || !window.DATA) {
-    console.log('Waiting for DATA and DOM...');
-    return;
-  }
-  
-  sNav.innerHTML = '';
-  
-  Object.keys(DATA).forEach(catKey => {
-    const cat = DATA[catKey];
-    const translatedLabel = translations.categories ? (translations.categories[catKey] || cat.label) : cat.label;
-    const transItems = translations.projects ? (translations.projects[catKey]?.items || []) : [];
-    
-    const group = document.createElement('div');
-    group.innerHTML = `
-      <div class="s-cat-head closed" data-cat="${catKey}" onclick="this.classList.toggle('closed')">${translatedLabel} <span class="s-cat-arr">▾</span></div>
-      <div class="s-items">
-        ${cat.items.map((item, i) => {
-          const transTitle = transItems[i]?.title || item.title;
-          return `<div class="s-item" id="si-${catKey}-${i}" onclick="openProject('${catKey}', ${i})">${transTitle}</div>`;
-        }).join('')}
-      </div>
-    `;
-    sNav.appendChild(group);
-  });
-}
-
-// Store original openProject
-const originalOpenProject = window.openProject;
-
-// Override openProject to use translated content
+// Override openProject to translate content
+const origOpenProject = window.openProject;
 window.openProject = function(cat, idx) {
-  const p = DATA[cat].items[idx];
-  const transProject = translations.projects ? (translations.projects[cat]?.items[idx] || {}) : {};
-  window.currentProjImages = p.images || [];
-
-  // Highlight sidebar item and expand category
-  document.querySelectorAll('.s-item.on').forEach(el => el.classList.remove('on'));
-  const activeItem = document.getElementById(`si-${cat}-${idx}`);
-  if (activeItem) activeItem.classList.add('on');
-  const catHead = document.querySelector(`.s-cat-head[data-cat="${cat}"]`);
-  if (catHead) catHead.classList.remove('closed');
-
-  // Hero image
-  const pHero = document.getElementById('p-hero');
-  if (pHero) {
-    pHero.innerHTML = window.currentProjImages.length > 0 
-      ? `<img src="${window.currentProjImages[0]}" onclick="openLightbox(0)" />` 
-      : `<div class="ph">No Image</div>`;
-  }
+  origOpenProject.call(this, cat, idx);
   
-  // Gallery
-  const pGallery = document.getElementById('p-gallery');
-  if (pGallery) {
-    let galleryHtml = '';
-    for (let k = 1; k < window.currentProjImages.length; k++) {
-      galleryHtml += `<div class="proj-img-wrap"><img src="${window.currentProjImages[k]}" onclick="openLightbox(${k})" /></div>`;
+  // Apply translations to the project page after it's loaded
+  if (translations.projects && translations.projects[cat] && translations.projects[cat].items) {
+    const transProject = translations.projects[cat].items[idx];
+    if (transProject) {
+      const pTitle = document.getElementById('p-title');
+      const pDesc = document.getElementById('p-desc');
+      const pCat = document.getElementById('p-cat');
+      
+      if (pTitle) pTitle.textContent = transProject.title || pTitle.textContent;
+      if (pDesc) pDesc.innerHTML = transProject.desc || pDesc.innerHTML;
+      if (pCat && translations.categories && translations.categories[cat]) {
+        pCat.textContent = translations.categories[cat];
+      }
+      
+      // Update meta labels
+      const metaRows = document.querySelectorAll('.proj-meta-row');
+      const labels = [
+        translations.projectMeta?.type || 'Type',
+        translations.projectMeta?.client || 'Client',
+        translations.projectMeta?.year || 'Year'
+      ];
+      metaRows.forEach((row, i) => {
+        if (i < labels.length) {
+          const label = row.querySelector('.proj-meta-label');
+          if (label) label.textContent = labels[i];
+        }
+      });
     }
-    pGallery.innerHTML = galleryHtml;
   }
-
-  // Update project info
-  const pCat = document.getElementById('p-cat');
-  const pTitle = document.getElementById('p-title');
-  const pDesc = document.getElementById('p-desc');
-  const pMeta = document.getElementById('p-meta');
-  
-  if (pCat) pCat.innerText = translations.categories ? (translations.categories[cat] || DATA[cat].label) : DATA[cat].label;
-  if (pTitle) pTitle.innerText = transProject.title || p.title;
-  if (pDesc) pDesc.innerHTML = transProject.desc || p.desc;
-  
-  if (pMeta) {
-    const typeLabel = translations.projectMeta ? translations.projectMeta.type : 'Type';
-    const clientLabel = translations.projectMeta ? translations.projectMeta.client : 'Client';
-    const yearLabel = translations.projectMeta ? translations.projectMeta.year : 'Year';
-    
-    pMeta.innerHTML = `
-      <div class="proj-meta-row"><span class="proj-meta-label">${typeLabel}</span><span>${p.type}</span></div>
-      <div class="proj-meta-row"><span class="proj-meta-label">${clientLabel}</span><span>${p.client}</span></div>
-      <div class="proj-meta-row"><span class="proj-meta-label">${yearLabel}</span><span>${p.year}</span></div>
-    `;
-  }
-  
-  showPage('project');
 };
 
-// Wait for DOM and DATA to be ready
-function initLanguageSystem() {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadTranslations);
-  } else {
-    // DOM is already ready
-    loadTranslations();
-  }
+// Initialize when page is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLanguageSystem);
+} else {
+  initLanguageSystem();
 }
-
-// Initialize when script loads
-initLanguageSystem();
