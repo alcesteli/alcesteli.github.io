@@ -160,12 +160,11 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 
 /* LANGUAGE SWITCHER */
 #lang-switcher {
-  position: fixed; bottom: 30px; right: 30px; z-index: 10003;
-  display: flex; gap: 10px;
+  display: flex; gap: 8px; padding: 12px 30px; border-top: 1px solid var(--line); justify-content: center;
 }
 .lang-btn {
-  background: var(--white); border: 1px solid var(--line); padding: 8px 12px;
-  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--white); border: 1px solid var(--line); padding: 6px 10px;
+  font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
   color: var(--gray); cursor: none; transition: all .2s;
   font-family: 'DM Mono', monospace; border-radius: 2px;
 }

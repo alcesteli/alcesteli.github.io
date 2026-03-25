@@ -98,17 +98,37 @@ function updateSidebarText() {
 }
 
 function createLanguageSwitcher() {
-  let switcher = document.getElementById('lang-switcher');
-  if (!switcher) {
-    switcher = document.createElement('div');
-    switcher.id = 'lang-switcher';
-    document.body.appendChild(switcher);
+  const footer = document.querySelector('.s-foot');
+  if (!footer) return;
+  
+  // Check if already added
+  if (document.getElementById('lang-switcher')) {
+    updateLanguageSwitcher();
+    return;
   }
   
+  // Create switcher div and add to footer
+  const switcher = document.createElement('div');
+  switcher.id = 'lang-switcher';
+  switcher.style.cssText = 'display: flex; gap: 10px; padding: 12px 30px; border-top: 1px solid var(--line); justify-content: center;';
+  
   switcher.innerHTML = `
-    <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" onclick="window.switchLanguage('en')">EN</button>
     <button class="lang-btn ${currentLang === 'fr' ? 'active' : ''}" onclick="window.switchLanguage('fr')">FR</button>
+    <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" onclick="window.switchLanguage('en')">EN</button>
   `;
+  
+  footer.appendChild(switcher);
+}
+
+function updateLanguageSwitcher() {
+  const switcher = document.getElementById('lang-switcher');
+  if (!switcher) return;
+  
+  const btns = switcher.querySelectorAll('.lang-btn');
+  if (btns.length >= 2) {
+    btns[0].classList.toggle('active', currentLang === 'fr');
+    btns[1].classList.toggle('active', currentLang === 'en');
+  }
 }
 
 // Override openProject to translate content
