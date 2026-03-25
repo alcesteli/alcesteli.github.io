@@ -176,22 +176,23 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 @media (max-width: 768px) {
   body { flex-direction: column; cursor: auto; overflow-y: auto; }
   #cur { display: none; }
-  aside { width: 100%; height: auto; min-width: 100%; border-right: none; border-bottom: 1px solid var(--line); position: sticky; top: 0; }
+  aside { width: 100%; height: auto; min-width: 100%; border-right: none; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 99; }
   .s-logo-container { padding: 20px; }
   .mobile-toggle { display: block; }
   .s-nav { display: none; max-height: 60vh; overflow-y: auto; } 
   aside.open .s-nav { display: block; border-bottom: 1px solid var(--line); }
-  .s-foot { display: flex; border-top: none; position: sticky; bottom: 0; background: var(--white); z-index: 2; flex-direction: column; }
-  .s-link { flex: 1; border-left: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: 1px solid var(--line); }
-  .s-link:first-child { border-left: none; }
-  main { height: auto; overflow: visible; flex: none; }
+  .s-foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); z-index: 100; flex-direction: column; display: flex; border-top: 1px solid var(--line); width: 100%; }
+  .s-link { flex: 1; border-right: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; display: flex; align-items: center; }
+  .s-link:last-child { border-right: none; }
+  #lang-switcher { border-top: 1px solid var(--line); border-bottom: none; padding: 6px 30px; }
+  main { height: auto; overflow: visible; flex: none; padding-bottom: 100px; }
   #pg-home { height: 75vh; display: none; }
   #pg-home.on { display: block; }
   .page { position: relative; opacity: 1; pointer-events: all; display: none; height: auto; }
   .page.on { display: block; }
   .proj-info { padding: 50px 20px; }
   .proj-info-grid { grid-template-columns: 1fr; gap: 40px; }
-  .content-block { padding: 60px 20px; }
+  .content-block { padding: 60px 20px 100px; }
 }
 </style>
 </head>
@@ -601,15 +602,9 @@ function updateDots() {
 function toggleMenu() {
   const sidebar = document.getElementById('sidebar');
   const btn = document.getElementById('menu-btn');
-  const switcher = document.getElementById('lang-switcher');
   
   sidebar.classList.toggle('open');
   btn.innerText = sidebar.classList.contains('open') ? 'Close' : 'Menu';
-  
-  // Show/hide language switcher on mobile when menu opens
-  if (window.innerWidth <= 768 && switcher) {
-    switcher.style.display = sidebar.classList.contains('open') ? 'flex' : 'none';
-  }
 }
 
 function showPage(id) {
