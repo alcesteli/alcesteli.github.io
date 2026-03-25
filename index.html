@@ -160,17 +160,17 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 
 /* LANGUAGE SWITCHER */
 #lang-switcher {
-  display: flex; gap: 5px; padding: 6px 30px; border-top: 1px solid var(--line); justify-content: center;
+  display: flex; gap: 0; padding: 6px 30px; border-top: 1px solid var(--line); justify-content: center; align-items: center;
 }
 .lang-btn {
-  background: transparent; border: 1px solid var(--line); padding: 3px 6px;
+  background: transparent; border: none; padding: 0 2px;
   font-size: 7px; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--gray); cursor: none; transition: all .2s;
-  font-family: 'DM Mono', monospace; border-radius: 2px;
+  color: var(--gray); cursor: none; transition: color .2s;
+  font-family: 'DM Mono', monospace;
 }
-.lang-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
-.lang-btn:hover { color: var(--blue); border-color: var(--blue); }
-.lang-btn.active:hover { color: white; }
+.lang-btn:first-child::after { content: " | "; margin: 0 2px; }
+.lang-btn.active { color: var(--blue); }
+.lang-btn:hover { color: var(--blue); }
 
 /* MOBILE STYLES */
 @media (max-width: 768px) {
