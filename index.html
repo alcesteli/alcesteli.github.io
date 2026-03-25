@@ -181,10 +181,10 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   .mobile-toggle { display: block; }
   .s-nav { display: none; max-height: 60vh; overflow-y: auto; } 
   aside.open .s-nav { display: block; border-bottom: 1px solid var(--line); }
-  .s-foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); z-index: 100; flex-direction: column; display: flex; border-top: 1px solid var(--line); width: 100%; }
-  .s-link { flex: 1; border-right: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; display: flex; align-items: center; }
-  .s-link:last-child { border-right: none; }
-  #lang-switcher { border-top: 1px solid var(--line); border-bottom: none; padding: 6px 30px; }
+  .s-foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); z-index: 100; width: 100%; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .s-link { border-right: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; display: flex; align-items: center; }
+  .s-link:last-of-type { border-right: none; }
+  #lang-switcher { grid-column: 1 / -1; border-top: 1px solid var(--line); border-bottom: none; padding: 10px 30px; display: flex; justify-content: center; }
   main { height: auto; overflow: visible; flex: none; padding-bottom: 100px; }
   #pg-home { height: 75vh; display: none; }
   #pg-home.on { display: block; }
