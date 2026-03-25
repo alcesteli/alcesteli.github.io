@@ -158,6 +158,21 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 .c-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: none; transition: padding-left .2s; }
 .c-row:hover { padding-left: 10px; }
 
+/* LANGUAGE SWITCHER */
+#lang-switcher {
+  position: fixed; bottom: 30px; right: 30px; z-index: 10003;
+  display: flex; gap: 10px;
+}
+.lang-btn {
+  background: var(--white); border: 1px solid var(--line); padding: 8px 12px;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gray); cursor: none; transition: all .2s;
+  font-family: 'DM Mono', monospace; border-radius: 2px;
+}
+.lang-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+.lang-btn:hover { color: var(--blue); border-color: var(--blue); }
+.lang-btn.active:hover { color: white; }
+
 /* MOBILE STYLES */
 @media (max-width: 768px) {
   body { flex-direction: column; cursor: auto; overflow-y: auto; }
@@ -674,5 +689,7 @@ document.addEventListener('keydown', e => {
   if (e.key === "ArrowLeft") changeLightboxImg(-1);
 });
 </script>
+
+<script src="js/lang.js"></script>
 </body>
 </html>
