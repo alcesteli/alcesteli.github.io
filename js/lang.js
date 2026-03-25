@@ -1,24 +1,57 @@
 let currentLang = localStorage.getItem('lang') || 'fr';
 let translations = {};
 
+console.log('[LANG] Initialized with language:', currentLang);
+
 function switchLanguage(lang) {
-  if (currentLang === lang) return;
+  console.log('[LANG] Switching to:', lang, 'Current:', currentLang);
+  
+  if (currentLang === lang) {
+    console.log('[LANG] Language already set to', lang);
+    return;
+  }
+  
   currentLang = lang;
   localStorage.setItem('lang', lang);
+  console.log('[LANG] Language saved to localStorage');
   
-  fetch(`/data/${lang}.json`)
-    .then(r => r.json())
+  loadLanguageData(lang);
+}
+
+function loadLanguageData(lang) {
+  const filePath = `./data/${lang}.json`;
+  console.log('[LANG] Fetching from:', filePath);
+  
+  fetch(filePath)
+    .then(r => {
+      console.log('[LANG] Fetch response status:', r.status, r.statusText);
+      if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
+      return r.json();
+    })
     .then(data => {
+      console.log('[LANG] Data loaded successfully:', Object.keys(data));
       translations = data;
       applyTranslations();
+    })
+    .catch(err => {
+      console.error('[LANG] Error loading translations:', err);
+      console.error('[LANG] Tried path:', filePath);
     });
 }
 
 function applyTranslations() {
+  console.log('[LANG] Applying translations...');
+  
   // Update sidebar text
   const aboutBtn = document.getElementById('sl-about');
   const contactBtn = document.getElementById('sl-contact');
   const menuBtn = document.getElementById('menu-btn');
+  
+  console.log('[LANG] Found buttons:', {
+    about: !!aboutBtn,
+    contact: !!contactBtn,
+    menu: !!menuBtn
+  });
   
   if (aboutBtn) aboutBtn.textContent = translations.sidebar?.about || 'About';
   if (contactBtn) contactBtn.textContent = translations.sidebar?.contact || 'Contact';
@@ -27,6 +60,7 @@ function applyTranslations() {
   // Update About page content
   const aboutPage = document.getElementById('pg-about');
   if (aboutPage && translations.about) {
+    console.log('[LANG] Updating About page');
     aboutPage.innerHTML = `
       <div class="content-block">
         <p class="eyebrow">${translations.about.heading}</p>
@@ -40,6 +74,7 @@ function applyTranslations() {
   // Update Contact page content  
   const contactPage = document.getElementById('pg-contact');
   if (contactPage && translations.contact) {
+    console.log('[LANG] Updating Contact page');
     contactPage.innerHTML = `
       <div class="content-block">
         <p class="eyebrow">Get in Touch</p>
@@ -58,6 +93,7 @@ function applyTranslations() {
   
   // Create language switcher
   createLanguageSwitcher();
+  console.log('[LANG] Translations applied');
 }
 
 function updateSidebarText() {
@@ -87,11 +123,23 @@ function updateSidebarText() {
 }
 
 function createLanguageSwitcher() {
+  console.log('[LANG] createLanguageSwitcher called');
+  
   const footer = document.querySelector('.s-foot');
-  if (!footer) return;
+  console.log('[LANG] Footer found:', !!footer);
+  
+  if (!footer) {
+    console.error('[LANG] ERROR: .s-foot element not found!');
+    console.error('[LANG] Available footer-like elements:', document.querySelectorAll('[class*="foot"], [class*="nav"], aside').length);
+    return;
+  }
   
   // Check if already added
-  if (document.getElementById('lang-switcher')) {
+  const existing = document.getElementById('lang-switcher');
+  console.log('[LANG] Existing switcher:', !!existing);
+  
+  if (existing) {
+    console.log('[LANG] Updating existing switcher');
     updateLanguageSwitcher();
     return;
   }
@@ -102,31 +150,46 @@ function createLanguageSwitcher() {
   
   switcher.innerHTML = `
     <button class="lang-btn ${currentLang === 'fr' ? 'active' : ''}" onclick="window.switchLanguage('fr')">FR</button>
+    <span class="lang-sep">|</span>
     <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" onclick="window.switchLanguage('en')">EN</button>
   `;
   
   footer.appendChild(switcher);
+  console.log('[LANG] Language switcher created and appended. Current lang:', currentLang);
+  console.log('[LANG] Switcher element:', switcher);
+  console.log('[LANG] Switcher HTML:', switcher.innerHTML);
 }
 
 function updateLanguageSwitcher() {
+  console.log('[LANG] updateLanguageSwitcher called');
+  
   const switcher = document.getElementById('lang-switcher');
-  if (!switcher) return;
+  if (!switcher) {
+    console.warn('[LANG] Switcher not found when updating');
+    return;
+  }
   
   const btns = switcher.querySelectorAll('.lang-btn');
+  console.log('[LANG] Found buttons:', btns.length);
+  
   if (btns.length >= 2) {
     btns[0].classList.toggle('active', currentLang === 'fr');
     btns[1].classList.toggle('active', currentLang === 'en');
+    console.log('[LANG] Updated button states for lang:', currentLang);
   }
 }
 
 // Override openProject to translate content
 const origOpenProject = window.openProject;
 window.openProject = function(cat, idx) {
+  console.log('[LANG] openProject called:', cat, idx);
   origOpenProject.call(this, cat, idx);
   
   // Apply translations to the project page after it's loaded
   if (translations.projects && translations.projects[cat] && translations.projects[cat].items) {
     const transProject = translations.projects[cat].items[idx];
+    console.log('[LANG] Found translated project:', !!transProject);
+    
     if (transProject) {
       const pTitle = document.getElementById('p-title');
       const pDesc = document.getElementById('p-desc');
@@ -151,30 +214,50 @@ window.openProject = function(cat, idx) {
           if (label) label.textContent = labels[i];
         }
       });
+      console.log('[LANG] Project translations applied');
     }
+  } else {
+    console.warn('[LANG] No translations or project data found for:', cat);
   }
 };
 
 // Initialize when page is fully loaded
 function initLanguageSystem() {
+  console.log('[LANG] initLanguageSystem called. Document state:', document.readyState);
+  
   // Make sure DOM is ready
   if (document.readyState === 'loading') {
+    console.log('[LANG] DOM still loading, waiting for DOMContentLoaded');
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('[LANG] DOMContentLoaded fired');
       setTimeout(loadLanguage, 100);
     });
   } else {
+    console.log('[LANG] DOM already ready, loading language immediately');
     setTimeout(loadLanguage, 100);
   }
 }
 
 function loadLanguage() {
-  fetch(`/data/${currentLang}.json`)
-    .then(r => r.json())
-    .then(data => {
-      translations = data;
-      applyTranslations();
-    })
-    .catch(err => console.error('Translation error:', err));
+  console.log('[LANG] loadLanguage called. Checking DOM elements...');
+  
+  // Verify DOM is ready
+  const footer = document.querySelector('.s-foot');
+  const aboutBtn = document.getElementById('sl-about');
+  
+  console.log('[LANG] DOM check:', {
+    footerFound: !!footer,
+    aboutBtnFound: !!aboutBtn,
+    documentReady: document.readyState === 'complete'
+  });
+  
+  if (!footer || !aboutBtn) {
+    console.warn('[LANG] DOM not fully ready yet, retrying...');
+    setTimeout(loadLanguage, 200);
+    return;
+  }
+  
+  loadLanguageData(currentLang);
 }
 
 initLanguageSystem();
