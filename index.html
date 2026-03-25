@@ -160,15 +160,15 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 
 /* LANGUAGE SWITCHER */
 #lang-switcher {
-  display: flex; gap: 0; padding: 6px 30px; border-top: 1px solid var(--line); justify-content: center; align-items: center;
+  display: flex; gap: 0; padding: 0; border-top: 1px solid var(--line); justify-content: center; align-items: center;
 }
 .lang-btn {
-  background: transparent; border: none; padding: 12px 18px;
-  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  background: transparent; border: none; padding: 18px 30px;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
   color: var(--gray); cursor: none; transition: color .2s;
-  font-family: 'DM Mono', monospace;
+  font-family: 'DM Mono', monospace; display: flex; align-items: center;
 }
-.lang-btn:first-child::after { content: " | "; margin: 0 2px; }
+.lang-btn:first-child::after { content: " | "; margin: 0 0; display: flex; align-items: center; }
 .lang-btn.active { color: var(--blue); }
 .lang-btn:hover { color: var(--blue); }
 
@@ -184,8 +184,8 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   .s-foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); z-index: 100; width: 100%; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
   .s-link { border-right: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; display: flex; align-items: center; }
   .s-link:last-of-type { border-right: none; }
-  #lang-switcher { grid-column: 1 / -1; border-top: 1px solid var(--line); border-bottom: none; padding: 12px 30px; display: flex; justify-content: center; }
-  .lang-btn { padding: 14px 18px; font-size: 10px; }
+  #lang-switcher { grid-column: 1 / -1; border-top: 1px solid var(--line); border-bottom: none; padding: 0; display: flex; justify-content: center; }
+  .lang-btn { padding: 14px; font-size: 9px; letter-spacing: .1em; }
   main { height: auto; overflow: visible; flex: none; padding-bottom: 100px; }
   #pg-home { height: 75vh; display: none; }
   #pg-home.on { display: block; }
