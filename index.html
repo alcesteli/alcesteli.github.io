@@ -101,7 +101,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 
 .h-dots {
   position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 10px; z-index: 10;
+  display: none !important; gap: 10px; z-index: 10;
 }
 .dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; transition: all .3s; }
 .dot.on { background: var(--blue); width: 20px; border-radius: 3px; }
@@ -163,8 +163,8 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   display: flex; gap: 0; padding: 6px 30px; border-top: 1px solid var(--line); justify-content: center; align-items: center;
 }
 .lang-btn {
-  background: transparent; border: none; padding: 0 2px;
-  font-size: 7px; letter-spacing: .08em; text-transform: uppercase;
+  background: transparent; border: none; padding: 12px 18px;
+  font-size: 14px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--gray); cursor: none; transition: color .2s;
   font-family: 'DM Mono', monospace;
 }
@@ -184,7 +184,8 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   .s-foot { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); z-index: 100; width: 100%; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
   .s-link { border-right: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; display: flex; align-items: center; }
   .s-link:last-of-type { border-right: none; }
-  #lang-switcher { grid-column: 1 / -1; border-top: 1px solid var(--line); border-bottom: none; padding: 10px 30px; display: flex; justify-content: center; }
+  #lang-switcher { grid-column: 1 / -1; border-top: 1px solid var(--line); border-bottom: none; padding: 12px 30px; display: flex; justify-content: center; }
+  .lang-btn { padding: 14px 18px; font-size: 10px; }
   main { height: auto; overflow: visible; flex: none; padding-bottom: 100px; }
   #pg-home { height: 75vh; display: none; }
   #pg-home.on { display: block; }
