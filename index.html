@@ -609,6 +609,12 @@ function showPage(id) {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('menu-btn').innerText = 'Menu';
   window.scrollTo(0, 0);
+
+  if (id === 'home') {
+    startAutoSlider();
+  } else {
+    stopAutoSlider();
+  }
 }
 
 function openProject(cat, idx) {
@@ -646,6 +652,37 @@ function openProject(cat, idx) {
 }
 
 function goHome() { showPage('home'); }
+
+// Auto-scroll for home slider
+const trackForSlider = document.getElementById('h-track');
+const numTotalSlides = HOME_SLIDES.length;
+let autoSlideInterval;
+
+function startAutoSlider() {
+  stopAutoSlider(); // Stop any existing interval
+  if (numTotalSlides < 2) return; // No need to slide if 1 or 0 slides
+
+  autoSlideInterval = setInterval(() => {
+    const slideWidth = trackForSlider.clientWidth;
+    const nextIndex = (Math.round(trackForSlider.scrollLeft / slideWidth) + 1) % numTotalSlides;
+    trackForSlider.scrollTo({ left: nextIndex * slideWidth, behavior: 'smooth' });
+  }, 3000);
+}
+
+function stopAutoSlider() {
+  clearInterval(autoSlideInterval);
+}
+
+// Stop slider on manual interaction
+trackForSlider.addEventListener('wheel', stopAutoSlider, { passive: true });
+trackForSlider.addEventListener('touchstart', stopAutoSlider, { passive: true });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Start slider only if home page is active on load
+    if (document.getElementById('pg-home').classList.contains('on')) {
+        startAutoSlider();
+    }
+});
 
 // LIGHTBOX LOGIC
 function openLightbox(index) {
