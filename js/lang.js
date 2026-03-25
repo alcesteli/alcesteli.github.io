@@ -106,6 +106,11 @@ function createLanguageSwitcher() {
   `;
   
   footer.appendChild(switcher);
+  
+  // On mobile, hide it by default (show only when menu is open)
+  if (window.innerWidth <= 768) {
+    switcher.style.display = 'none';
+  }
 }
 
 function updateLanguageSwitcher() {

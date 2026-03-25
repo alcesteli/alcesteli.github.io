@@ -64,11 +64,11 @@ aside {
 .s-item.on { background: var(--blue); color: #fff; }
 .s-item.on::before { background: #fff; }
 
-.s-foot { border-top: 1px solid var(--line); }
+.s-foot { border-top: 1px solid var(--line); display: flex; flex-direction: column; }
 .s-link {
   padding: 18px 30px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
   color: var(--gray); display: flex; justify-content: space-between; cursor: none;
-  transition: all .2s; border-bottom: 1px solid var(--line);
+  transition: all .2s; border-bottom: 1px solid var(--line); flex: 1;
 }
 .s-link:hover, .s-link.on { color: var(--blue); background: var(--hover); }
 
@@ -160,11 +160,11 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 
 /* LANGUAGE SWITCHER */
 #lang-switcher {
-  display: flex; gap: 8px; padding: 12px 30px; border-top: 1px solid var(--line); justify-content: center;
+  display: flex; gap: 5px; padding: 6px 30px; border-top: 1px solid var(--line); justify-content: center;
 }
 .lang-btn {
-  background: var(--white); border: 1px solid var(--line); padding: 6px 10px;
-  font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+  background: transparent; border: 1px solid var(--line); padding: 3px 6px;
+  font-size: 7px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--gray); cursor: none; transition: all .2s;
   font-family: 'DM Mono', monospace; border-radius: 2px;
 }
@@ -181,8 +181,8 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   .mobile-toggle { display: block; }
   .s-nav { display: none; max-height: 60vh; overflow-y: auto; } 
   aside.open .s-nav { display: block; border-bottom: 1px solid var(--line); }
-  .s-foot { display: flex; border-top: none; position: sticky; bottom: 0; background: var(--white); z-index: 2; }
-  .s-link { flex: 1; border-left: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: none; }
+  .s-foot { display: flex; border-top: none; position: sticky; bottom: 0; background: var(--white); z-index: 2; flex-direction: column; }
+  .s-link { flex: 1; border-left: 1px solid var(--line); justify-content: center; padding: 14px; font-size: 9px; border-bottom: 1px solid var(--line); }
   .s-link:first-child { border-left: none; }
   main { height: auto; overflow: visible; flex: none; }
   #pg-home { height: 75vh; display: none; }
@@ -601,8 +601,15 @@ function updateDots() {
 function toggleMenu() {
   const sidebar = document.getElementById('sidebar');
   const btn = document.getElementById('menu-btn');
+  const switcher = document.getElementById('lang-switcher');
+  
   sidebar.classList.toggle('open');
   btn.innerText = sidebar.classList.contains('open') ? 'Close' : 'Menu';
+  
+  // Show/hide language switcher on mobile when menu opens
+  if (window.innerWidth <= 768 && switcher) {
+    switcher.style.display = sidebar.classList.contains('open') ? 'flex' : 'none';
+  }
 }
 
 function showPage(id) {
