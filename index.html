@@ -372,7 +372,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
           <label class="contact-label" for="contact-message">Message</label>
           <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
         </div>
-        <div class="h-captcha" data-captcha="true"></div>
+        <div class="h-captcha" data-captcha="true" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
         <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
         <p class="contact-note">Messages are sent directly from this form.</p>
         <p class="contact-status" id="contact-status" aria-live="polite"></p>
@@ -900,6 +900,7 @@ document.addEventListener('keydown', e => {
 
 const WEB3FORMS_ACCESS_KEY = 'cef8118d-e2c7-433a-bdf2-32c9fbee69fd';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const HCAPTCHA_SITE_KEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
 
 function setContactStatus(message, type = '') {
   const status = document.getElementById('contact-status');
@@ -907,6 +908,18 @@ function setContactStatus(message, type = '') {
   status.textContent = message;
   status.classList.remove('is-error', 'is-success');
   if (type) status.classList.add(type);
+}
+
+function initHCaptcha() {
+  if (!window.hcaptcha) return;
+  document.querySelectorAll('.h-captcha').forEach(el => {
+    if (el.dataset.rendered === 'true') return;
+    el.innerHTML = '';
+    window.hcaptcha.render(el, {
+      sitekey: HCAPTCHA_SITE_KEY
+    });
+    el.dataset.rendered = 'true';
+  });
 }
 
 function initContactForm() {
@@ -979,10 +992,11 @@ function initContactForm() {
   if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
 }
 window.initContactForm = initContactForm;
+window.initHCaptcha = initHCaptcha;
 initContactForm();
 </script>
 
-<script src="https://web3forms.com/client/script.js" async defer></script>
+<script src="https://js.hcaptcha.com/1/api.js?onload=initHCaptcha&render=explicit" async defer></script>
 <script src="js/lang.js"></script>
 </body>
 </html>
