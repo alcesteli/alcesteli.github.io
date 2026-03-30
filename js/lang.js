@@ -97,7 +97,8 @@ function applyTranslations() {
             <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
           </div>
           <button class="contact-submit" type="submit">Send Message</button>
-          <p class="contact-note">Your message will open in your email app as a prepared draft for sending.</p>
+          <p class="contact-note">Messages are sent directly from this form.</p>
+          <p class="contact-status" id="contact-status" aria-live="polite"></p>
         </form>
         <div class="contact-links">
           <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>

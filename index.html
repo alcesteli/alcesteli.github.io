@@ -233,6 +233,18 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   color: #666;
   max-width: 560px;
 }
+.contact-status {
+  font-size: 11px;
+  line-height: 1.7;
+  min-height: 1.7em;
+  color: #666;
+}
+.contact-status.is-error {
+  color: #a12626;
+}
+.contact-status.is-success {
+  color: #1a6a3a;
+}
 .c-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: none; transition: padding-left .2s; }
 .c-row:hover { padding-left: 10px; }
 
@@ -361,7 +373,8 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
           <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
         </div>
         <button class="contact-submit" type="submit">Send Message</button>
-        <p class="contact-note">Your message will open in your email app as a prepared draft for sending.</p>
+        <p class="contact-note">Messages are sent directly from this form.</p>
+        <p class="contact-status" id="contact-status" aria-live="polite"></p>
       </form>
       <div class="contact-links">
         <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
@@ -884,26 +897,67 @@ document.addEventListener('keydown', e => {
   if (e.key === "ArrowLeft") changeLightboxImg(-1);
 });
 
+const WEB3FORMS_ACCESS_KEY = 'cef8118d-e2c7-433a-bdf2-32c9fbee69fd';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+
+function setContactStatus(message, type = '') {
+  const status = document.getElementById('contact-status');
+  if (!status) return;
+  status.textContent = message;
+  status.classList.remove('is-error', 'is-success');
+  if (type) status.classList.add(type);
+}
+
 function initContactForm() {
   const contactForm = document.getElementById('contact-form');
   if (!contactForm || contactForm.dataset.bound === 'true') return;
 
   contactForm.dataset.bound = 'true';
-  contactForm.addEventListener('submit', e => {
+  contactForm.addEventListener('submit', async e => {
     e.preventDefault();
+    const submitBtn = contactForm.querySelector('.contact-submit');
     const formData = new FormData(contactForm);
     const name = (formData.get('name') || '').toString().trim();
     const email = (formData.get('email') || '').toString().trim();
     const subject = (formData.get('subject') || '').toString().trim();
     const message = (formData.get('message') || '').toString().trim();
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      '',
-      message
-    ].join('\n');
-    const mailto = `mailto:contact@hidden.invalid?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+
+    if (WEB3FORMS_ACCESS_KEY === 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY') {
+      setContactStatus('Add your Web3Forms access key in index.html before using the live form.', 'is-error');
+      return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    setContactStatus('Sending message...');
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name,
+          email,
+          subject,
+          message
+        })
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Unable to send message.');
+      }
+
+      contactForm.reset();
+      setContactStatus('Message sent successfully.', 'is-success');
+    } catch (error) {
+      setContactStatus(error.message || 'Something went wrong. Please try again.', 'is-error');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 }
 window.initContactForm = initContactForm;
