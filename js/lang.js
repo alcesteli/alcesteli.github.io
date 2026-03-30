@@ -1,5 +1,7 @@
 let currentLang = localStorage.getItem('lang') || 'fr';
 let translations = {};
+const escapeHtml = window.escapeHtml || (value => String(value));
+const sanitizeRichText = window.sanitizeRichText || (html => String(html));
 
 console.log('[LANG] Initialized with language:', currentLang);
 
@@ -63,9 +65,9 @@ function applyTranslations() {
     console.log('[LANG] Updating About page');
     aboutPage.innerHTML = `
       <div class="content-block">
-        <p class="eyebrow">${translations.about.heading}</p>
+        <p class="eyebrow">${escapeHtml(translations.about.heading)}</p>
         <div class="about-copy">
-          ${translations.about.content.map(p => `<p>${p}</p>`).join('')}
+          ${translations.about.content.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
         </div>
       </div>
     `;
@@ -78,32 +80,34 @@ function applyTranslations() {
     contactPage.innerHTML = `
       <div class="content-block">
         <p class="eyebrow">Get in Touch</p>
-        <h2 class="heading">${translations.contact.heading}</h2>
+        <h2 class="heading">${sanitizeRichText(translations.contact.heading)}</h2>
         <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
           <div class="contact-field">
             <label class="contact-label" for="contact-name">Name</label>
-            <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" required>
+            <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
           </div>
           <div class="contact-field">
             <label class="contact-label" for="contact-email">Email</label>
-            <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" required>
+            <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
           </div>
           <div class="contact-field">
             <label class="contact-label" for="contact-subject">Subject</label>
-            <input class="contact-input" id="contact-subject" name="subject" type="text" required>
+            <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
           </div>
           <div class="contact-field">
             <label class="contact-label" for="contact-message">Message</label>
-            <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+            <textarea class="contact-textarea" id="contact-message" name="message" maxlength="3000" required></textarea>
           </div>
+          <input type="text" name="website" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="form_started_at" value="">
           <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
           <p class="contact-note">Messages are sent directly from this form, without opening an email app.</p>
           <p class="contact-status" id="contact-status" aria-live="polite"></p>
         </form>
         <div class="contact-links">
-          <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
-          <a href="https://www.behance.net/alceste_li" target="_blank" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
+          <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
+          <a href="https://www.behance.net/alceste_li" target="_blank" rel="noopener noreferrer" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
         </div>
       </div>
     `;
@@ -218,7 +222,7 @@ window.openProject = function(cat, idx) {
       const pCat = document.getElementById('p-cat');
       
       if (pTitle) pTitle.textContent = transProject.title || pTitle.textContent;
-      if (pDesc) pDesc.innerHTML = transProject.desc || pDesc.innerHTML;
+      if (pDesc) pDesc.innerHTML = sanitizeRichText(transProject.desc || pDesc.innerHTML);
       if (pCat && translations.categories && translations.categories[cat]) {
         pCat.textContent = translations.categories[cat];
       }

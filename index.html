@@ -367,34 +367,76 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
       <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
         <div class="contact-field">
           <label class="contact-label" for="contact-name">Name</label>
-          <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" required>
+          <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
         </div>
         <div class="contact-field">
           <label class="contact-label" for="contact-email">Email</label>
-          <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" required>
+          <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
         </div>
         <div class="contact-field">
           <label class="contact-label" for="contact-subject">Subject</label>
-          <input class="contact-input" id="contact-subject" name="subject" type="text" required>
+          <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
         </div>
         <div class="contact-field">
           <label class="contact-label" for="contact-message">Message</label>
-          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+          <textarea class="contact-textarea" id="contact-message" name="message" maxlength="3000" required></textarea>
         </div>
+        <input type="text" name="website" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="form_started_at" value="">
         <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
         <p class="contact-note">Messages are sent directly from this form, without opening an email app.</p>
         <p class="contact-status" id="contact-status" aria-live="polite"></p>
       </form>
       <div class="contact-links">
-        <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
-        <a href="https://www.behance.net/alceste_li" target="_blank" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
+        <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
+        <a href="https://www.behance.net/alceste_li" target="_blank" rel="noopener noreferrer" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
       </div>
     </div>
   </div>
 </main>
 
 <script>
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+}
+
+function sanitizeRichText(html) {
+  const template = document.createElement('template');
+  template.innerHTML = String(html);
+
+  const allowedTags = new Set(['P', 'BR', 'EM', 'STRONG']);
+  const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT);
+  const nodesToReplace = [];
+
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (!allowedTags.has(node.tagName)) {
+      nodesToReplace.push(node);
+      continue;
+    }
+
+    [...node.attributes].forEach(attr => node.removeAttribute(attr.name));
+  }
+
+  nodesToReplace.forEach(node => {
+    const fragment = document.createDocumentFragment();
+    while (node.firstChild) fragment.appendChild(node.firstChild);
+    node.replaceWith(fragment);
+  });
+
+  return template.innerHTML;
+}
+
+window.escapeHtml = escapeHtml;
+window.sanitizeRichText = sanitizeRichText;
+
 const DATA = {
    stageDesign: {
     label: 'Stage Design',
@@ -668,9 +710,9 @@ Object.keys(DATA).forEach(catKey => {
   const cat = DATA[catKey];
   const group = document.createElement('div');
   group.innerHTML = `
-    <div class="s-cat-head closed" data-cat="${catKey}" onclick="this.classList.toggle('closed')">${cat.label} <span class="s-cat-arr">▾</span></div>
+    <div class="s-cat-head closed" data-cat="${escapeHtml(catKey)}" onclick="this.classList.toggle('closed')">${escapeHtml(cat.label)} <span class="s-cat-arr">▾</span></div>
     <div class="s-items">
-      ${cat.items.map((item, i) => `<div class="s-item" id="si-${catKey}-${i}" onclick="openProject('${catKey}', ${i})">${item.title}</div>`).join('')}
+      ${cat.items.map((item, i) => `<div class="s-item" id="si-${escapeHtml(catKey)}-${i}" onclick="openProject('${catKey}', ${i})">${escapeHtml(item.title)}</div>`).join('')}
     </div>
   `;
   sNav.appendChild(group);
@@ -699,8 +741,8 @@ HOME_SLIDES.forEach((cfg, i) => {
   const item = getHomeSlideData(cfg);
   const slide = document.createElement('div');
   slide.className = 'h-slide';
-  const imgSrc = item.image ? `<img src="${item.image}" alt="${item.title || 'Featured image'}" />` : `<div class="ph">Coming Soon</div>`;
-  slide.innerHTML = `<div class="h-slide-img-wrap">${imgSrc}</div><div class="h-slide-title">${item.title}</div>`;
+  const imgSrc = item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Featured image')}" />` : `<div class="ph">Coming Soon</div>`;
+  slide.innerHTML = `<div class="h-slide-img-wrap">${imgSrc}</div><div class="h-slide-title">${escapeHtml(item.title)}</div>`;
   if (item.click) slide.onclick = item.click;
   track.appendChild(slide);
   const dot = document.createElement('div');
@@ -797,11 +839,11 @@ function openProject(cat, idx) {
 
   document.getElementById('p-cat').innerText = DATA[cat].label;
   document.getElementById('p-title').innerText = p.title;
-  document.getElementById('p-desc').innerHTML = p.desc;
+  document.getElementById('p-desc').innerHTML = sanitizeRichText(p.desc);
   document.getElementById('p-meta').innerHTML = `
-    <div class="proj-meta-row"><span class="proj-meta-label">Type</span><span>${p.type}</span></div>
-    <div class="proj-meta-row"><span class="proj-meta-label">Client</span><span>${p.client}</span></div>
-    <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${p.year}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">Type</span><span>${escapeHtml(p.type)}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">Client</span><span>${escapeHtml(p.client)}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${escapeHtml(p.year)}</span></div>
   `;
   showPage('project');
 
@@ -909,6 +951,57 @@ document.addEventListener('keydown', e => {
 
 const WEB3FORMS_ACCESS_KEY = 'cef8118d-e2c7-433a-bdf2-32c9fbee69fd';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const CONTACT_MIN_FILL_TIME_MS = 3500;
+const CONTACT_RATE_LIMIT_MS = 60000;
+const CONTACT_LAST_SENT_KEY = 'contact:lastSentAt';
+const CONTACT_MIN_INTERACTIONS = 3;
+const CONTACT_MAX_URLS_IN_MESSAGE = 2;
+const CONTACT_REPEAT_CHAR_LIMIT = 6;
+
+function setFormStartedAt(contactForm) {
+  const startedAtInput = contactForm.querySelector('input[name="form_started_at"]');
+  if (startedAtInput) startedAtInput.value = String(Date.now());
+}
+
+function normalizeContactField(value, maxLength) {
+  return value.toString().trim().replace(/\s+/g, ' ').slice(0, maxLength);
+}
+
+function getRemainingCooldownMs() {
+  const lastSentAt = Number(localStorage.getItem(CONTACT_LAST_SENT_KEY) || '0');
+  if (!lastSentAt) return 0;
+  return Math.max(0, CONTACT_RATE_LIMIT_MS - (Date.now() - lastSentAt));
+}
+
+function countUrls(value) {
+  const matches = value.match(/https?:\/\/|www\./gi);
+  return matches ? matches.length : 0;
+}
+
+function hasSuspiciousRepetition(value) {
+  return new RegExp(`(.)\\1{${CONTACT_REPEAT_CHAR_LIMIT},}`, 'i').test(value);
+}
+
+function ensureDynamicHoneypot(contactForm) {
+  if (contactForm.querySelector('[data-dynamic-honeypot="true"]')) return;
+
+  const randomSuffix = Math.random().toString(36).slice(2, 10);
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.name = `company_${randomSuffix}`;
+  input.tabIndex = -1;
+  input.autocomplete = 'off';
+  input.setAttribute('aria-hidden', 'true');
+  input.className = 'contact-honeypot';
+  input.dataset.dynamicHoneypot = 'true';
+  contactForm.insertBefore(input, contactForm.querySelector('.contact-submit'));
+}
+
+function resetContactFormState(contactForm, interactedFields) {
+  contactForm.reset();
+  interactedFields.clear();
+  setFormStartedAt(contactForm);
+}
 
 function setContactStatus(message, type = '') {
   const status = document.getElementById('contact-status');
@@ -924,6 +1017,18 @@ function initContactForm() {
 
   contactForm.dataset.bound = 'true';
   const submitBtn = contactForm.querySelector('.contact-submit');
+  const interactedFields = new Set();
+
+  setFormStartedAt(contactForm);
+  ensureDynamicHoneypot(contactForm);
+
+  contactForm.querySelectorAll('input:not([type="hidden"]), textarea').forEach(field => {
+    const markInteraction = () => {
+      interactedFields.add(field.name || field.id || `field-${interactedFields.size}`);
+    };
+    field.addEventListener('input', markInteraction);
+    field.addEventListener('focus', markInteraction);
+  });
 
   const handleSubmit = async e => {
     if (e) {
@@ -934,19 +1039,61 @@ function initContactForm() {
     if (!contactForm.reportValidity()) return;
 
     const formData = new FormData(contactForm);
-    const name = (formData.get('name') || '').toString().trim();
-    const email = (formData.get('email') || '').toString().trim();
-    const subject = (formData.get('subject') || '').toString().trim();
-    const message = (formData.get('message') || '').toString().trim();
+    const name = normalizeContactField(formData.get('name') || '', 80);
+    const email = normalizeContactField(formData.get('email') || '', 254);
+    const subject = normalizeContactField(formData.get('subject') || '', 150);
+    const message = (formData.get('message') || '').toString().trim().slice(0, 3000);
+    const website = normalizeContactField(formData.get('website') || '', 200);
     const botcheck = (formData.get('botcheck') || '').toString().trim();
+    const startedAt = Number(formData.get('form_started_at') || '0');
+    const dynamicHoneypot = contactForm.querySelector('[data-dynamic-honeypot="true"]');
+    const dynamicHoneypotValue = dynamicHoneypot ? normalizeContactField(formData.get(dynamicHoneypot.name) || '', 200) : '';
 
     if (WEB3FORMS_ACCESS_KEY === 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY') {
       setContactStatus('Add your Web3Forms access key in index.html before using the live form.', 'is-error');
       return;
     }
 
-    if (botcheck) {
+    if (website || botcheck || dynamicHoneypotValue) {
       setContactStatus('Spam protection triggered.', 'is-error');
+      resetContactFormState(contactForm, interactedFields);
+      return;
+    }
+
+    if (!startedAt || Date.now() - startedAt < CONTACT_MIN_FILL_TIME_MS) {
+      setContactStatus('Please take a moment to complete the form before sending.', 'is-error');
+      return;
+    }
+
+    const remainingCooldownMs = getRemainingCooldownMs();
+    if (remainingCooldownMs > 0) {
+      const seconds = Math.ceil(remainingCooldownMs / 1000);
+      setContactStatus(`Please wait ${seconds} seconds before sending another message.`, 'is-error');
+      return;
+    }
+
+    if (name.length < 2 || subject.length < 3 || message.length < 20) {
+      setContactStatus('Please add a fuller name, subject, and message before sending.', 'is-error');
+      return;
+    }
+
+    if (interactedFields.size < CONTACT_MIN_INTERACTIONS) {
+      setContactStatus('Please complete the form manually before sending.', 'is-error');
+      return;
+    }
+
+    if (/(https?:\/\/|www\.)/i.test(name) || /(https?:\/\/|www\.)/i.test(subject)) {
+      setContactStatus('Links are not allowed in the name or subject fields.', 'is-error');
+      return;
+    }
+
+    if (countUrls(message) > CONTACT_MAX_URLS_IN_MESSAGE) {
+      setContactStatus('Please reduce the number of links in your message.', 'is-error');
+      return;
+    }
+
+    if (hasSuspiciousRepetition(`${name} ${subject} ${message}`)) {
+      setContactStatus('Please remove repeated characters and try again.', 'is-error');
       return;
     }
 
@@ -975,7 +1122,8 @@ function initContactForm() {
         throw new Error(result.message || 'Unable to send message.');
       }
 
-      contactForm.reset();
+      resetContactFormState(contactForm, interactedFields);
+      localStorage.setItem(CONTACT_LAST_SENT_KEY, String(Date.now()));
       setContactStatus('Message sent successfully.', 'is-success');
     } catch (error) {
       setContactStatus(error.message || 'Something went wrong. Please try again.', 'is-error');
