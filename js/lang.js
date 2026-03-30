@@ -96,9 +96,9 @@ function applyTranslations() {
             <label class="contact-label" for="contact-message">Message</label>
             <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
           </div>
-          <div class="h-captcha" data-captcha="true"></div>
+          <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
           <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
-          <p class="contact-note">Messages are sent directly from this form.</p>
+          <p class="contact-note">Messages are sent directly from this form, without opening an email app.</p>
           <p class="contact-status" id="contact-status" aria-live="polite"></p>
         </form>
         <div class="contact-links">
@@ -108,7 +108,6 @@ function applyTranslations() {
       </div>
     `;
     if (window.initContactForm) window.initContactForm();
-    if (window.initCaptchaScript) window.initCaptchaScript();
   }
   
   // Update sidebar project titles and categories
