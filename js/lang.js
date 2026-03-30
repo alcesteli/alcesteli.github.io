@@ -96,6 +96,7 @@ function applyTranslations() {
             <label class="contact-label" for="contact-message">Message</label>
             <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
           </div>
+          <div class="h-captcha" data-captcha="true"></div>
           <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
           <p class="contact-note">Messages are sent directly from this form.</p>
           <p class="contact-status" id="contact-status" aria-live="polite"></p>

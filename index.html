@@ -372,6 +372,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
           <label class="contact-label" for="contact-message">Message</label>
           <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
         </div>
+        <div class="h-captcha" data-captcha="true"></div>
         <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
         <p class="contact-note">Messages are sent directly from this form.</p>
         <p class="contact-status" id="contact-status" aria-live="polite"></p>
@@ -928,9 +929,15 @@ function initContactForm() {
     const email = (formData.get('email') || '').toString().trim();
     const subject = (formData.get('subject') || '').toString().trim();
     const message = (formData.get('message') || '').toString().trim();
+    const captcha = (formData.get('h-captcha-response') || '').toString().trim();
 
     if (WEB3FORMS_ACCESS_KEY === 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY') {
       setContactStatus('Add your Web3Forms access key in index.html before using the live form.', 'is-error');
+      return;
+    }
+
+    if (!captcha) {
+      setContactStatus('Please complete the CAPTCHA.', 'is-error');
       return;
     }
 
@@ -949,7 +956,8 @@ function initContactForm() {
           name,
           email,
           subject,
-          message
+          message,
+          'h-captcha-response': captcha
         })
       });
       const result = await response.json();
@@ -974,6 +982,7 @@ window.initContactForm = initContactForm;
 initContactForm();
 </script>
 
+<script src="https://web3forms.com/client/script.js" async defer></script>
 <script src="js/lang.js"></script>
 </body>
 </html>
