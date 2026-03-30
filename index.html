@@ -174,8 +174,65 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 .about-copy p { font-size: 13px; line-height: 1.9; color: #555; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
-.contact-email { font-family: 'Cormorant Garamond', serif; font-size: clamp(17px, 2vw, 26px); font-style: italic; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 3px; transition: color .2s; width: fit-content; display: block; margin-bottom: 72px; }
-.contact-email:hover { color: var(--blue); }
+.contact-form {
+  margin-bottom: 72px;
+  display: grid;
+  gap: 18px;
+}
+.contact-field {
+  display: grid;
+  gap: 8px;
+}
+.contact-label {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.contact-input,
+.contact-textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--black);
+  font: inherit;
+  font-size: 12px;
+  padding: 16px 18px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.contact-input:focus,
+.contact-textarea:focus {
+  border-color: var(--blue);
+  background: #fcfcff;
+}
+.contact-textarea {
+  min-height: 170px;
+  resize: vertical;
+}
+.contact-submit {
+  width: fit-content;
+  border: 1px solid var(--black);
+  background: var(--black);
+  color: var(--white);
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 16px 24px;
+  cursor: none;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.contact-submit:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.contact-note {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #666;
+  max-width: 560px;
+}
 .c-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: none; transition: padding-left .2s; }
 .c-row:hover { padding-left: 10px; }
 
@@ -218,6 +275,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   .proj-info { padding: 50px 20px; }
   .proj-info-grid { grid-template-columns: 1fr; gap: 40px; }
   .content-block { padding: 60px 20px 100px; }
+  .contact-submit { cursor: pointer; width: 100%; justify-content: center; }
 }
 </style>
 </head>
@@ -285,7 +343,26 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
     <div class="content-block">
       <p class="eyebrow">Get in Touch</p>
       <h2 class="heading">Let's<br><em>work</em><br>together.</h2>
-      <a href="mailto:contact@hidden.invalid" class="contact-email">contact@hidden.invalid</a>
+      <form class="contact-form" id="contact-form">
+        <div class="contact-field">
+          <label class="contact-label" for="contact-name">Name</label>
+          <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-email">Email</label>
+          <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-subject">Subject</label>
+          <input class="contact-input" id="contact-subject" name="subject" type="text" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-message">Message</label>
+          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="contact-submit" type="submit">Send Message</button>
+        <p class="contact-note">Your message will open in your email app as a prepared draft for sending.</p>
+      </form>
       <div class="contact-links">
         <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
         <a href="https://www.behance.net/alceste_li" target="_blank" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
@@ -806,6 +883,26 @@ document.addEventListener('keydown', e => {
   if (e.key === "ArrowRight") changeLightboxImg(1);
   if (e.key === "ArrowLeft") changeLightboxImg(-1);
 });
+
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    const name = (formData.get('name') || '').toString().trim();
+    const email = (formData.get('email') || '').toString().trim();
+    const subject = (formData.get('subject') || '').toString().trim();
+    const message = (formData.get('message') || '').toString().trim();
+    const body = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      '',
+      message
+    ].join('\n');
+    const mailto = `mailto:contact@hidden.invalid?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  });
+}
 </script>
 
 <script src="js/lang.js"></script>
