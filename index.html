@@ -114,6 +114,24 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 .proj-gallery { display: flex; flex-direction: column; gap: 0; padding: 0; }
 .proj-img-wrap { width: 100%; display: flex; background: none; min-height: auto; }
 .proj-img-wrap img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+.proj-loading {
+  width: 100%;
+  min-height: 42vh;
+  background:
+    linear-gradient(110deg, #f7f7f7 8%, #efefef 18%, #f7f7f7 33%);
+  background-size: 200% 100%;
+  animation: projShimmer 1.2s linear infinite;
+}
+.proj-img {
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.proj-img.is-ready {
+  opacity: 1;
+}
+@keyframes projShimmer {
+  to { background-position-x: -200%; }
+}
 
 .proj-info { padding: 100px 60px; border-top: 1px solid var(--line); max-width: 1400px; margin: 0 auto; }
 .proj-info-eyebrow { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
@@ -533,14 +551,16 @@ const DATA = {
 // - Custom image slide: { image: 'images/path.jpg', title: 'My title', project: { cat: 'graphic', idx: 0 } } (project optional)
 // Add/remove entries freely; the home page adapts to any quantity.
 const HOME_SLIDES = [
-  { project: { cat: 'stageDesign', idx: 0 } },
+  { image: 'images/COVER/S-LCH0.png', project: { cat: 'stageDesign', idx: 0 } },
   { project: { cat: 'windowDisplay', idx: 0 } },
   { project: { cat: 'graphic', idx: 0 } },
-  { project: { cat: 'architecture', idx: 0 } }
+  { project: { cat: 'architecture', idx: 0 } },
+  { image: 'images/OTHERS/SP1.jpeg', project: { cat: 'others', idx: 0 } }
 ];
 
 let currentProjImages = [];
 let lbIndex = 0;
+let projectRenderToken = 0;
 
 // Initialize Sidebar Nav
 const sNav = document.getElementById('s-nav');
@@ -609,6 +629,9 @@ function showPage(id) {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('menu-btn').innerText = 'Menu';
   window.scrollTo(0, 0);
+  if (id === 'project') {
+    document.getElementById('pg-project').scrollTo({ top: 0, behavior: 'auto' });
+  }
 
   if (id === 'home') {
     startAutoSlider();
@@ -617,9 +640,53 @@ function showPage(id) {
   }
 }
 
+function loadProjectImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = async () => {
+      try {
+        if (img.decode) await img.decode();
+      } catch (_) {}
+      resolve(src);
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+function createProjectImage(src, index, isHero) {
+  const wrap = document.createElement('div');
+  wrap.className = isHero ? 'proj-loading' : 'proj-img-wrap';
+  if (!isHero) {
+    wrap.innerHTML = '<div class="proj-loading"></div>';
+  }
+
+  const img = document.createElement('img');
+  img.className = 'proj-img';
+  img.loading = index <= 1 ? 'eager' : 'lazy';
+  img.decoding = 'async';
+  img.onclick = () => openLightbox(index);
+  img.onload = async () => {
+    try {
+      if (img.decode) await img.decode();
+    } catch (_) {}
+    wrap.innerHTML = '';
+    if (!isHero) wrap.className = 'proj-img-wrap';
+    wrap.appendChild(img);
+    requestAnimationFrame(() => img.classList.add('is-ready'));
+  };
+  img.src = src;
+
+  return { wrap, img };
+}
+
 function openProject(cat, idx) {
   const p = DATA[cat].items[idx];
   currentProjImages = p.images || [];
+  projectRenderToken += 1;
+  const renderToken = projectRenderToken;
+  closeLightbox();
 
   // Highlight sidebar item and expand its category
   document.querySelectorAll('.s-item.on').forEach(el => el.classList.remove('on'));
@@ -627,18 +694,6 @@ function openProject(cat, idx) {
   if (activeItem) activeItem.classList.add('on');
   const catHead = document.querySelector(`.s-cat-head[data-cat="${cat}"]`);
   if (catHead) catHead.classList.remove('closed');
-
-  // Hero Image (cliquable index 0)
-  document.getElementById('p-hero').innerHTML = currentProjImages.length > 0 
-    ? `<img src="${currentProjImages[0]}" onclick="openLightbox(0)" />` 
-    : `<div class="ph">No Image</div>`;
-  
-  // Gallery (cliquables index 1+)
-  let galleryHtml = '';
-  for (let k = 1; k < currentProjImages.length; k++) {
-    galleryHtml += `<div class="proj-img-wrap"><img src="${currentProjImages[k]}" onclick="openLightbox(${k})" /></div>`;
-  }
-  document.getElementById('p-gallery').innerHTML = galleryHtml;
 
   document.getElementById('p-cat').innerText = DATA[cat].label;
   document.getElementById('p-title').innerText = p.title;
@@ -649,6 +704,37 @@ function openProject(cat, idx) {
     <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${p.year}</span></div>
   `;
   showPage('project');
+
+  const hero = document.getElementById('p-hero');
+  const gallery = document.getElementById('p-gallery');
+  hero.innerHTML = '';
+  gallery.innerHTML = '';
+
+  if (currentProjImages.length === 0) {
+    hero.innerHTML = '<div class="ph">No Image</div>';
+    return;
+  }
+
+  hero.innerHTML = '<div class="proj-loading"></div>';
+
+  loadProjectImage(currentProjImages[0])
+    .then(() => {
+      if (renderToken !== projectRenderToken) return;
+
+      const heroImage = createProjectImage(currentProjImages[0], 0, true);
+      hero.innerHTML = '';
+      hero.appendChild(heroImage.wrap);
+
+      for (let k = 1; k < currentProjImages.length; k++) {
+        if (renderToken !== projectRenderToken) return;
+        const galleryImage = createProjectImage(currentProjImages[k], k, false);
+        gallery.appendChild(galleryImage.wrap);
+      }
+    })
+    .catch(() => {
+      if (renderToken !== projectRenderToken) return;
+      hero.innerHTML = '<div class="ph">Image unavailable</div>';
+    });
 }
 
 function goHome() { showPage('home'); }
