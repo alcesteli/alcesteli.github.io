@@ -79,7 +79,7 @@ function applyTranslations() {
       <div class="content-block">
         <p class="eyebrow">Get in Touch</p>
         <h2 class="heading">${translations.contact.heading}</h2>
-        <form class="contact-form" id="contact-form">
+        <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
           <div class="contact-field">
             <label class="contact-label" for="contact-name">Name</label>
             <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" required>
@@ -96,7 +96,7 @@ function applyTranslations() {
             <label class="contact-label" for="contact-message">Message</label>
             <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
           </div>
-          <button class="contact-submit" type="submit">Send Message</button>
+          <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
           <p class="contact-note">Messages are sent directly from this form.</p>
           <p class="contact-status" id="contact-status" aria-live="polite"></p>
         </form>
