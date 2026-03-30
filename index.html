@@ -884,8 +884,11 @@ document.addEventListener('keydown', e => {
   if (e.key === "ArrowLeft") changeLightboxImg(-1);
 });
 
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
+function initContactForm() {
+  const contactForm = document.getElementById('contact-form');
+  if (!contactForm || contactForm.dataset.bound === 'true') return;
+
+  contactForm.dataset.bound = 'true';
   contactForm.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(contactForm);
@@ -903,6 +906,8 @@ if (contactForm) {
     window.location.href = mailto;
   });
 }
+window.initContactForm = initContactForm;
+initContactForm();
 </script>
 
 <script src="js/lang.js"></script>

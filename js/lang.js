@@ -79,13 +79,33 @@ function applyTranslations() {
       <div class="content-block">
         <p class="eyebrow">Get in Touch</p>
         <h2 class="heading">${translations.contact.heading}</h2>
-        <a href="mailto:contact@hidden.invalid" class="contact-email">contact@hidden.invalid</a>
+        <form class="contact-form" id="contact-form">
+          <div class="contact-field">
+            <label class="contact-label" for="contact-name">Name</label>
+            <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-email">Email</label>
+            <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-subject">Subject</label>
+            <input class="contact-input" id="contact-subject" name="subject" type="text" required>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-message">Message</label>
+            <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+          </div>
+          <button class="contact-submit" type="submit">Send Message</button>
+          <p class="contact-note">Your message will open in your email app as a prepared draft for sending.</p>
+        </form>
         <div class="contact-links">
           <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
           <a href="https://www.behance.net/alceste_li" target="_blank" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
         </div>
       </div>
     `;
+    if (window.initContactForm) window.initContactForm();
   }
   
   // Update sidebar project titles and categories
