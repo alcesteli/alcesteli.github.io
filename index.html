@@ -325,6 +325,11 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   <div class="s-foot">
     <div class="s-link" id="sl-about" onclick="showPage('about')">About</div>
     <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact</div>
+    <div id="lang-switcher">
+      <button class="lang-btn active" type="button" onclick="window.switchLanguage('fr')">FR</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" type="button" onclick="window.switchLanguage('en')">EN</button>
+    </div>
   </div>
 </aside>
 

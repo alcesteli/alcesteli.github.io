@@ -155,39 +155,15 @@ function updateSidebarText() {
 function createLanguageSwitcher() {
   console.log('[LANG] createLanguageSwitcher called');
   
-  const footer = document.querySelector('.s-foot');
-  console.log('[LANG] Footer found:', !!footer);
-  
-  if (!footer) {
-    console.error('[LANG] ERROR: .s-foot element not found!');
-    console.error('[LANG] Available footer-like elements:', document.querySelectorAll('[class*="foot"], [class*="nav"], aside').length);
+  const switcher = document.getElementById('lang-switcher');
+  console.log('[LANG] Switcher found:', !!switcher);
+
+  if (!switcher) {
+    console.error('[LANG] ERROR: #lang-switcher element not found!');
     return;
   }
-  
-  // Check if already added
-  const existing = document.getElementById('lang-switcher');
-  console.log('[LANG] Existing switcher:', !!existing);
-  
-  if (existing) {
-    console.log('[LANG] Updating existing switcher');
-    updateLanguageSwitcher();
-    return;
-  }
-  
-  // Create switcher div and add to footer
-  const switcher = document.createElement('div');
-  switcher.id = 'lang-switcher';
-  
-  switcher.innerHTML = `
-    <button class="lang-btn ${currentLang === 'fr' ? 'active' : ''}" onclick="window.switchLanguage('fr')">FR</button>
-    <span class="lang-sep">|</span>
-    <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" onclick="window.switchLanguage('en')">EN</button>
-  `;
-  
-  footer.appendChild(switcher);
-  console.log('[LANG] Language switcher created and appended. Current lang:', currentLang);
-  console.log('[LANG] Switcher element:', switcher);
-  console.log('[LANG] Switcher HTML:', switcher.innerHTML);
+
+  updateLanguageSwitcher();
 }
 
 function updateLanguageSwitcher() {
