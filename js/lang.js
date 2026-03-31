@@ -25,6 +25,16 @@ function switchLanguage(lang) {
 window.switchLanguage = switchLanguage;
 
 function loadLanguageData(lang) {
+  const inlineTranslations = window.INLINE_TRANSLATIONS?.[lang];
+  if (inlineTranslations) {
+    console.log('[LANG] Using inline translations for:', lang);
+    translations = inlineTranslations;
+    appliedLang = lang;
+    document.documentElement.lang = lang;
+    applyTranslations();
+    return;
+  }
+
   const filePath = `./data/${lang}.json`;
   console.log('[LANG] Fetching from:', filePath);
   
