@@ -1,5 +1,6 @@
 let currentLang = localStorage.getItem('lang') || 'fr';
 let translations = {};
+let appliedLang = document.documentElement.lang || 'en';
 const escapeHtml = window.escapeHtml || (value => String(value));
 const sanitizeRichText = window.sanitizeRichText || (html => String(html));
 
@@ -16,7 +17,8 @@ function switchLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
   console.log('[LANG] Language saved to localStorage');
-  
+
+  updateLanguageSwitcher();
   loadLanguageData(lang);
 }
 
@@ -35,11 +37,15 @@ function loadLanguageData(lang) {
     .then(data => {
       console.log('[LANG] Data loaded successfully:', Object.keys(data));
       translations = data;
+      appliedLang = lang;
+      document.documentElement.lang = lang;
       applyTranslations();
     })
     .catch(err => {
       console.error('[LANG] Error loading translations:', err);
       console.error('[LANG] Tried path:', filePath);
+      appliedLang = 'en';
+      document.documentElement.lang = 'en';
       createLanguageSwitcher();
       updateLanguageSwitcher();
     });
@@ -163,7 +169,22 @@ function createLanguageSwitcher() {
     return;
   }
 
+  bindLanguageSwitcher(switcher);
   updateLanguageSwitcher();
+}
+
+function bindLanguageSwitcher(switcher) {
+  if (switcher.dataset.bound === 'true') return;
+
+  switcher.dataset.bound = 'true';
+  switcher.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const lang = btn.dataset.lang;
+      if (lang) switchLanguage(lang);
+    });
+  });
 }
 
 function updateLanguageSwitcher() {
@@ -178,11 +199,10 @@ function updateLanguageSwitcher() {
   const btns = switcher.querySelectorAll('.lang-btn');
   console.log('[LANG] Found buttons:', btns.length);
   
-  if (btns.length >= 2) {
-    btns[0].classList.toggle('active', currentLang === 'fr');
-    btns[1].classList.toggle('active', currentLang === 'en');
-    console.log('[LANG] Updated button states for lang:', currentLang);
-  }
+  btns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === appliedLang);
+  });
+  console.log('[LANG] Updated button states. Requested:', currentLang, 'Applied:', appliedLang);
 }
 
 // Override openProject to translate content
