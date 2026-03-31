@@ -20,6 +20,8 @@ function switchLanguage(lang) {
   loadLanguageData(lang);
 }
 
+window.switchLanguage = switchLanguage;
+
 function loadLanguageData(lang) {
   const filePath = `./data/${lang}.json`;
   console.log('[LANG] Fetching from:', filePath);
@@ -38,6 +40,8 @@ function loadLanguageData(lang) {
     .catch(err => {
       console.error('[LANG] Error loading translations:', err);
       console.error('[LANG] Tried path:', filePath);
+      createLanguageSwitcher();
+      updateLanguageSwitcher();
     });
 }
 
@@ -256,10 +260,14 @@ function initLanguageSystem() {
     console.log('[LANG] DOM still loading, waiting for DOMContentLoaded');
     document.addEventListener('DOMContentLoaded', () => {
       console.log('[LANG] DOMContentLoaded fired');
+      createLanguageSwitcher();
+      updateLanguageSwitcher();
       setTimeout(loadLanguage, 100);
     });
   } else {
     console.log('[LANG] DOM already ready, loading language immediately');
+    createLanguageSwitcher();
+    updateLanguageSwitcher();
     setTimeout(loadLanguage, 100);
   }
 }
