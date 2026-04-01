@@ -17,13 +17,38 @@ window.INLINE_TRANSLATIONS = {
       ]
     },
     "contact": {
+      "eyebrow": "Entrons en contact",
       "heading": "Travaillons<br><em>ensemble.</em>",
+      "nameLabel": "Nom",
+      "emailLabel": "E-mail",
+      "subjectLabel": "Objet",
+      "messageLabel": "Message",
+      "submitLabel": "Envoyer le message",
+      "note": "Les messages sont envoyés directement depuis ce formulaire, sans ouvrir d'application e-mail.",
       "email_label": "Envoyer un email"
     },
     "projectMeta": {
       "type": "Type",
       "client": "Client",
       "year": "Année"
+    },
+    "system": {
+      "noImage": "Aucune image",
+      "imageUnavailable": "Image indisponible"
+    },
+    "status": {
+      "missingAccessKey": "Ajoutez votre clé d'accès Web3Forms dans index.html avant d'utiliser le formulaire en direct.",
+      "spamTriggered": "La protection anti-spam s'est déclenchée.",
+      "completeBeforeSend": "Merci de prendre un moment pour remplir le formulaire avant l'envoi.",
+      "waitBeforeResend": "Veuillez attendre {seconds} secondes avant d'envoyer un autre message.",
+      "fillMoreFields": "Merci d'indiquer un nom, un objet et un message plus complets avant l'envoi.",
+      "manualCompletion": "Merci de remplir le formulaire manuellement avant l'envoi.",
+      "linksNotAllowed": "Les liens ne sont pas autorisés dans le nom ou l'objet.",
+      "tooManyLinks": "Merci de réduire le nombre de liens dans votre message.",
+      "removeRepeatedChars": "Merci de retirer les caracteres repetes puis de reessayer.",
+      "sending": "Envoi du message...",
+      "messageSent": "Message envoye avec succes.",
+      "genericError": "Une erreur s'est produite. Merci de reessayer."
     },
     "categories": {
       "stageDesign": "Spectacle",
@@ -203,13 +228,38 @@ window.INLINE_TRANSLATIONS = {
       ]
     },
     "contact": {
+      "eyebrow": "Get in Touch",
       "heading": "Let's<br><em>work</em><br>together.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "subjectLabel": "Subject",
+      "messageLabel": "Message",
+      "submitLabel": "Send Message",
+      "note": "Messages are sent directly from this form, without opening an email app.",
       "email_label": "Send email"
     },
     "projectMeta": {
       "type": "Type",
       "client": "Client",
       "year": "Year"
+    },
+    "system": {
+      "noImage": "No Image",
+      "imageUnavailable": "Image unavailable"
+    },
+    "status": {
+      "missingAccessKey": "Add your Web3Forms access key in index.html before using the live form.",
+      "spamTriggered": "Spam protection triggered.",
+      "completeBeforeSend": "Please take a moment to complete the form before sending.",
+      "waitBeforeResend": "Please wait {seconds} seconds before sending another message.",
+      "fillMoreFields": "Please add a fuller name, subject, and message before sending.",
+      "manualCompletion": "Please complete the form manually before sending.",
+      "linksNotAllowed": "Links are not allowed in the name or subject fields.",
+      "tooManyLinks": "Please reduce the number of links in your message.",
+      "removeRepeatedChars": "Please remove repeated characters and try again.",
+      "sending": "Sending message...",
+      "messageSent": "Message sent successfully.",
+      "genericError": "Something went wrong. Please try again."
     },
     "categories": {
       "stageDesign": "Stage Design",

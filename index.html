@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -325,7 +325,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   </div>
   <div class="s-nav" id="s-nav"></div>
   <div class="s-foot">
-    <div class="s-link" id="sl-about" onclick="showPage('about')">About</div>
+    <div class="s-link" id="sl-about" onclick="showPage('about')">À propos</div>
     <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact</div>
     <div id="lang-switcher">
       <button class="lang-btn active" type="button" data-lang="fr">FR</button>
@@ -356,32 +356,32 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 
   <div class="page" id="pg-about">
     <div class="content-block">
-      <p class="eyebrow">About</p>
+      <p class="eyebrow">À propos</p>
       <div class="about-copy">
-        <p>I am a Paris-based scenographer and French state-certified architect, originally from China. My practice explores the intersection between architecture and performance, with a particular focus on how space, light, and movement can shape narrative and perception.</p>
-        <p>I was trained in architecture at ENSA Paris-Malaquais and China Central Academy of Fine Arts, where I developed a strong foundation in spatial design and project management, and later completed a degree in scenography at Sorbonne Nouvelle and École Duperré. This dual background allows me to approach projects at different scales, from built environments to stage design, always with attention to both concept and execution.</p>
-        <p>Professionally, I have worked as an architect and project manager, coordinating with clients and engineering teams on complex projects. At the same time, I expanded my practice into the performing arts through internships in the lighting departments of the Odéon Théâtre de l'Europe and Théâtre des Champs-Élysées, as well as within the design office of the Opéra national de Paris. These experiences strengthened my understanding of technical constraints while deepening my interest in atmosphere, dramaturgy, and the expressive potential of light.</p>
-        <p>My approach is both rigorous and intuitive, combining technical precision with a sensitivity to visual storytelling. I am interested in creating spaces that are not only functional, but also immersive and evocative, where architecture becomes a medium for experience.</p>
-        <p>Outside of my professional work, I draw inspiration from opera, dance, and visual arts, which continue to inform my approach to rhythm, composition, and scenographic thinking.</p>
+        <p>Je suis un scénographe et architecte français certifié par l'État, basé à Paris, originaire de Chine. Ma pratique explore l'intersection entre l'architecture et la performance, en mettant l'accent particulier sur la façon dont l'espace, la lumière et le mouvement peuvent façonner la narration et la perception.</p>
+        <p>J'ai été formé en architecture à l'ENSA Paris-Malaquais et à l'Académie centrale des beaux-arts de Chine, où j'ai développé une solide base en conception spatiale et en gestion de projet. J'ai ensuite complété ma formation par un diplôme en scénographie à la Sorbonne Nouvelle et à l'École Duperré. Cette double formation me permet d'aborder les projets à différentes échelles, de l'environnement bâti au design de scène, toujours avec attention au concept et à l'exécution.</p>
+        <p>Professionnellement, j'ai travaillé comme architecte et chef de projet, coordonnant avec les clients et les équipes d'ingénierie sur des projets complexes. Parallèlement, j'ai étendu ma pratique aux arts du spectacle par des stages dans les départements d'éclairage de l'Odéon Théâtre de l'Europe et du Théâtre des Champs-Élysées, ainsi qu'au sein du bureau d'études de l'Opéra national de Paris. Ces expériences ont renforcé ma compréhension des contraintes techniques tout en approfondissant mon intérêt pour l'atmosphère, la dramaturgie et le potentiel expressif de la lumière.</p>
+        <p>Mon approche est à la fois rigoureuse et intuitive, combinant la précision technique avec une sensibilité au récit visuel. Je m'intéresse à la création d'espaces qui ne sont pas seulement fonctionnels, mais aussi immersifs et évocateurs, où l'architecture devient un médium pour l'expérience.</p>
+        <p>En dehors de mon travail professionnel, je m'inspire de l'opéra, de la danse et des arts visuels, qui continuent à nourrir mon approche du rythme, de la composition et de la pensée scénographique.</p>
       </div>
     </div>
   </div>
 
   <div class="page" id="pg-contact">
     <div class="content-block">
-      <p class="eyebrow">Get in Touch</p>
-      <h2 class="heading">Let's<br><em>work</em><br>together.</h2>
+      <p class="eyebrow">Entrons en contact</p>
+      <h2 class="heading">Travaillons<br><em>ensemble.</em></h2>
       <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
         <div class="contact-field">
-          <label class="contact-label" for="contact-name">Name</label>
+          <label class="contact-label" for="contact-name">Nom</label>
           <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
         </div>
         <div class="contact-field">
-          <label class="contact-label" for="contact-email">Email</label>
+          <label class="contact-label" for="contact-email">E-mail</label>
           <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
         </div>
         <div class="contact-field">
-          <label class="contact-label" for="contact-subject">Subject</label>
+          <label class="contact-label" for="contact-subject">Objet</label>
           <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
         </div>
         <div class="contact-field">
@@ -391,8 +391,8 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
         <input type="text" name="website" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
         <input type="hidden" name="form_started_at" value="">
-        <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
-        <p class="contact-note">Messages are sent directly from this form, without opening an email app.</p>
+        <button class="contact-submit" id="contact-submit" type="button">Envoyer le message</button>
+        <p class="contact-note">Les messages sont envoyés directement depuis ce formulaire, sans ouvrir d'application e-mail.</p>
         <p class="contact-status" id="contact-status" aria-live="polite"></p>
       </form>
       <div class="contact-links">
@@ -443,6 +443,72 @@ function sanitizeRichText(html) {
 
 window.escapeHtml = escapeHtml;
 window.sanitizeRichText = sanitizeRichText;
+
+const UI_TEXT = {
+  fr: {
+    sidebar: { menu: 'Menu', close: 'Fermer' },
+    projectMeta: { type: 'Type', client: 'Client', year: 'Année' },
+    system: { noImage: 'Aucune image', imageUnavailable: 'Image indisponible' },
+    status: {
+      missingAccessKey: "Ajoutez votre clé d'accès Web3Forms dans index.html avant d'utiliser le formulaire en direct.",
+      spamTriggered: "La protection anti-spam s'est déclenchée.",
+      completeBeforeSend: "Merci de prendre un moment pour remplir le formulaire avant l'envoi.",
+      waitBeforeResend: 'Veuillez attendre {seconds} secondes avant d\'envoyer un autre message.',
+      fillMoreFields: "Merci d'indiquer un nom, un objet et un message plus complets avant l'envoi.",
+      manualCompletion: 'Merci de remplir le formulaire manuellement avant l\'envoi.',
+      linksNotAllowed: "Les liens ne sont pas autorisés dans le nom ou l'objet.",
+      tooManyLinks: 'Merci de réduire le nombre de liens dans votre message.',
+      removeRepeatedChars: 'Merci de retirer les caracteres repetes puis de reessayer.',
+      sending: 'Envoi du message...',
+      messageSent: 'Message envoye avec succes.',
+      genericError: "Une erreur s'est produite. Merci de reessayer."
+    }
+  },
+  en: {
+    sidebar: { menu: 'Menu', close: 'Close' },
+    projectMeta: { type: 'Type', client: 'Client', year: 'Year' },
+    system: { noImage: 'No Image', imageUnavailable: 'Image unavailable' },
+    status: {
+      missingAccessKey: 'Add your Web3Forms access key in index.html before using the live form.',
+      spamTriggered: 'Spam protection triggered.',
+      completeBeforeSend: 'Please take a moment to complete the form before sending.',
+      waitBeforeResend: 'Please wait {seconds} seconds before sending another message.',
+      fillMoreFields: 'Please add a fuller name, subject, and message before sending.',
+      manualCompletion: 'Please complete the form manually before sending.',
+      linksNotAllowed: 'Links are not allowed in the name or subject fields.',
+      tooManyLinks: 'Please reduce the number of links in your message.',
+      removeRepeatedChars: 'Please remove repeated characters and try again.',
+      sending: 'Sending message...',
+      messageSent: 'Message sent successfully.',
+      genericError: 'Something went wrong. Please try again.'
+    }
+  }
+};
+
+function interpolateUiText(template, replacements = {}) {
+  return Object.entries(replacements).reduce(
+    (output, [key, value]) => output.replaceAll(`{${key}}`, String(value)),
+    String(template)
+  );
+}
+
+function getUiText(path, replacements = {}) {
+  const currentLanguage = typeof window.getCurrentLanguage === 'function' ? window.getCurrentLanguage() : 'fr';
+  if (typeof window.getTranslationText === 'function') {
+    const translatedValue = window.getTranslationText(path, '', replacements);
+    if (translatedValue) return translatedValue;
+  }
+
+  const fallbackValue = path
+    .split('.')
+    .reduce((acc, key) => acc && acc[key], UI_TEXT[currentLanguage] || UI_TEXT.fr);
+
+  return typeof fallbackValue === 'string'
+    ? interpolateUiText(fallbackValue, replacements)
+    : '';
+}
+
+window.getUiText = getUiText;
 
 const DATA = {
    stageDesign: {
@@ -767,7 +833,9 @@ function toggleMenu() {
   const btn = document.getElementById('menu-btn');
   
   sidebar.classList.toggle('open');
-  btn.innerText = sidebar.classList.contains('open') ? 'Close' : 'Menu';
+  btn.innerText = sidebar.classList.contains('open')
+    ? getUiText('sidebar.close')
+    : getUiText('sidebar.menu');
 }
 
 function showPage(id) {
@@ -776,7 +844,7 @@ function showPage(id) {
   document.getElementById('sl-about').classList.toggle('on', id === 'about');
   document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
   document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('menu-btn').innerText = 'Menu';
+  document.getElementById('menu-btn').innerText = getUiText('sidebar.menu');
   window.scrollTo(0, 0);
   if (id === 'project') {
     document.getElementById('pg-project').scrollTo({ top: 0, behavior: 'auto' });
@@ -848,9 +916,9 @@ function openProject(cat, idx) {
   document.getElementById('p-title').innerText = p.title;
   document.getElementById('p-desc').innerHTML = sanitizeRichText(p.desc);
   document.getElementById('p-meta').innerHTML = `
-    <div class="proj-meta-row"><span class="proj-meta-label">Type</span><span>${escapeHtml(p.type)}</span></div>
-    <div class="proj-meta-row"><span class="proj-meta-label">Client</span><span>${escapeHtml(p.client)}</span></div>
-    <div class="proj-meta-row"><span class="proj-meta-label">Year</span><span>${escapeHtml(p.year)}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">${escapeHtml(getUiText('projectMeta.type'))}</span><span>${escapeHtml(p.type)}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">${escapeHtml(getUiText('projectMeta.client'))}</span><span>${escapeHtml(p.client)}</span></div>
+    <div class="proj-meta-row"><span class="proj-meta-label">${escapeHtml(getUiText('projectMeta.year'))}</span><span>${escapeHtml(p.year)}</span></div>
   `;
   showPage('project');
 
@@ -860,7 +928,7 @@ function openProject(cat, idx) {
   gallery.innerHTML = '';
 
   if (currentProjImages.length === 0) {
-    hero.innerHTML = '<div class="ph">No Image</div>';
+    hero.innerHTML = `<div class="ph">${escapeHtml(getUiText('system.noImage'))}</div>`;
     return;
   }
 
@@ -882,7 +950,7 @@ function openProject(cat, idx) {
     })
     .catch(() => {
       if (renderToken !== projectRenderToken) return;
-      hero.innerHTML = '<div class="ph">Image unavailable</div>';
+      hero.innerHTML = `<div class="ph">${escapeHtml(getUiText('system.imageUnavailable'))}</div>`;
     });
 }
 
@@ -1057,55 +1125,55 @@ function initContactForm() {
     const dynamicHoneypotValue = dynamicHoneypot ? normalizeContactField(formData.get(dynamicHoneypot.name) || '', 200) : '';
 
     if (WEB3FORMS_ACCESS_KEY === 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY') {
-      setContactStatus('Add your Web3Forms access key in index.html before using the live form.', 'is-error');
+      setContactStatus(getUiText('status.missingAccessKey'), 'is-error');
       return;
     }
 
     if (website || botcheck || dynamicHoneypotValue) {
-      setContactStatus('Spam protection triggered.', 'is-error');
+      setContactStatus(getUiText('status.spamTriggered'), 'is-error');
       resetContactFormState(contactForm, interactedFields);
       return;
     }
 
     if (!startedAt || Date.now() - startedAt < CONTACT_MIN_FILL_TIME_MS) {
-      setContactStatus('Please take a moment to complete the form before sending.', 'is-error');
+      setContactStatus(getUiText('status.completeBeforeSend'), 'is-error');
       return;
     }
 
     const remainingCooldownMs = getRemainingCooldownMs();
     if (remainingCooldownMs > 0) {
       const seconds = Math.ceil(remainingCooldownMs / 1000);
-      setContactStatus(`Please wait ${seconds} seconds before sending another message.`, 'is-error');
+      setContactStatus(getUiText('status.waitBeforeResend', { seconds }), 'is-error');
       return;
     }
 
     if (name.length < 2 || subject.length < 3 || message.length < 20) {
-      setContactStatus('Please add a fuller name, subject, and message before sending.', 'is-error');
+      setContactStatus(getUiText('status.fillMoreFields'), 'is-error');
       return;
     }
 
     if (interactedFields.size < CONTACT_MIN_INTERACTIONS) {
-      setContactStatus('Please complete the form manually before sending.', 'is-error');
+      setContactStatus(getUiText('status.manualCompletion'), 'is-error');
       return;
     }
 
     if (/(https?:\/\/|www\.)/i.test(name) || /(https?:\/\/|www\.)/i.test(subject)) {
-      setContactStatus('Links are not allowed in the name or subject fields.', 'is-error');
+      setContactStatus(getUiText('status.linksNotAllowed'), 'is-error');
       return;
     }
 
     if (countUrls(message) > CONTACT_MAX_URLS_IN_MESSAGE) {
-      setContactStatus('Please reduce the number of links in your message.', 'is-error');
+      setContactStatus(getUiText('status.tooManyLinks'), 'is-error');
       return;
     }
 
     if (hasSuspiciousRepetition(`${name} ${subject} ${message}`)) {
-      setContactStatus('Please remove repeated characters and try again.', 'is-error');
+      setContactStatus(getUiText('status.removeRepeatedChars'), 'is-error');
       return;
     }
 
     if (submitBtn) submitBtn.disabled = true;
-    setContactStatus('Sending message...');
+    setContactStatus(getUiText('status.sending'));
 
     try {
       const response = await fetch(WEB3FORMS_ENDPOINT, {
@@ -1131,9 +1199,9 @@ function initContactForm() {
 
       resetContactFormState(contactForm, interactedFields);
       localStorage.setItem(CONTACT_LAST_SENT_KEY, String(Date.now()));
-      setContactStatus('Message sent successfully.', 'is-success');
+      setContactStatus(getUiText('status.messageSent'), 'is-success');
     } catch (error) {
-      setContactStatus(error.message || 'Something went wrong. Please try again.', 'is-error');
+      setContactStatus(error.message || getUiText('status.genericError'), 'is-error');
     } finally {
       if (submitBtn) submitBtn.disabled = false;
     }
@@ -1146,7 +1214,7 @@ window.initContactForm = initContactForm;
 initContactForm();
 </script>
 
-<script src="js/translations-inline.js?v=20260331b"></script>
-<script src="js/lang.js?v=20260331b"></script>
+<script src="js/translations-inline.js?v=20260401a"></script>
+<script src="js/lang.js?v=20260401a"></script>
 </body>
 </html>

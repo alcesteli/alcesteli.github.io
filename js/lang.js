@@ -1,16 +1,43 @@
-let currentLang = localStorage.getItem('lang') || 'fr';
+const SUPPORTED_LANGS = new Set(['fr', 'en']);
+
+function normalizeLanguage(lang) {
+  return SUPPORTED_LANGS.has(lang) ? lang : 'fr';
+}
+
+let currentLang = normalizeLanguage(localStorage.getItem('lang') || 'fr');
 let translations = {};
-let appliedLang = document.documentElement.lang || 'en';
+let appliedLang = normalizeLanguage(document.documentElement.lang || currentLang);
 const escapeHtml = window.escapeHtml || (value => String(value));
 const sanitizeRichText = window.sanitizeRichText || (html => String(html));
+
+function getTranslationValue(path, fallback = '') {
+  const value = path.split('.').reduce((acc, key) => acc && acc[key], translations);
+  return value ?? fallback;
+}
+
+function interpolateText(template, replacements = {}) {
+  return Object.entries(replacements).reduce(
+    (output, [key, value]) => output.replaceAll(`{${key}}`, String(value)),
+    String(template)
+  );
+}
+
+window.getCurrentLanguage = () => appliedLang || currentLang || 'fr';
+window.getTranslationText = (path, fallback = '', replacements = {}) => {
+  const value = getTranslationValue(path, fallback);
+  return typeof value === 'string' ? interpolateText(value, replacements) : value;
+};
 
 console.log('[LANG] Initialized with language:', currentLang);
 
 function switchLanguage(lang) {
-  console.log('[LANG] Switching to:', lang, 'Current:', currentLang);
+  lang = normalizeLanguage(lang);
+  console.log('[LANG] Switching to:', lang, 'Current:', currentLang, 'Applied:', appliedLang);
   
-  if (currentLang === lang) {
-    console.log('[LANG] Language already set to', lang);
+  const hasLoadedTranslations = Object.keys(translations).length > 0;
+  if (currentLang === lang && appliedLang === lang && hasLoadedTranslations) {
+    console.log('[LANG] Language already fully applied:', lang);
+    updateLanguageSwitcher();
     return;
   }
   
@@ -25,6 +52,7 @@ function switchLanguage(lang) {
 window.switchLanguage = switchLanguage;
 
 function loadLanguageData(lang) {
+  lang = normalizeLanguage(lang);
   const inlineTranslations = window.INLINE_TRANSLATIONS?.[lang];
   if (inlineTranslations) {
     console.log('[LANG] Using inline translations for:', lang);
@@ -54,8 +82,13 @@ function loadLanguageData(lang) {
     .catch(err => {
       console.error('[LANG] Error loading translations:', err);
       console.error('[LANG] Tried path:', filePath);
+      translations = window.INLINE_TRANSLATIONS?.en || {};
       appliedLang = 'en';
       document.documentElement.lang = 'en';
+      if (Object.keys(translations).length > 0) {
+        applyTranslations();
+        return;
+      }
       createLanguageSwitcher();
       updateLanguageSwitcher();
     });
@@ -99,30 +132,30 @@ function applyTranslations() {
     console.log('[LANG] Updating Contact page');
     contactPage.innerHTML = `
       <div class="content-block">
-        <p class="eyebrow">Get in Touch</p>
+        <p class="eyebrow">${escapeHtml(translations.contact.eyebrow || 'Get in Touch')}</p>
         <h2 class="heading">${sanitizeRichText(translations.contact.heading)}</h2>
         <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
           <div class="contact-field">
-            <label class="contact-label" for="contact-name">Name</label>
+            <label class="contact-label" for="contact-name">${escapeHtml(translations.contact.nameLabel || 'Name')}</label>
             <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="contact-email">Email</label>
+            <label class="contact-label" for="contact-email">${escapeHtml(translations.contact.emailLabel || 'Email')}</label>
             <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="contact-subject">Subject</label>
+            <label class="contact-label" for="contact-subject">${escapeHtml(translations.contact.subjectLabel || 'Subject')}</label>
             <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="contact-message">Message</label>
+            <label class="contact-label" for="contact-message">${escapeHtml(translations.contact.messageLabel || 'Message')}</label>
             <textarea class="contact-textarea" id="contact-message" name="message" maxlength="3000" required></textarea>
           </div>
           <input type="text" name="website" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
           <input type="hidden" name="form_started_at" value="">
-          <button class="contact-submit" id="contact-submit" type="button">Send Message</button>
-          <p class="contact-note">Messages are sent directly from this form, without opening an email app.</p>
+          <button class="contact-submit" id="contact-submit" type="button">${escapeHtml(translations.contact.submitLabel || 'Send Message')}</button>
+          <p class="contact-note">${escapeHtml(translations.contact.note || 'Messages are sent directly from this form, without opening an email app.')}</p>
           <p class="contact-status" id="contact-status" aria-live="polite"></p>
         </form>
         <div class="contact-links">
@@ -234,6 +267,16 @@ function updateLanguageSwitcher() {
   console.log('[LANG] Updated button states. Requested:', currentLang, 'Applied:', appliedLang);
 }
 
+function syncMenuLabel() {
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menu-btn');
+  if (!menuBtn) return;
+  const isOpen = sidebar?.classList.contains('open');
+  menuBtn.textContent = isOpen
+    ? window.getTranslationText('sidebar.close', 'Close')
+    : window.getTranslationText('sidebar.menu', 'Menu');
+}
+
 // Override openProject to translate content
 const origOpenProject = window.openProject;
 window.openProject = function(cat, idx) {
@@ -274,11 +317,14 @@ window.openProject = function(cat, idx) {
   } else {
     console.warn('[LANG] No translations or project data found for:', cat);
   }
+  syncMenuLabel();
 };
 
 // Initialize when page is fully loaded
 function initLanguageSystem() {
   console.log('[LANG] initLanguageSystem called. Document state:', document.readyState);
+  document.documentElement.lang = currentLang;
+  appliedLang = currentLang;
   
   // Make sure DOM is ready
   if (document.readyState === 'loading') {
@@ -287,12 +333,14 @@ function initLanguageSystem() {
       console.log('[LANG] DOMContentLoaded fired');
       createLanguageSwitcher();
       updateLanguageSwitcher();
+      syncMenuLabel();
       setTimeout(loadLanguage, 100);
     });
   } else {
     console.log('[LANG] DOM already ready, loading language immediately');
     createLanguageSwitcher();
     updateLanguageSwitcher();
+    syncMenuLabel();
     setTimeout(loadLanguage, 100);
   }
 }
