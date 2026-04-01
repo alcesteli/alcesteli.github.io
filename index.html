@@ -260,19 +260,21 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
 /* LANGUAGE SWITCHER */
 #lang-switcher {
   display: flex; gap: 0; padding: 0; border-top: 1px solid var(--line); justify-content: center; align-items: center;
+  pointer-events: auto;
 }
 .lang-btn {
   background: transparent; border: none; padding: 10px 15px; line-height: 1;
   font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--gray); cursor: none; transition: color .2s;
+  color: var(--gray); cursor: pointer !important; transition: color .2s;
   font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 0;
+  pointer-events: auto;
 }
 .lang-sep {
   color: var(--gray);
   font-size: 10px;
 }
 .lang-btn.active { color: var(--blue); }
-.lang-btn:hover { color: var(--blue); }
+.lang-btn:hover { color: var(--blue); cursor: pointer; }
 
 /* MOBILE STYLES */
 @media (max-width: 768px) {

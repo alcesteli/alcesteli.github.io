@@ -136,10 +136,29 @@ function applyTranslations() {
   
   // Update sidebar project titles and categories
   updateSidebarText();
+  updateHomeSlideTitles();
   
   // Create language switcher
   createLanguageSwitcher();
   console.log('[LANG] Translations applied');
+}
+
+function updateHomeSlideTitles() {
+  const slides = document.querySelectorAll('.h-slide');
+  if (!slides.length || !window.HOME_SLIDES) return;
+
+  HOME_SLIDES.forEach((cfg, index) => {
+    if (!cfg.project) return;
+    const translationsForProject = translations.projects?.[cfg.project.cat]?.items;
+    const translatedItem = translationsForProject?.[cfg.project.idx];
+    if (!translatedItem?.title) return;
+
+    const slide = slides[index];
+    const titleEl = slide?.querySelector('.h-slide-title');
+    if (titleEl) {
+      titleEl.textContent = translatedItem.title;
+    }
+  });
 }
 
 function updateSidebarText() {
