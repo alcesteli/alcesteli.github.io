@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debug Lang</title>
+<style>
+body {
+  font-family: monospace;
+  padding: 24px;
+  line-height: 1.6;
+}
+.card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+button {
+  padding: 10px 14px;
+  margin-right: 8px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <strong>BUILD:</strong> 2026-04-01-debug-1
+</div>
+
+<div class="card">
+  <div id="summary">Chargement...</div>
+  <div id="lang-attr"></div>
+  <div id="storage"></div>
+  <div id="current-lang"></div>
+</div>
+
+<div class="card">
+  <button type="button" id="btn-fr">FR</button>
+  <button type="button" id="btn-en">EN</button>
+  <div id="text" style="margin-top:12px;">Texte initial en francais.</div>
+</div>
+
+<script src="js/translations-inline.js?v=20260401a"></script>
+<script src="js/lang.js?v=20260401a"></script>
+<script>
+  const summary = document.getElementById('summary');
+  const langAttr = document.getElementById('lang-attr');
+  const storage = document.getElementById('storage');
+  const currentLang = document.getElementById('current-lang');
+  const text = document.getElementById('text');
+
+  function refreshDebugState() {
+    summary.textContent = 'JS charge';
+    langAttr.textContent = `document.documentElement.lang = ${document.documentElement.lang}`;
+    storage.textContent = `localStorage lang = ${localStorage.getItem('lang')}`;
+    currentLang.textContent = `window.getCurrentLanguage() = ${typeof window.getCurrentLanguage === 'function' ? window.getCurrentLanguage() : 'absent'}`;
+    text.textContent = document.documentElement.lang === 'en'
+      ? 'Current text: English is active.'
+      : 'Texte courant : le francais est actif.';
+  }
+
+  document.getElementById('btn-fr').addEventListener('click', () => {
+    if (typeof window.switchLanguage === 'function') {
+      window.switchLanguage('fr');
+      setTimeout(refreshDebugState, 50);
+    }
+  });
+
+  document.getElementById('btn-en').addEventListener('click', () => {
+    if (typeof window.switchLanguage === 'function') {
+      window.switchLanguage('en');
+      setTimeout(refreshDebugState, 50);
+    }
+  });
+
+  window.addEventListener('error', event => {
+    summary.textContent = `ERREUR JS: ${event.message}`;
+  });
+
+  setTimeout(refreshDebugState, 150);
+</script>
+</body>
+</html>
