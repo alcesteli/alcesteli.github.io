@@ -1043,7 +1043,14 @@ function normalizeContactField(value, maxLength) {
 }
 
 function getRemainingCooldownMs() {
-  const lastSentAt = Number(localStorage.getItem(CONTACT_LAST_SENT_KEY) || '0');
+  const getStorageItem = window.safeGetStorageItem || (key => {
+    try {
+      return window.localStorage.getItem(key);
+    } catch (_) {
+      return null;
+    }
+  });
+  const lastSentAt = Number(getStorageItem(CONTACT_LAST_SENT_KEY) || '0');
   if (!lastSentAt) return 0;
   return Math.max(0, CONTACT_RATE_LIMIT_MS - (Date.now() - lastSentAt));
 }
@@ -1198,7 +1205,12 @@ function initContactForm() {
       }
 
       resetContactFormState(contactForm, interactedFields);
-      localStorage.setItem(CONTACT_LAST_SENT_KEY, String(Date.now()));
+      const setStorageItem = window.safeSetStorageItem || ((key, value) => {
+        try {
+          window.localStorage.setItem(key, String(value));
+        } catch (_) {}
+      });
+      setStorageItem(CONTACT_LAST_SENT_KEY, String(Date.now()));
       setContactStatus(getUiText('status.messageSent'), 'is-success');
     } catch (error) {
       setContactStatus(error.message || getUiText('status.genericError'), 'is-error');

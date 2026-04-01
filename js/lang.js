@@ -1,10 +1,30 @@
 const SUPPORTED_LANGS = new Set(['fr', 'en']);
+const memoryStorage = {};
+
+function safeGetStorageItem(key) {
+  try {
+    const value = window.localStorage.getItem(key);
+    return value === null ? (memoryStorage[key] ?? null) : value;
+  } catch (_) {
+    return memoryStorage[key] ?? null;
+  }
+}
+
+function safeSetStorageItem(key, value) {
+  memoryStorage[key] = String(value);
+  try {
+    window.localStorage.setItem(key, String(value));
+  } catch (_) {}
+}
 
 function normalizeLanguage(lang) {
   return SUPPORTED_LANGS.has(lang) ? lang : 'fr';
 }
 
-let currentLang = normalizeLanguage(localStorage.getItem('lang') || 'fr');
+window.safeGetStorageItem = safeGetStorageItem;
+window.safeSetStorageItem = safeSetStorageItem;
+
+let currentLang = normalizeLanguage(safeGetStorageItem('lang') || 'fr');
 let translations = {};
 let appliedLang = normalizeLanguage(document.documentElement.lang || currentLang);
 const escapeHtml = window.escapeHtml || (value => String(value));
@@ -42,8 +62,8 @@ function switchLanguage(lang) {
   }
   
   currentLang = lang;
-  localStorage.setItem('lang', lang);
-  console.log('[LANG] Language saved to localStorage');
+  safeSetStorageItem('lang', lang);
+  console.log('[LANG] Language saved to storage');
 
   updateLanguageSwitcher();
   loadLanguageData(lang);

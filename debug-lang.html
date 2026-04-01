@@ -51,7 +51,10 @@ button {
   function refreshDebugState() {
     summary.textContent = 'JS charge';
     langAttr.textContent = `document.documentElement.lang = ${document.documentElement.lang}`;
-    storage.textContent = `localStorage lang = ${localStorage.getItem('lang')}`;
+    const storedLang = typeof window.safeGetStorageItem === 'function'
+      ? window.safeGetStorageItem('lang')
+      : 'safeGetStorageItem absent';
+    storage.textContent = `storage lang = ${storedLang}`;
     currentLang.textContent = `window.getCurrentLanguage() = ${typeof window.getCurrentLanguage === 'function' ? window.getCurrentLanguage() : 'absent'}`;
     text.textContent = document.documentElement.lang === 'en'
       ? 'Current text: English is active.'
