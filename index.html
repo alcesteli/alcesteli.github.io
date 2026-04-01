@@ -328,9 +328,9 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
     <div class="s-link" id="sl-about" onclick="showPage('about')">À propos</div>
     <div class="s-link" id="sl-contact" onclick="showPage('contact')">Contact</div>
     <div id="lang-switcher">
-      <button class="lang-btn active" type="button" data-lang="fr">FR</button>
+      <button class="lang-btn active" type="button" data-lang="fr" onclick="switchLanguage('fr')">FR</button>
       <span class="lang-sep">|</span>
-      <button class="lang-btn" type="button" data-lang="en">EN</button>
+      <button class="lang-btn" type="button" data-lang="en" onclick="switchLanguage('en')">EN</button>
     </div>
   </div>
 </aside>
@@ -403,6 +403,7 @@ main { flex: 1; height: 100vh; height: 100dvh; overflow: hidden; position: relat
   </div>
 </main>
 
+<script src="js/translations-inline.js?v=20260401a"></script>
 <script>
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, char => ({
@@ -773,23 +774,173 @@ const HOME_SLIDES = [
   { image: 'images/OTHERS/SP1.jpeg', project: { cat: 'others', idx: 0 } }
 ];
 
+const LANGUAGE_STORAGE_KEY = 'lang';
+const BASE_DATA = JSON.parse(JSON.stringify(DATA));
+let siteLang = 'fr';
+let currentProjectState = { cat: null, idx: null };
+
+function safeReadStorage(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch (_) {
+    return null;
+  }
+}
+
+function safeWriteStorage(key, value) {
+  try {
+    window.localStorage.setItem(key, String(value));
+  } catch (_) {}
+}
+
+function normalizeSiteLanguage(lang) {
+  return lang === 'en' ? 'en' : 'fr';
+}
+
+function getActiveTranslations(lang) {
+  return window.INLINE_TRANSLATIONS && window.INLINE_TRANSLATIONS[lang]
+    ? window.INLINE_TRANSLATIONS[lang]
+    : null;
+}
+
+function getNestedTranslation(source, path, fallback = '') {
+  const value = path.split('.').reduce((acc, key) => acc && acc[key], source);
+  return value == null ? fallback : value;
+}
+
+window.getCurrentLanguage = function() {
+  return siteLang;
+};
+
+window.getTranslationText = function(path, fallback = '', replacements = {}) {
+  const source = getActiveTranslations(siteLang) || {};
+  let output = getNestedTranslation(source, path, fallback);
+  if (typeof output !== 'string') return output;
+  Object.keys(replacements).forEach(key => {
+    output = output.split(`{${key}}`).join(String(replacements[key]));
+  });
+  return output;
+};
+
+function syncLangButtons() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === siteLang);
+  });
+}
+
+function applyStaticTranslations(lang) {
+  const tr = getActiveTranslations(lang) || {};
+  const sidebar = tr.sidebar || {};
+  const about = tr.about || {};
+  const contact = tr.contact || {};
+
+  document.documentElement.lang = lang;
+
+  const aboutBtn = document.getElementById('sl-about');
+  const contactBtn = document.getElementById('sl-contact');
+  const menuBtn = document.getElementById('menu-btn');
+  if (aboutBtn) aboutBtn.textContent = sidebar.about || 'About';
+  if (contactBtn) contactBtn.textContent = sidebar.contact || 'Contact';
+  if (menuBtn) menuBtn.textContent = sidebar.menu || 'Menu';
+
+  const aboutPage = document.getElementById('pg-about');
+  if (aboutPage && about.content) {
+    aboutPage.innerHTML = `
+      <div class="content-block">
+        <p class="eyebrow">${escapeHtml(about.heading || 'About')}</p>
+        <div class="about-copy">
+          ${about.content.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  const contactPage = document.getElementById('pg-contact');
+  if (contactPage && contact.heading) {
+    contactPage.innerHTML = `
+      <div class="content-block">
+        <p class="eyebrow">${escapeHtml(contact.eyebrow || 'Get in Touch')}</p>
+        <h2 class="heading">${sanitizeRichText(contact.heading)}</h2>
+        <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-name">${escapeHtml(contact.nameLabel || 'Name')}</label>
+            <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-email">${escapeHtml(contact.emailLabel || 'Email')}</label>
+            <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-subject">${escapeHtml(contact.subjectLabel || 'Subject')}</label>
+            <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
+          </div>
+          <div class="contact-field">
+            <label class="contact-label" for="contact-message">${escapeHtml(contact.messageLabel || 'Message')}</label>
+            <textarea class="contact-textarea" id="contact-message" name="message" maxlength="3000" required></textarea>
+          </div>
+          <input type="text" name="website" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="form_started_at" value="">
+          <button class="contact-submit" id="contact-submit" type="button">${escapeHtml(contact.submitLabel || 'Send Message')}</button>
+          <p class="contact-note">${escapeHtml(contact.note || 'Messages are sent directly from this form, without opening an email app.')}</p>
+          <p class="contact-status" id="contact-status" aria-live="polite"></p>
+        </form>
+        <div class="contact-links">
+          <a href="https://www.instagram.com/clapciodonagua?igsh=MXh6YTN6OHd3NTB0aw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="c-row"><span class="c-row-name">Instagram</span><span class="c-row-arr">&#8599;</span></a>
+          <a href="https://www.behance.net/alceste_li" target="_blank" rel="noopener noreferrer" class="c-row"><span class="c-row-name">Behance</span><span class="c-row-arr">&#8599;</span></a>
+        </div>
+      </div>
+    `;
+  }
+
+  syncLangButtons();
+}
+
+function applyDataTranslations(lang) {
+  Object.keys(BASE_DATA).forEach(catKey => {
+    DATA[catKey] = JSON.parse(JSON.stringify(BASE_DATA[catKey]));
+  });
+
+  if (lang !== 'fr') return;
+
+  const tr = getActiveTranslations(lang) || {};
+  const categories = tr.categories || {};
+  const projects = tr.projects || {};
+
+  Object.keys(DATA).forEach(catKey => {
+    if (categories[catKey]) DATA[catKey].label = categories[catKey];
+    const translatedItems = projects[catKey] && projects[catKey].items;
+    if (!translatedItems) return;
+    DATA[catKey].items.forEach((item, index) => {
+      const translatedItem = translatedItems[index];
+      if (!translatedItem) return;
+      if (translatedItem.title) item.title = translatedItem.title;
+      if (translatedItem.desc) item.desc = translatedItem.desc;
+    });
+  });
+}
+
 let currentProjImages = [];
 let lbIndex = 0;
 let projectRenderToken = 0;
-
-// Initialize Sidebar Nav
 const sNav = document.getElementById('s-nav');
-Object.keys(DATA).forEach(catKey => {
-  const cat = DATA[catKey];
-  const group = document.createElement('div');
-  group.innerHTML = `
-    <div class="s-cat-head closed" data-cat="${escapeHtml(catKey)}" onclick="this.classList.toggle('closed')">${escapeHtml(cat.label)} <span class="s-cat-arr">▾</span></div>
-    <div class="s-items">
-      ${cat.items.map((item, i) => `<div class="s-item" id="si-${escapeHtml(catKey)}-${i}" onclick="openProject('${catKey}', ${i})">${escapeHtml(item.title)}</div>`).join('')}
-    </div>
-  `;
-  sNav.appendChild(group);
-});
+const track = document.getElementById('h-track');
+const dots = document.getElementById('h-dots');
+
+function renderSidebarNav() {
+  sNav.innerHTML = '';
+  Object.keys(DATA).forEach(catKey => {
+    const cat = DATA[catKey];
+    const group = document.createElement('div');
+    group.innerHTML = `
+      <div class="s-cat-head closed" data-cat="${escapeHtml(catKey)}" onclick="this.classList.toggle('closed')">${escapeHtml(cat.label)} <span class="s-cat-arr">▾</span></div>
+      <div class="s-items">
+        ${cat.items.map((item, i) => `<div class="s-item" id="si-${escapeHtml(catKey)}-${i}" onclick="openProject('${catKey}', ${i})">${escapeHtml(item.title)}</div>`).join('')}
+      </div>
+    `;
+    sNav.appendChild(group);
+  });
+}
 
 function getHomeSlideData(cfg) {
   if (cfg.project) {
@@ -807,21 +958,40 @@ function getHomeSlideData(cfg) {
   };
 }
 
-// Initialize Home Slider
-const track = document.getElementById('h-track');
-const dots = document.getElementById('h-dots');
-HOME_SLIDES.forEach((cfg, i) => {
-  const item = getHomeSlideData(cfg);
-  const slide = document.createElement('div');
-  slide.className = 'h-slide';
-  const imgSrc = item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Featured image')}" />` : `<div class="ph">Coming Soon</div>`;
-  slide.innerHTML = `<div class="h-slide-img-wrap">${imgSrc}</div><div class="h-slide-title">${escapeHtml(item.title)}</div>`;
-  if (item.click) slide.onclick = item.click;
-  track.appendChild(slide);
-  const dot = document.createElement('div');
-  dot.className = 'dot' + (i === 0 ? ' on' : '');
-  dots.appendChild(dot);
-});
+function renderHomeSlider() {
+  track.innerHTML = '';
+  dots.innerHTML = '';
+  HOME_SLIDES.forEach((cfg, i) => {
+    const item = getHomeSlideData(cfg);
+    const slide = document.createElement('div');
+    slide.className = 'h-slide';
+    const imgSrc = item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Featured image')}" />` : `<div class="ph">Coming Soon</div>`;
+    slide.innerHTML = `<div class="h-slide-img-wrap">${imgSrc}</div><div class="h-slide-title">${escapeHtml(item.title)}</div>`;
+    if (item.click) slide.onclick = item.click;
+    track.appendChild(slide);
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' on' : '');
+    dots.appendChild(dot);
+  });
+}
+
+window.switchLanguage = function(lang) {
+  siteLang = normalizeSiteLanguage(lang);
+  safeWriteStorage(LANGUAGE_STORAGE_KEY, siteLang);
+  applyDataTranslations(siteLang);
+  applyStaticTranslations(siteLang);
+  renderSidebarNav();
+  renderHomeSlider();
+  if (typeof window.initContactForm === 'function') window.initContactForm();
+  if (currentProjectState.cat !== null) openProject(currentProjectState.cat, currentProjectState.idx);
+  updateDots();
+};
+
+siteLang = normalizeSiteLanguage(safeReadStorage(LANGUAGE_STORAGE_KEY) || 'fr');
+applyDataTranslations(siteLang);
+applyStaticTranslations(siteLang);
+renderSidebarNav();
+renderHomeSlider();
 
 function updateDots() {
   const i = Math.round(track.scrollLeft / track.clientWidth);
@@ -899,6 +1069,7 @@ function createProjectImage(src, index, isHero) {
 }
 
 function openProject(cat, idx) {
+  currentProjectState = { cat, idx };
   const p = DATA[cat].items[idx];
   currentProjImages = p.images || [];
   projectRenderToken += 1;
@@ -1226,7 +1397,5 @@ window.initContactForm = initContactForm;
 initContactForm();
 </script>
 
-<script src="js/translations-inline.js?v=20260401a"></script>
-<script src="js/lang.js?v=20260401a"></script>
 </body>
 </html>
