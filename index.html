@@ -486,10 +486,10 @@ const UI_TEXT = {
 };
 
 function interpolateUiText(template, replacements = {}) {
-  return Object.entries(replacements).reduce(
-    (output, [key, value]) => output.replaceAll(`{${key}}`, String(value)),
-    String(template)
-  );
+  return Object.keys(replacements).reduce((output, key) => {
+    const token = `{${key}}`;
+    return output.split(token).join(String(replacements[key]));
+  }, String(template));
 }
 
 function getUiText(path, replacements = {}) {

@@ -4,9 +4,9 @@ const memoryStorage = {};
 function safeGetStorageItem(key) {
   try {
     const value = window.localStorage.getItem(key);
-    return value === null ? (memoryStorage[key] ?? null) : value;
+    return value === null ? (Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null) : value;
   } catch (_) {
-    return memoryStorage[key] ?? null;
+    return Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null;
   }
 }
 
@@ -32,14 +32,14 @@ const sanitizeRichText = window.sanitizeRichText || (html => String(html));
 
 function getTranslationValue(path, fallback = '') {
   const value = path.split('.').reduce((acc, key) => acc && acc[key], translations);
-  return value ?? fallback;
+  return value == null ? fallback : value;
 }
 
 function interpolateText(template, replacements = {}) {
-  return Object.entries(replacements).reduce(
-    (output, [key, value]) => output.replaceAll(`{${key}}`, String(value)),
-    String(template)
-  );
+  return Object.keys(replacements).reduce((output, key) => {
+    const token = `{${key}}`;
+    return output.split(token).join(String(replacements[key]));
+  }, String(template));
 }
 
 window.getCurrentLanguage = () => appliedLang || currentLang || 'fr';
@@ -73,7 +73,7 @@ window.switchLanguage = switchLanguage;
 
 function loadLanguageData(lang) {
   lang = normalizeLanguage(lang);
-  const inlineTranslations = window.INLINE_TRANSLATIONS?.[lang];
+  const inlineTranslations = window.INLINE_TRANSLATIONS && window.INLINE_TRANSLATIONS[lang];
   if (inlineTranslations) {
     console.log('[LANG] Using inline translations for:', lang);
     translations = inlineTranslations;
@@ -102,7 +102,7 @@ function loadLanguageData(lang) {
     .catch(err => {
       console.error('[LANG] Error loading translations:', err);
       console.error('[LANG] Tried path:', filePath);
-      translations = window.INLINE_TRANSLATIONS?.en || {};
+      translations = (window.INLINE_TRANSLATIONS && window.INLINE_TRANSLATIONS.en) || {};
       appliedLang = 'en';
       document.documentElement.lang = 'en';
       if (Object.keys(translations).length > 0) {
@@ -128,9 +128,9 @@ function applyTranslations() {
     menu: !!menuBtn
   });
   
-  if (aboutBtn) aboutBtn.textContent = translations.sidebar?.about || 'About';
-  if (contactBtn) contactBtn.textContent = translations.sidebar?.contact || 'Contact';
-  if (menuBtn) menuBtn.textContent = translations.sidebar?.menu || 'Menu';
+  if (aboutBtn) aboutBtn.textContent = translations.sidebar && translations.sidebar.about || 'About';
+  if (contactBtn) contactBtn.textContent = translations.sidebar && translations.sidebar.contact || 'Contact';
+  if (menuBtn) menuBtn.textContent = translations.sidebar && translations.sidebar.menu || 'Menu';
   
   // Update About page content
   const aboutPage = document.getElementById('pg-about');
@@ -152,30 +152,30 @@ function applyTranslations() {
     console.log('[LANG] Updating Contact page');
     contactPage.innerHTML = `
       <div class="content-block">
-        <p class="eyebrow">${escapeHtml(translations.contact.eyebrow || 'Get in Touch')}</p>
+        <p class="eyebrow">${escapeHtml(translations.contact && translations.contact.eyebrow || 'Get in Touch')}</p>
         <h2 class="heading">${sanitizeRichText(translations.contact.heading)}</h2>
         <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
           <div class="contact-field">
-            <label class="contact-label" for="contact-name">${escapeHtml(translations.contact.nameLabel || 'Name')}</label>
+            <label class="contact-label" for="contact-name">${escapeHtml(translations.contact && translations.contact.nameLabel || 'Name')}</label>
             <input class="contact-input" id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="contact-email">${escapeHtml(translations.contact.emailLabel || 'Email')}</label>
+            <label class="contact-label" for="contact-email">${escapeHtml(translations.contact && translations.contact.emailLabel || 'Email')}</label>
             <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="contact-subject">${escapeHtml(translations.contact.subjectLabel || 'Subject')}</label>
+            <label class="contact-label" for="contact-subject">${escapeHtml(translations.contact && translations.contact.subjectLabel || 'Subject')}</label>
             <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
           </div>
           <div class="contact-field">
-            <label class="contact-label" for="contact-message">${escapeHtml(translations.contact.messageLabel || 'Message')}</label>
+            <label class="contact-label" for="contact-message">${escapeHtml(translations.contact && translations.contact.messageLabel || 'Message')}</label>
             <textarea class="contact-textarea" id="contact-message" name="message" maxlength="3000" required></textarea>
           </div>
           <input type="text" name="website" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off">
           <input type="hidden" name="form_started_at" value="">
-          <button class="contact-submit" id="contact-submit" type="button">${escapeHtml(translations.contact.submitLabel || 'Send Message')}</button>
-          <p class="contact-note">${escapeHtml(translations.contact.note || 'Messages are sent directly from this form, without opening an email app.')}</p>
+          <button class="contact-submit" id="contact-submit" type="button">${escapeHtml(translations.contact && translations.contact.submitLabel || 'Send Message')}</button>
+          <p class="contact-note">${escapeHtml(translations.contact && translations.contact.note || 'Messages are sent directly from this form, without opening an email app.')}</p>
           <p class="contact-status" id="contact-status" aria-live="polite"></p>
         </form>
         <div class="contact-links">
@@ -202,12 +202,12 @@ function updateHomeSlideTitles() {
 
   HOME_SLIDES.forEach((cfg, index) => {
     if (!cfg.project) return;
-    const translationsForProject = translations.projects?.[cfg.project.cat]?.items;
-    const translatedItem = translationsForProject?.[cfg.project.idx];
-    if (!translatedItem?.title) return;
+    const translationsForProject = translations.projects && translations.projects[cfg.project.cat] && translations.projects[cfg.project.cat].items;
+    const translatedItem = translationsForProject && translationsForProject[cfg.project.idx];
+    if (!translatedItem || !translatedItem.title) return;
 
     const slide = slides[index];
-    const titleEl = slide?.querySelector('.h-slide-title');
+    const titleEl = slide && slide.querySelector('.h-slide-title');
     if (titleEl) {
       titleEl.textContent = translatedItem.title;
     }
@@ -217,7 +217,9 @@ function updateHomeSlideTitles() {
 function updateSidebarText() {
   // Get all sidebar items and update their text
   document.querySelectorAll('.s-item').forEach(item => {
-    const catAttr = item.parentElement?.previousElementSibling?.getAttribute('data-cat');
+    const catAttr = item.parentElement && item.parentElement.previousElementSibling
+      ? item.parentElement.previousElementSibling.getAttribute('data-cat')
+      : null;
     const itemIndex = Array.from(item.parentElement.children).indexOf(item);
     
     if (catAttr && translations.projects && translations.projects[catAttr]) {
@@ -291,7 +293,7 @@ function syncMenuLabel() {
   const sidebar = document.getElementById('sidebar');
   const menuBtn = document.getElementById('menu-btn');
   if (!menuBtn) return;
-  const isOpen = sidebar?.classList.contains('open');
+  const isOpen = !!(sidebar && sidebar.classList.contains('open'));
   menuBtn.textContent = isOpen
     ? window.getTranslationText('sidebar.close', 'Close')
     : window.getTranslationText('sidebar.menu', 'Menu');
@@ -322,9 +324,9 @@ window.openProject = function(cat, idx) {
       // Update meta labels
       const metaRows = document.querySelectorAll('.proj-meta-row');
       const labels = [
-        translations.projectMeta?.type || 'Type',
-        translations.projectMeta?.client || 'Client',
-        translations.projectMeta?.year || 'Year'
+        translations.projectMeta && translations.projectMeta.type || 'Type',
+        translations.projectMeta && translations.projectMeta.client || 'Client',
+        translations.projectMeta && translations.projectMeta.year || 'Year'
       ];
       metaRows.forEach((row, i) => {
         if (i < labels.length) {
