@@ -1050,10 +1050,10 @@ function loadProjectImage(src) {
 
 function createProjectImage(src, index, isHero) {
   const wrap = document.createElement('div');
-  wrap.className = isHero ? 'proj-loading' : 'proj-img-wrap';
-  if (!isHero) {
-    wrap.innerHTML = '<div class="proj-loading"></div>';
-  }
+  wrap.className = isHero ? 'proj-hero' : 'proj-img-wrap';
+  const loader = document.createElement('div');
+  loader.className = 'proj-loading';
+  wrap.appendChild(loader);
 
   const img = document.createElement('img');
   img.className = 'proj-img';
@@ -1064,11 +1064,15 @@ function createProjectImage(src, index, isHero) {
     try {
       if (img.decode) await img.decode();
     } catch (_) {}
-    wrap.innerHTML = '';
-    if (!isHero) wrap.className = 'proj-img-wrap';
-    wrap.appendChild(img);
+    loader.remove();
     requestAnimationFrame(() => img.classList.add('is-ready'));
   };
+  img.onerror = () => {
+    loader.remove();
+    img.remove();
+    wrap.innerHTML = `<div class="ph">${escapeHtml(getUiText('system.imageUnavailable'))}</div>`;
+  };
+  wrap.appendChild(img);
   img.src = src;
 
   return { wrap, img };
