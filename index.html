@@ -18,6 +18,7 @@
   --hover: #f0ece6;
   --accent: #0000ff;
   --side-safe: clamp(84px, 9vw, 140px);
+  --nav-size: clamp(18px, 1.4vw, 22px);
 }
 
 html, body { height: 100%; background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
@@ -67,7 +68,7 @@ aside::before {
 .s-logo { cursor: pointer; }
 .s-logo-name {
   font-family: 'Avenir Black', 'Avenir Next Heavy', 'Avenir Next', Avenir, sans-serif;
-  font-size: clamp(18px, 1.4vw, 22px);
+  font-size: var(--nav-size);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -.04em;
@@ -85,7 +86,7 @@ aside::before {
   background: transparent;
   backdrop-filter: none;
   font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
-  font-size: 11px;
+  font-size: var(--nav-size);
   font-weight: 400;
   letter-spacing: .02em;
   text-transform: lowercase;
@@ -142,6 +143,7 @@ aside::before {
   border-radius: 0;
   background: transparent;
   backdrop-filter: none;
+  font-size: var(--nav-size);
 }
 .open .s-nav {
   opacity: 1;
@@ -153,9 +155,10 @@ aside::before {
 .s-cat-head {
   padding: 0 0 14px;
   margin-top: 22px;
-  font-size: 10px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
+  font-size: var(--nav-size);
+  font-weight: 400;
+  letter-spacing: .02em;
+  text-transform: lowercase;
   color: var(--gray);
   display: flex;
   justify-content: center;
@@ -173,7 +176,8 @@ aside::before {
 .s-item {
   font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
   padding: 8px 0;
-  font-size: 12px;
+  font-size: var(--nav-size);
+  font-weight: 400;
   line-height: 1.4;
   color: var(--black);
   cursor: pointer;
@@ -190,7 +194,7 @@ aside::before {
   position: fixed;
   top: 50%;
   font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
-  font-size: clamp(12px, 1vw, 14px);
+  font-size: var(--nav-size);
   font-weight: 400;
   letter-spacing: .02em;
   text-transform: lowercase;
@@ -223,12 +227,14 @@ main {
 }
 .page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
 .page.on { opacity: 1; pointer-events: all; }
-#pg-about, #pg-contact { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+#pg-about, #pg-contact { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+#pg-about::-webkit-scrollbar, #pg-contact::-webkit-scrollbar { display: none; }
 
 /* HOME SLIDER */
 #pg-home {
   height: 100%;
   padding: 112px var(--side-safe) 112px;
+  overflow: hidden;
 }
 .h-track {
   display: flex;
@@ -236,7 +242,11 @@ main {
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory; scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-y: none;
 }
 .h-track::-webkit-scrollbar { display: none; }
 .h-slide {
@@ -281,7 +291,9 @@ main {
   scroll-behavior: smooth;
   background: var(--white);
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+#pg-project::-webkit-scrollbar { display: none; }
 .proj-hero {
   width: min(1400px, calc(100% - (var(--side-safe) * 2)));
   margin: 0 auto;
@@ -524,31 +536,37 @@ main {
 }
 .lang-btn {
   background: transparent; border: none; padding: 4px 8px; line-height: 1;
-  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-size: var(--nav-size);
+  letter-spacing: .02em;
+  text-transform: uppercase;
   color: var(--gray); cursor: pointer !important; transition: color .2s;
-  font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 0;
+  display: flex; align-items: center; gap: 0;
   pointer-events: auto;
 }
 .lang-sep {
   color: var(--gray);
-  font-size: 10px;
+  font-size: var(--nav-size);
 }
 .lang-btn.active { color: var(--accent); }
 .lang-btn:hover { color: var(--accent); cursor: pointer; }
+
+body.home-active {
+  overflow: hidden;
+}
 
 /* MOBILE STYLES */
 @media (max-width: 768px) {
   :root {
     --mobile-side-safe: 72px;
+    --nav-size: 16px;
   }
-  body { cursor: auto; overflow-y: auto; }
+  body { cursor: auto; overflow: hidden; }
   #cur { display: none; }
   .s-logo-container { top: 26px; }
-  .s-logo-name { font-size: 16px; }
   .mobile-toggle {
     bottom: 20px;
     padding: 0;
-    font-size: 10px;
   }
   .s-nav {
     top: auto;
@@ -562,7 +580,10 @@ main {
     top: 50%;
     bottom: auto;
     transform: translateY(-50%);
-    font-size: 11px;
+    font-size: var(--nav-size);
+    line-height: 1;
+    width: max-content;
+    white-space: nowrap;
   }
   #sl-about { left: 20px; }
   #sl-contact { right: 20px; }
@@ -573,8 +594,12 @@ main {
     transform: translateX(-50%);
     padding: 0;
   }
-  .lang-btn { padding: 4px 6px; font-size: 9px; letter-spacing: .1em; line-height: 1; }
-  main { height: auto; overflow: visible; padding-bottom: 130px; }
+  .lang-btn { padding: 4px 6px; line-height: 1; }
+  main {
+    height: 100svh;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
   #pg-home {
     width: calc(100vw - (var(--mobile-side-safe) * 2));
     margin: 0 auto;
@@ -582,21 +607,34 @@ main {
     min-height: 640px;
     display: none;
     padding: 88px 0 140px;
+    overflow: hidden;
   }
   #pg-home.on { display: block; }
   .page {
-    position: relative;
-    opacity: 1;
-    pointer-events: all;
-    display: none;
-    height: auto;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    display: block;
+    height: 100svh;
   }
-  .page.on { display: block; }
+  .page.on { opacity: 1; pointer-events: all; }
   #pg-project,
   #pg-about,
   #pg-contact {
     width: calc(100vw - (var(--mobile-side-safe) * 2));
     margin: 0 auto;
+    height: 100svh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 0;
+    scrollbar-width: none;
+  }
+  #pg-project::-webkit-scrollbar,
+  #pg-about::-webkit-scrollbar,
+  #pg-contact::-webkit-scrollbar {
+    display: none;
   }
   .h-slide-img-wrap {
     width: 100%;
@@ -615,6 +653,15 @@ main {
   .proj-info-grid { gap: 30px; }
   .content-block { padding: 94px 0 120px; }
   .contact-submit { cursor: pointer; width: 100%; justify-content: center; }
+  body.home-active {
+    overflow: hidden;
+    height: 100svh;
+  }
+  body.home-active main {
+    height: 100svh;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
 }
 </style>
 </head>
@@ -1321,6 +1368,7 @@ applyDataTranslations(siteLang);
 applyStaticTranslations(siteLang);
 renderSidebarNav();
 renderHomeSlider();
+document.body.classList.add('home-active');
 
 function updateDots() {
   const i = Math.round(track.scrollLeft / track.clientWidth);
@@ -1340,6 +1388,7 @@ function toggleMenu() {
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + id).classList.add('on');
+  document.body.classList.toggle('home-active', id === 'home');
   document.getElementById('sl-about').classList.toggle('on', id === 'about');
   document.getElementById('sl-contact').classList.toggle('on', id === 'contact');
   document.getElementById('sidebar').classList.remove('open');
