@@ -149,4 +149,6 @@ document.addEventListener('keydown', e => {
     if (Math.abs(dx) < 40) return;
     changeLightboxImg(dx < 0 ? 1 : -1);
   }, { passive: true });
+
+  lb.addEventListener('touchcancel', () => { touchStartX = null; });
 })();

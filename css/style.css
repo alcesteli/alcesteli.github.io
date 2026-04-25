@@ -414,10 +414,12 @@ main {
   position: fixed; inset: 0; background: rgba(13, 13, 13, 0.9);
   z-index: 10000; display: none; align-items: center; justify-content: center;
   backdrop-filter: blur(8px);
+  touch-action: none;
+  -webkit-touch-callout: none;
 }
 #lightbox.on { display: flex; }
 .lb-content { max-width: 90%; max-height: 90%; display: flex; align-items: center; justify-content: center; }
-.lb-content img { max-width: 100%; max-height: 90vh; object-fit: contain; }
+.lb-content img { max-width: 100%; max-height: 90vh; object-fit: contain; pointer-events: none; user-select: none; }
 .lb-close { position: absolute; top: 30px; right: 40px; color: white; font-size: 24px; cursor: pointer; z-index: 10001; padding: 10px; }
 .lb-nav {
   position: absolute; top: 50%; transform: translateY(-50%);
