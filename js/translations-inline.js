@@ -18,7 +18,7 @@ window.INLINE_TRANSLATIONS = {
     },
     "contact": {
       "eyebrow": "Entrons en contact",
-      "heading": "Travaillons<br><em>ensemble.</em>",
+      "heading": "Travaillons <em>ensemble.</em>",
       "nameLabel": "Nom",
       "emailLabel": "E-mail",
       "subjectLabel": "Objet",
