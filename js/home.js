@@ -10,10 +10,10 @@ const EXPANDED_SLIDE_CONFIGS = [
 // Collapsed pile: each entry is (% of element size, rotation, z-index, scale multiplier)
 const COLLAPSED_LAYOUTS = [
   { x:   0, y:   2, rot:  -3, z: 5, sm: 1.00 },
-  { x:  46, y: -22, rot:   9, z: 4, sm: 0.76 },
-  { x: -50, y: -16, rot: -10, z: 3, sm: 0.80 },
-  { x:  36, y:  34, rot:   7, z: 2, sm: 0.88 },
-  { x: -32, y:  30, rot:  -8, z: 1, sm: 0.70 }
+  { x:  46, y: -38, rot:   9, z: 4, sm: 0.56 },
+  { x: -50, y: -35, rot: -10, z: 3, sm: 0.80 },
+  { x:  36, y:  140, rot:   7, z: 2, sm: 1.00 },
+  { x: -32, y:  160, rot:  -8, z: 1, sm: 1.00 }
 ];
 
 // Computes px-based expanded positions so rows never overlap regardless of viewport size.
