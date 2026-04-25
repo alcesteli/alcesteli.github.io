@@ -133,3 +133,20 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') changeLightboxImg(1);
   if (e.key === 'ArrowLeft') changeLightboxImg(-1);
 });
+
+(function () {
+  let touchStartX = null;
+  const lb = document.getElementById('lightbox');
+
+  lb.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  lb.addEventListener('touchend', e => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(dx) < 40) return;
+    changeLightboxImg(dx < 0 ? 1 : -1);
+  }, { passive: true });
+})();
