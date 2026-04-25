@@ -220,11 +220,11 @@ window.INLINE_TRANSLATIONS = {
     "about": {
       "heading": "About",
       "content": [
-        "I am a Paris-based scenographer and French state-certified architect, originally from China. My practice explores the intersection between architecture and performance, with a particular focus on how space, light, and movement can shape narrative and perception.",
-        "I was trained in architecture at ENSA Paris-Malaquais and China Central Academy of Fine Arts, where I developed a strong foundation in spatial design and project management, and later completed a degree in scenography at Sorbonne Nouvelle and École Duperré. This dual background allows me to approach projects at different scales, from built environments to stage design, always with attention to both concept and execution.",
-        "Professionally, I have worked as an architect and project manager, coordinating with clients and engineering teams on complex projects. At the same time, I expanded my practice into the performing arts through internships in the lighting departments of the Odéon Théâtre de l'Europe and Théâtre des Champs-Élysées, as well as within the design office of the Opéra national de Paris. These experiences strengthened my understanding of technical constraints while deepening my interest in atmosphere, dramaturgy, and the expressive potential of light.",
-        "My approach is both rigorous and intuitive, combining technical precision with a sensitivity to visual storytelling. I am interested in creating spaces that are not only functional, but also immersive and evocative, where architecture becomes a medium for experience.",
-        "Outside of my professional work, I draw inspiration from opera, dance, and visual arts, which continue to inform my approach to rhythm, composition, and scenographic thinking."
+        "Based in Paris and trained in architecture, I develop a scenographic approach at the intersection of performing arts, installation, and spatial design.",
+        "My work explores how space can produce an experience — shaping perception, guiding the body, and embedding a narrative in time. Informed by an ongoing engagement with opera and stage practices, I approach each project as a spatial device, where dramaturgy, perception, and staging converge.",
+        "Whether designing for a stage, a window display, or an exhibition space, I aim to create environments that are both clear and evocative, capable of generating presence, tension, and rhythm. My process involves a constant dialogue between concept and fabrication, integrating questions of scale, materials, and technical constraints from the early stages of design.",
+        "With a background bridging architecture and scenography, I work across a range of contexts — cultural institutions, artistic projects, and commercial environments — with a strong focus on the overall coherence of each project, from initial idea to final realization.",
+        "Open to collaborations in scenography — including performing arts, installations, window displays, and events — I contribute as an assistant or designer, depending on the scope and nature of the project."
       ]
     },
     "contact": {
