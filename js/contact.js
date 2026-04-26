@@ -52,7 +52,7 @@ function setContactStatus(message, type = '') {
 }
 
 // Returns an error key (string) or null if valid.
-function validateFormInputs({ name, subject, message, website, botcheck, dynamicHoneypotValue, startedAt, interactedCount }) {
+function validateFormInputs({ name, message, website, botcheck, dynamicHoneypotValue, startedAt, interactedCount }) {
   if (WEB3FORMS_ACCESS_KEY === 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY') return 'status.missingAccessKey';
   if (website || botcheck || dynamicHoneypotValue)                         return 'status.spamTriggered';
   if (!startedAt || Date.now() - startedAt < CONTACT_MIN_FILL_TIME_MS)    return 'status.completeBeforeSend';
@@ -60,19 +60,19 @@ function validateFormInputs({ name, subject, message, website, botcheck, dynamic
   const remainingMs = getRemainingCooldownMs();
   if (remainingMs > 0) return { key: 'status.waitBeforeResend', replacements: { seconds: Math.ceil(remainingMs / 1000) } };
 
-  if (name.length < VALIDATION.NAME_MIN_LENGTH || subject.length < VALIDATION.SUBJECT_MIN_LENGTH || message.length < VALIDATION.MESSAGE_MIN_LENGTH) return 'status.fillMoreFields';
+  if (name.length < VALIDATION.NAME_MIN_LENGTH || message.length < VALIDATION.MESSAGE_MIN_LENGTH) return 'status.fillMoreFields';
   if (interactedCount < CONTACT_MIN_INTERACTIONS)                          return 'status.manualCompletion';
-  if (/(https?:\/\/|www\.)/i.test(name) || /(https?:\/\/|www\.)/i.test(subject)) return 'status.linksNotAllowed';
+  if (/(https?:\/\/|www\.)/i.test(name))                                   return 'status.linksNotAllowed';
   if (countUrls(message) > CONTACT_MAX_URLS_IN_MESSAGE)                   return 'status.tooManyLinks';
-  if (hasSuspiciousRepetition(`${name} ${subject} ${message}`))            return 'status.removeRepeatedChars';
+  if (hasSuspiciousRepetition(`${name} ${message}`))                       return 'status.removeRepeatedChars';
   return null;
 }
 
-async function sendContactForm({ name, email, subject, message, botcheck }) {
+async function sendContactForm({ name, email, message, botcheck }) {
   const response = await fetch(WEB3FORMS_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ access_key: WEB3FORMS_ACCESS_KEY, name, email, subject, message, botcheck })
+    body: JSON.stringify({ access_key: WEB3FORMS_ACCESS_KEY, name, email, message, botcheck })
   });
   const result = await response.json();
   if (!response.ok || !result.success) throw new Error(result.message || 'Unable to send message.');
@@ -105,7 +105,6 @@ function initContactForm() {
     const formData = new FormData(contactForm);
     const name    = normalizeContactField(formData.get('name')    || '', 80);
     const email   = normalizeContactField(formData.get('email')   || '', 254);
-    const subject = normalizeContactField(formData.get('subject') || '', 150);
     const message = (formData.get('message') || '').toString().trim().slice(0, 3000);
     const website = normalizeContactField(formData.get('website') || '', 200);
     const botcheck = (formData.get('botcheck') || '').toString().trim();
@@ -113,7 +112,7 @@ function initContactForm() {
     const dynamicHoneypot = contactForm.querySelector('[data-dynamic-honeypot="true"]');
     const dynamicHoneypotValue = dynamicHoneypot ? normalizeContactField(formData.get(dynamicHoneypot.name) || '', 200) : '';
 
-    const error = validateFormInputs({ name, subject, message, website, botcheck, dynamicHoneypotValue, startedAt, interactedCount: interactedFields.size });
+    const error = validateFormInputs({ name, message, website, botcheck, dynamicHoneypotValue, startedAt, interactedCount: interactedFields.size });
     if (error) {
       const isSpam = (typeof error === 'string' ? error : error.key) === 'status.spamTriggered';
       const key = typeof error === 'string' ? error : error.key;
@@ -127,7 +126,7 @@ function initContactForm() {
     setContactStatus(getUiText('status.sending'));
 
     try {
-      await sendContactForm({ name, email, subject, message, botcheck });
+      await sendContactForm({ name, email, message, botcheck });
       resetContactFormState(contactForm, interactedFields);
       safeWriteStorage(CONTACT_LAST_SENT_KEY, String(Date.now()));
       setContactStatus(getUiText('status.messageSent'), 'is-success');

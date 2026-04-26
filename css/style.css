@@ -16,7 +16,7 @@ html, body { height: 100%; background: var(--white); color: var(--black); -webki
 body {
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Marcellus', sans-serif;
   font-weight: 300;
   overflow: hidden;
   cursor: default;
@@ -76,9 +76,9 @@ aside::before {
 }
 .s-logo { cursor: pointer; }
 .s-logo-name {
-  font-family: 'Avenir Black', 'Avenir Next Heavy', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: var(--nav-size);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -.04em;
 }
@@ -94,7 +94,7 @@ aside::before {
   border: none;
   background: transparent;
   backdrop-filter: none;
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: var(--nav-size);
   font-weight: 400;
   letter-spacing: .02em;
@@ -165,7 +165,7 @@ aside::before {
   padding: 0 0 14px;
   margin-top: 22px;
   font-size: var(--nav-size);
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 400;
   letter-spacing: .02em;
   text-transform: lowercase;
@@ -186,7 +186,7 @@ aside::before {
 .s-cat-head.closed + .s-items { max-height: 0; }
 
 .s-item {
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding: 8px 0;
   font-size: var(--nav-size);
   font-weight: 400;
@@ -205,7 +205,7 @@ aside::before {
 .s-link {
   position: fixed;
   top: 50%;
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: var(--nav-size);
   font-weight: 400;
   letter-spacing: .02em;
@@ -214,17 +214,19 @@ aside::before {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  width: 90px;
+  white-space: nowrap;
   cursor: pointer;
   transition: opacity .2s, color .2s;
   pointer-events: auto;
 }
 #sl-about {
-  left: clamp(18px, 3vw, 48px);
+  left: calc(var(--side-safe) / 2 - 45px);
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: center;
 }
 #sl-contact {
-  right: clamp(18px, 3vw, 48px);
+  right: calc(var(--side-safe) / 2 - 45px);
   transform: translateY(-50%) rotate(90deg);
   transform-origin: center;
 }
@@ -365,7 +367,7 @@ main {
   margin: 56px auto 0;
 }
 .proj-info-eyebrow {
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -426,7 +428,7 @@ main {
   background: transparent;
   border: none;
   color: var(--black);
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 1;
@@ -442,8 +444,8 @@ main {
 
 /* ABOUT & CONTACT */
 .content-block {
-  padding: 140px min(7vw, 86px) 120px;
-  max-width: 960px;
+  padding: 140px 0 120px;
+  width: min(960px, calc(100vw - (var(--side-safe) * 2)));
   margin: 0 auto;
   text-align: center;
 }
@@ -452,7 +454,7 @@ main {
 .heading em { font-style: italic; color: var(--black); }
 .about-stats { margin-top: 64px; display: flex; flex-direction: column; gap: 44px; }
 .about-copy { display: flex; flex-direction: column; gap: 22px; max-width: 760px; margin: 0 auto; align-items: center; }
-.about-copy p { font-size: 13px; line-height: 1.9; color: #555; }
+.about-copy p { font-size: 14px; line-height: 1.9; color: #555; }
 .stat-lbl { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .stat-item { font-size: 12px; letter-spacing: .06em; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .contact-form {
@@ -571,7 +573,7 @@ main {
 }
 .lang-btn {
   background: transparent; border: none; padding: 4px 8px; line-height: 1;
-  font-family: 'Avenir Book', 'Avenir Next', Avenir, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: var(--nav-size);
   letter-spacing: .02em;
   text-transform: uppercase;

@@ -68,10 +68,6 @@ function renderContactPage(contact) {
           <input class="contact-input" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
         </div>
         <div class="contact-field">
-          <label class="contact-label" for="contact-subject">${escapeHtml(contact.subjectLabel || 'Subject')}</label>
-          <input class="contact-input" id="contact-subject" name="subject" type="text" maxlength="150" required>
-        </div>
-        <div class="contact-field">
           <label class="contact-label" for="contact-message">${escapeHtml(contact.messageLabel || 'Message')}</label>
           <textarea class="contact-textarea" id="contact-message" name="message" maxlength="3000" required></textarea>
         </div>
