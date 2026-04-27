@@ -168,7 +168,7 @@ aside::before {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   letter-spacing: .02em;
-  text-transform: lowercase;
+  text-transform: uppercase;
   color: var(--gray);
   display: flex;
   justify-content: center;
