@@ -1,65 +1,75 @@
 // Aspect ratios and relative widths used to compute the expanded layout
 const EXPANDED_SLIDE_CONFIGS = [
-  { w: 28, ratio: [4, 3] },
-  { w: 36, ratio: [16, 9] },
-  { w: 24, ratio: [4, 3] },
+  { w: 26, ratio: [4, 3] },
   { w: 22, ratio: [4, 3] },
+  { w: 28, ratio: [16, 9] },
+  { w: 22, ratio: [4, 3] },
+  { w: 26, ratio: [4, 3] },
   { w: 18, ratio: [3, 4] }
 ];
 
 // Collapsed pile: each entry is (% of element size, rotation, z-index, scale multiplier)
 const COLLAPSED_LAYOUTS = [
   { x:   0, y:   2, rot:  -3, z: 5, sm: 1.00 },
-  { x:  46, y: -38, rot:   9, z: 4, sm: 0.56 },
+  { x:  46, y: 118, rot:   -6, z: 4, sm: 0.86 },
+  { x:  46, y: -48, rot:   9, z: 4, sm: 0.56 },
   { x: -50, y: -35, rot: -10, z: 3, sm: 0.80 },
-  { x:  36, y:  140, rot:   7, z: 2, sm: 1.00 },
-  { x: -32, y:  160, rot:  -8, z: 1, sm: 1.00 }
+  { x:  -36, y:  140, rot:   7, z: 2, sm: 1.00 },
+  { x: -32, y:  170, rot:  -8, z: 1, sm: 1.00 }
 ];
 
 // Computes px-based expanded positions so rows never overlap regardless of viewport size.
-// Row 1: slides 0–1 (top), Row 2: slides 2–4 (bottom).
-// If total height exceeds available space, all slides shrink uniformly.
+// Slides are split into two rows; row 1 = floor(N/2), row 2 = ceil(N/2).
+// If total height or row width exceeds available space, all slides shrink uniformly.
 function computeExpandedLayout(trackW, trackH) {
   const gap = window.innerWidth <= 768 ? 14 : 28;
+  const N = HOME_SLIDES.length;
+  const row1Count = Math.floor(N / 2);
+  const row2Count = N - row1Count;
 
-  const dims = EXPANDED_SLIDE_CONFIGS.map((c, i) => {
+  const dims = [];
+  for (let i = 0; i < N; i++) {
+    const c = EXPANDED_SLIDE_CONFIGS[i % EXPANDED_SLIDE_CONFIGS.length];
     const w = c.w / 100 * trackW;
     const nat = SLIDE_NATURAL_DIMS[i];
     const hRatio = nat ? nat.h / nat.w : c.ratio[1] / c.ratio[0];
-    return { w, h: w * hRatio };
-  });
+    dims.push({ w, h: w * hRatio });
+  }
 
-  const r1H = Math.max(dims[0].h, dims[1].h);
-  const r2H = Math.max(dims[2].h, dims[3].h, dims[4].h);
-  const totalH = r1H + gap + r2H;
+  const row1Dims = dims.slice(0, row1Count);
+  const row2Dims = dims.slice(row1Count);
 
+  const rowWidth = (rd) => rd.reduce((s, d) => s + d.w, 0) + gap * Math.max(0, rd.length - 1);
+  const rowHeight = (rd) => rd.reduce((m, d) => Math.max(m, d.h), 0);
+
+  const maxRowW = Math.max(rowWidth(row1Dims), rowWidth(row2Dims));
+  if (maxRowW > trackW * 0.94) {
+    const scale = (trackW * 0.94) / maxRowW;
+    dims.forEach(d => { d.w *= scale; d.h *= scale; });
+  }
+
+  const totalH = rowHeight(row1Dims) + gap + rowHeight(row2Dims);
   if (totalH > trackH * 0.88) {
     const scale = (trackH * 0.88) / totalH;
     dims.forEach(d => { d.w *= scale; d.h *= scale; });
   }
 
-  const sR1H = Math.max(dims[0].h, dims[1].h);
-  const sR2H = Math.max(dims[2].h, dims[3].h, dims[4].h);
-  const row1Y = -(gap / 2 + sR1H / 2);
+  const sR1H = rowHeight(row1Dims);
+  const sR2H = rowHeight(row2Dims);
+  const row1Y = row1Count > 0 ? -(gap / 2 + sR1H / 2) : 0;
   const row2Y =  (gap / 2 + sR2H / 2);
 
-  const r1w = dims[0].w + gap + dims[1].w;
-  const x0  = -(r1w / 2 - dims[0].w / 2);
-  const x1  =   r1w / 2 - dims[1].w / 2;
+  const placeRow = (rd, y) => {
+    const rw = rowWidth(rd);
+    let cursor = -rw / 2;
+    return rd.map(d => {
+      const tx = cursor + d.w / 2;
+      cursor += d.w + gap;
+      return { tx: Math.round(tx), ty: Math.round(y), w: Math.round(d.w) };
+    });
+  };
 
-  const r2w = dims[2].w + gap + dims[3].w + gap + dims[4].w;
-  const r2s = -r2w / 2;
-  const x2  = r2s + dims[2].w / 2;
-  const x3  = r2s + dims[2].w + gap + dims[3].w / 2;
-  const x4  = r2s + dims[2].w + gap + dims[3].w + gap + dims[4].w / 2;
-
-  return [
-    { tx: Math.round(x0), ty: Math.round(row1Y), w: Math.round(dims[0].w) },
-    { tx: Math.round(x1), ty: Math.round(row1Y), w: Math.round(dims[1].w) },
-    { tx: Math.round(x2), ty: Math.round(row2Y), w: Math.round(dims[2].w) },
-    { tx: Math.round(x3), ty: Math.round(row2Y), w: Math.round(dims[3].w) },
-    { tx: Math.round(x4), ty: Math.round(row2Y), w: Math.round(dims[4].w) }
-  ];
+  return [...placeRow(row1Dims, row1Y), ...placeRow(row2Dims, row2Y)];
 }
 
 function setHomeExpandedState(expanded) {

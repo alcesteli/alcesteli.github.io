@@ -263,6 +263,7 @@ const DATA = {
 // Add/remove entries freely; the home page adapts to any quantity.
 const HOME_SLIDES = [
   { image: 'images/COVER/S-LCH0.png', project: { cat: 'stageDesign', idx: 0 } },
+  { image: 'images/INTERIOR/MH1.JPG', project: { cat: 'interior', idx: 2 } },
   { project: { cat: 'windowDisplay', idx: 0 } },
   { project: { cat: 'graphic', idx: 0 } },
   { project: { cat: 'architecture', idx: 0 } },
