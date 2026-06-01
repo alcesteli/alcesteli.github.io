@@ -19,3 +19,13 @@ const VALIDATION = {
   SUBJECT_MIN_LENGTH: 3,
   MESSAGE_MIN_LENGTH: 20
 };
+
+// Supabase (journal comments). Paste your values from Project Settings → API.
+const SUPABASE_URL = 'https://gpncrwzvhcgglymttujw.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_IQbRFty8FSuRaTnw4klPfQ_kd6GO3Br';
+
+// Comments — anti-spam & validation
+const COMMENTS_LAST_SENT_KEY = 'comments:lastSentAt';
+const COMMENTS_NAME_MIN_LENGTH = 2;
+const COMMENTS_BODY_MIN_LENGTH = 5;
+const COMMENTS_MIN_INTERACTIONS = 2;

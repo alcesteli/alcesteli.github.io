@@ -270,10 +270,15 @@ const HOME_SLIDES = [
   { image: 'images/OTHERS/SP1.jpeg', project: { cat: 'others', idx: 0 } }
 ];
 
+// Journal articles. Loaded asynchronously from Supabase (table `posts`).
+// Shape after load: { slug, title, body, published_at, created_at }
+let JOURNAL_ARTICLES = [];
+
 // Shared mutable state
 const BASE_DATA = structuredClone(DATA);
 let siteLang = 'fr';
 let currentProjectState = { cat: null, idx: null };
+let currentArticleSlug = null;
 let homeExpanded = false;
 const SLIDE_NATURAL_DIMS = {};
 let rerenderPending = false;

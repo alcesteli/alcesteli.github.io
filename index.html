@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alceste Li</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Marcellus&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=20260601a">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
   </div>
   <div class="s-foot">
     <div class="s-link" id="sl-about" onclick="toggleAbout()">À propos</div>
-    <div class="s-link" id="sl-contact" onclick="toggleContact()">Contact</div>
+    <div class="s-link" id="sl-journal" onclick="toggleJournal()">Journal</div>
   </div>
 </aside>
 
@@ -67,11 +67,7 @@
         <p>Mon approche est à la fois rigoureuse et intuitive, combinant la précision technique avec une sensibilité au récit visuel. Je m'intéresse à la création d'espaces qui ne sont pas seulement fonctionnels, mais aussi immersifs et évocateurs, où l'architecture devient un médium pour l'expérience.</p>
         <p>En dehors de mon travail professionnel, je m'inspire de l'opéra, de la danse et des arts visuels, qui continuent à nourrir mon approche du rythme, de la composition et de la pensée scénographique.</p>
       </div>
-    </div>
-  </div>
-
-  <div class="page" id="pg-contact">
-    <div class="content-block">
+      <div class="about-contact-divider" aria-hidden="true"></div>
       <p class="eyebrow">Entrons en contact</p>
       <h2 class="heading">Travaillons <em>ensemble.</em></h2>
       <form class="contact-form" id="contact-form" action="javascript:void(0);" novalidate>
@@ -100,16 +96,31 @@
       </div>
     </div>
   </div>
+
+  <div class="page" id="pg-journal">
+    <div class="content-block">
+      <p class="eyebrow">Journal</p>
+      <h2 class="heading">Journal</h2>
+      <div class="journal-list" id="journal-list"></div>
+    </div>
+  </div>
+
+  <div class="page" id="pg-article">
+    <div class="content-block" id="article-block"></div>
+    <div class="content-block content-block-comments" id="comments-container"></div>
+  </div>
 </main>
 
-<script src="js/translations-inline.js?v=20260401a"></script>
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/data.js"></script>
-<script src="js/home.js"></script>
-<script src="js/gallery.js"></script>
-<script src="js/contact.js"></script>
-<script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/translations-inline.js?v=20260601a"></script>
+<script src="js/config.js?v=20260601a"></script>
+<script src="js/utils.js?v=20260601a"></script>
+<script src="js/data.js?v=20260601a"></script>
+<script src="js/home.js?v=20260601a"></script>
+<script src="js/gallery.js?v=20260601a"></script>
+<script src="js/contact.js?v=20260601a"></script>
+<script src="js/comments.js?v=20260601a"></script>
+<script src="js/app.js?v=20260601a"></script>
 
 </body>
 </html>

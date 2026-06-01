@@ -63,9 +63,78 @@ function sanitizeRichText(html) {
 window.escapeHtml = escapeHtml;
 window.sanitizeRichText = sanitizeRichText;
 
+// --- Journal post body parser ---
+// Plain-text input with three rules:
+//   1. Blank line separates paragraphs
+//   2. *text* renders as <em>text</em>
+//   3. A line containing only an image URL (.jpg/.jpeg/.png/.webp/.gif/.avif) renders as <img>
+const POST_IMAGE_URL_RE = /^https?:\/\/[^\s<>"']+?\.(?:jpe?g|png|webp|gif|avif)(?:\?[^\s<>"']*)?$/i;
+
+function renderPostBlock(block) {
+  const trimmed = block.trim();
+  if (!trimmed) return '';
+  if (POST_IMAGE_URL_RE.test(trimmed)) {
+    return `<img class="article-img" src="${escapeHtml(trimmed)}" alt="" loading="lazy">`;
+  }
+  const escaped = escapeHtml(trimmed)
+    .replace(/\n/g, '<br>')
+    .replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+  return `<p>${escaped}</p>`;
+}
+
+function renderPostBody(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/\r\n/g, '\n')
+    .split(/\n\s*\n+/)
+    .map(renderPostBlock)
+    .filter(Boolean)
+    .join('');
+}
+
+function extractPostExcerpt(text, maxChars = 180) {
+  if (!text) return '';
+  const firstTextBlock = String(text)
+    .replace(/\r\n/g, '\n')
+    .split(/\n\s*\n+/)
+    .map(b => b.trim())
+    .find(b => b && !POST_IMAGE_URL_RE.test(b));
+  if (!firstTextBlock) return '';
+  const flat = firstTextBlock
+    .replace(/\n+/g, ' ')
+    .replace(/\*([^*\n]+)\*/g, '$1')
+    .trim();
+  if (flat.length <= maxChars) return flat;
+  return flat.slice(0, maxChars).replace(/\s+\S*$/, '') + '…';
+}
+
+window.renderPostBody = renderPostBody;
+window.extractPostExcerpt = extractPostExcerpt;
+
 const UI_TEXT = {
   fr: {
-    sidebar: { menu: 'Menu', close: 'Fermer' },
+    sidebar: { menu: 'Menu', close: 'Fermer', journal: 'Journal', back: 'Retour', about: 'À propos' },
+    journal: { heading: 'Journal', empty: 'Aucun article publié pour le moment.', loading: 'Chargement…' },
+    comments: {
+      heading: 'Commentaires',
+      empty: 'Aucun commentaire pour le moment. Soyez le premier à en laisser un.',
+      leaveOne: 'Laisser un commentaire',
+      nameLabel: 'Pseudo',
+      messageLabel: 'Commentaire',
+      submitLabel: 'Publier',
+      pendingModeration: 'Merci. Votre commentaire est en attente de modération.',
+      authorBadge: 'Auteur',
+      spamTriggered: "La protection anti-spam s'est déclenchée.",
+      completeBeforeSend: 'Merci de prendre un moment pour remplir le formulaire avant l\'envoi.',
+      waitBeforeResend: 'Veuillez attendre {seconds} secondes avant de poster un autre commentaire.',
+      fillMoreFields: 'Merci d\'indiquer un pseudo et un commentaire plus complets.',
+      manualCompletion: 'Merci de remplir le formulaire manuellement.',
+      linksNotAllowed: 'Les liens ne sont pas autorisés dans le pseudo.',
+      tooManyLinks: 'Merci de réduire le nombre de liens dans votre commentaire.',
+      removeRepeatedChars: 'Merci de retirer les caractères répétés puis de réessayer.',
+      sending: 'Envoi en cours...',
+      genericError: "Une erreur s'est produite. Merci de réessayer."
+    },
     projectMeta: { type: 'Type', client: 'Client', year: 'Année' },
     system: { noImage: 'Aucune image', imageUnavailable: 'Image indisponible' },
     status: {
@@ -84,7 +153,28 @@ const UI_TEXT = {
     }
   },
   en: {
-    sidebar: { menu: 'Menu', close: 'Close' },
+    sidebar: { menu: 'Menu', close: 'Close', journal: 'Journal', back: 'Back', about: 'About' },
+    journal: { heading: 'Journal', empty: 'No articles published yet.', loading: 'Loading…' },
+    comments: {
+      heading: 'Comments',
+      empty: 'No comments yet. Be the first to leave one.',
+      leaveOne: 'Leave a comment',
+      nameLabel: 'Name',
+      messageLabel: 'Comment',
+      submitLabel: 'Publish',
+      pendingModeration: 'Thank you. Your comment is pending moderation.',
+      authorBadge: 'Author',
+      spamTriggered: 'Spam protection triggered.',
+      completeBeforeSend: 'Please take a moment to complete the form before sending.',
+      waitBeforeResend: 'Please wait {seconds} seconds before posting another comment.',
+      fillMoreFields: 'Please add a fuller name and comment.',
+      manualCompletion: 'Please complete the form manually.',
+      linksNotAllowed: 'Links are not allowed in the name.',
+      tooManyLinks: 'Please reduce the number of links in your comment.',
+      removeRepeatedChars: 'Please remove repeated characters and try again.',
+      sending: 'Sending...',
+      genericError: 'Something went wrong. Please try again.'
+    },
     projectMeta: { type: 'Type', client: 'Client', year: 'Year' },
     system: { noImage: 'No Image', imageUnavailable: 'Image unavailable' },
     status: {

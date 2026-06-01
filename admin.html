@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Modération — Alceste Li</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Marcellus&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20260601a">
+<style>
+  body { overflow: auto; }
+  .admin-shell {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+  .admin-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(32px, 4vw, 48px);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .admin-sub {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .admin-section { margin-bottom: 56px; }
+  .admin-section-head {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+  }
+  .admin-login-form {
+    max-width: 420px;
+    margin: 40px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+  .admin-login-form input {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--white);
+    font: inherit;
+    font-size: 13px;
+    padding: 14px 16px;
+    outline: none;
+    text-align: center;
+  }
+  .admin-login-form input:focus { border-color: var(--accent); }
+  .admin-btn {
+    border: 1px solid var(--black);
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 13px 22px;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .admin-btn:hover { background: var(--accent); border-color: var(--accent); }
+  .admin-btn.ghost {
+    background: transparent;
+    color: var(--black);
+  }
+  .admin-btn.ghost:hover { color: var(--accent); background: transparent; border-color: var(--accent); }
+  .admin-btn.danger { border-color: #a12626; background: transparent; color: #a12626; }
+  .admin-btn.danger:hover { background: #a12626; color: var(--white); }
+
+  .admin-status {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    min-height: 1.5em;
+    margin-top: 8px;
+  }
+  .admin-status.is-error { color: #a12626; }
+  .admin-status.is-success { color: #1a6a3a; }
+
+  .admin-row {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .admin-row:first-child { border-top: 1px solid var(--line); }
+  .admin-row-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .admin-row-name { color: var(--black); }
+  .admin-row-date { color: var(--gray); margin-left: auto; }
+  .admin-row-slug { color: var(--accent); font-size: 9px; }
+  .admin-row-parent { color: var(--gray); font-size: 9px; font-style: italic; }
+  .admin-row-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 14px;
+  }
+  .admin-row-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .admin-reply-form {
+    margin-top: 14px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .admin-reply-form.open { display: flex; }
+  .admin-reply-form textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    font: inherit;
+    font-size: 13px;
+    padding: 12px 14px;
+    min-height: 90px;
+    resize: vertical;
+    outline: none;
+  }
+  .admin-reply-form textarea:focus { border-color: var(--accent); }
+  .admin-reply-form .reply-actions { display: flex; gap: 8px; }
+  .admin-empty {
+    font-size: 12px;
+    color: var(--gray);
+    text-align: center;
+    padding: 24px 0;
+  }
+  .admin-header-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+  .admin-account {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  /* Post editor */
+  .post-editor-actions-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+  .post-editor {
+    border: 1px solid var(--line);
+    padding: 24px;
+    margin-bottom: 32px;
+    background: var(--white);
+  }
+  .post-field { margin-bottom: 18px; }
+  .post-label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+  .post-input,
+  .post-textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--white);
+    font: inherit;
+    font-size: 14px;
+    padding: 10px 12px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .post-input:focus,
+  .post-textarea:focus { border-color: var(--accent); }
+  .post-textarea {
+    font-family: 'Marcellus', serif;
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 280px;
+  }
+  .post-hint {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .post-hint code {
+    background: #f4f4f4;
+    padding: 1px 5px;
+    font-size: 11px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .post-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .post-tool-btn {
+    border: 1px solid var(--line);
+    background: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: border-color .2s, color .2s;
+  }
+  .post-tool-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .post-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="admin-shell">
+  <h1 class="admin-title">Modération</h1>
+  <p class="admin-sub">Journal — commentaires</p>
+
+  <div id="admin-login">
+    <p class="admin-section-head" style="text-align:center; border:none;">Connexion par lien magique</p>
+    <form class="admin-login-form" id="login-form">
+      <input id="login-email" type="email" placeholder="Adresse e-mail" autocomplete="email" required>
+      <button type="submit" class="admin-btn">Envoyer le lien</button>
+    </form>
+    <p class="admin-status" id="login-status" aria-live="polite"></p>
+  </div>
+
+  <div id="admin-dashboard" style="display:none;">
+    <p class="admin-account" id="admin-account"></p>
+    <div class="admin-header-actions">
+      <button class="admin-btn ghost" id="logout-btn" type="button">Déconnexion</button>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="admin-section-head">Articles</h2>
+      <div class="post-editor-actions-top">
+        <button class="admin-btn" id="new-post-btn" type="button">Nouvel article</button>
+      </div>
+
+      <div class="post-editor" id="post-editor" style="display:none;">
+        <input type="hidden" id="post-id" value="">
+        <div class="post-field">
+          <label class="post-label" for="post-title">Titre</label>
+          <input class="post-input" id="post-title" type="text" maxlength="200" autocomplete="off">
+        </div>
+        <div class="post-field">
+          <label class="post-label" for="post-slug">Slug</label>
+          <input class="post-input" id="post-slug" type="text" maxlength="120" autocomplete="off" pattern="[a-z0-9-]+">
+          <p class="post-hint">Identifiant dans l'URL — lettres minuscules, chiffres, tirets. Généré automatiquement à partir du titre.</p>
+        </div>
+        <div class="post-field">
+          <label class="post-label" for="post-body">Corps</label>
+          <div class="post-toolbar">
+            <button type="button" class="post-tool-btn" id="post-tool-italic" title="Italique"><em>I</em></button>
+          </div>
+          <textarea class="post-textarea" id="post-body" rows="18"></textarea>
+          <p class="post-hint">Ligne vide = nouveau paragraphe. <code>*texte*</code> = italique. Une URL d'image (.jpg/.png/.webp…) seule sur sa ligne = image insérée.</p>
+        </div>
+        <div class="post-actions">
+          <button type="button" class="admin-btn" id="post-publish-btn">Publier</button>
+          <button type="button" class="admin-btn ghost" id="post-save-draft-btn">Enregistrer brouillon</button>
+          <button type="button" class="admin-btn ghost" id="post-cancel-btn">Annuler</button>
+        </div>
+        <p class="admin-status" id="post-status" aria-live="polite"></p>
+      </div>
+
+      <div id="posts-list"></div>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="admin-section-head">Commentaires en attente</h2>
+      <div id="pending-list"></div>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="admin-section-head">Commentaires approuvés</h2>
+      <div id="approved-list"></div>
+    </div>
+
+    <p class="admin-status" id="action-status" aria-live="polite"></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js?v=20260601a"></script>
+<script src="js/utils.js?v=20260601a"></script>
+<script src="js/admin.js?v=20260601a"></script>
+</body>
+</html>

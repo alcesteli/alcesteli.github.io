@@ -3,8 +3,35 @@ window.INLINE_TRANSLATIONS = {
     "sidebar": {
       "about": "À propos",
       "contact": "Contact",
+      "journal": "Journal",
+      "back": "Retour",
       "menu": "Menu",
       "close": "Fermer"
+    },
+    "journal": {
+      "heading": "Journal",
+      "empty": "Aucun article publié pour le moment.",
+      "loading": "Chargement…"
+    },
+    "comments": {
+      "heading": "Commentaires",
+      "empty": "Aucun commentaire pour le moment. Soyez le premier à en laisser un.",
+      "leaveOne": "Laisser un commentaire",
+      "nameLabel": "Pseudo",
+      "messageLabel": "Commentaire",
+      "submitLabel": "Publier",
+      "pendingModeration": "Merci. Votre commentaire est en attente de modération.",
+      "authorBadge": "Auteur",
+      "spamTriggered": "La protection anti-spam s'est déclenchée.",
+      "completeBeforeSend": "Merci de prendre un moment pour remplir le formulaire avant l'envoi.",
+      "waitBeforeResend": "Veuillez attendre {seconds} secondes avant de poster un autre commentaire.",
+      "fillMoreFields": "Merci d'indiquer un pseudo et un commentaire plus complets.",
+      "manualCompletion": "Merci de remplir le formulaire manuellement.",
+      "linksNotAllowed": "Les liens ne sont pas autorisés dans le pseudo.",
+      "tooManyLinks": "Merci de réduire le nombre de liens dans votre commentaire.",
+      "removeRepeatedChars": "Merci de retirer les caractères répétés puis de réessayer.",
+      "sending": "Envoi en cours...",
+      "genericError": "Une erreur s'est produite. Merci de réessayer."
     },
     "about": {
       "heading": "À propos",
@@ -214,8 +241,35 @@ window.INLINE_TRANSLATIONS = {
     "sidebar": {
       "about": "About",
       "contact": "Contact",
+      "journal": "Journal",
+      "back": "Back",
       "menu": "Menu",
       "close": "Close"
+    },
+    "journal": {
+      "heading": "Journal",
+      "empty": "No articles published yet.",
+      "loading": "Loading…"
+    },
+    "comments": {
+      "heading": "Comments",
+      "empty": "No comments yet. Be the first to leave one.",
+      "leaveOne": "Leave a comment",
+      "nameLabel": "Name",
+      "messageLabel": "Comment",
+      "submitLabel": "Publish",
+      "pendingModeration": "Thank you. Your comment is pending moderation.",
+      "authorBadge": "Author",
+      "spamTriggered": "Spam protection triggered.",
+      "completeBeforeSend": "Please take a moment to complete the form before sending.",
+      "waitBeforeResend": "Please wait {seconds} seconds before posting another comment.",
+      "fillMoreFields": "Please add a fuller name and comment.",
+      "manualCompletion": "Please complete the form manually.",
+      "linksNotAllowed": "Links are not allowed in the name.",
+      "tooManyLinks": "Please reduce the number of links in your comment.",
+      "removeRepeatedChars": "Please remove repeated characters and try again.",
+      "sending": "Sending...",
+      "genericError": "Something went wrong. Please try again."
     },
     "about": {
       "heading": "About",

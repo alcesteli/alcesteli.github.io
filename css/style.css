@@ -225,7 +225,7 @@ aside::before {
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: center;
 }
-#sl-contact {
+#sl-journal {
   right: calc(var(--side-safe) / 2 - 45px);
   transform: translateY(-50%) rotate(90deg);
   transform-origin: center;
@@ -241,8 +241,8 @@ main {
 }
 .page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
 .page.on { opacity: 1; pointer-events: all; }
-#pg-about, #pg-contact { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-#pg-about::-webkit-scrollbar, #pg-contact::-webkit-scrollbar { display: none; }
+#pg-about, #pg-journal, #pg-article { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+#pg-about::-webkit-scrollbar, #pg-journal::-webkit-scrollbar, #pg-article::-webkit-scrollbar { display: none; }
 
 /* HOME SLIDER */
 #pg-home {
@@ -612,6 +612,215 @@ main {
 .lang-btn.active { color: var(--accent); }
 .lang-btn:hover { color: var(--accent); cursor: pointer; }
 
+/* ABOUT → CONTACT SEPARATOR */
+.about-contact-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--line);
+  margin: 80px auto 64px;
+}
+
+/* JOURNAL */
+.journal-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+.journal-item {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+  transition: padding-left .2s, color .2s;
+}
+.journal-list .journal-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.journal-item:hover {
+  padding-left: 10px;
+}
+.journal-item:hover .journal-title {
+  color: var(--accent);
+}
+.journal-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 14px;
+}
+.journal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.2;
+  color: var(--black);
+  margin-bottom: 12px;
+  transition: color .2s;
+}
+.journal-excerpt {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #666;
+  max-width: 640px;
+}
+.journal-empty {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray);
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* ARTICLE */
+.article-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.article-body {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #555;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: left;
+}
+.article-body p { margin-bottom: 1.2em; }
+.article-body p:last-of-type { margin-bottom: 0; }
+.article-body em { font-style: italic; }
+.article-body strong { font-weight: 400; color: var(--black); }
+.article-body .article-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 28px auto;
+}
+
+/* COMMENTS */
+.content-block-comments {
+  padding: 0 0 120px;
+}
+.comments-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--line);
+  margin: 0 auto 64px;
+}
+.comments-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 48px;
+  color: var(--black);
+  font-weight: 400;
+}
+.comments-list {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.comments-empty {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray);
+  text-align: center;
+  padding: 24px 0;
+}
+.comment {
+  padding: 22px 0 4px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.comments-list .comment:last-child {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 22px;
+}
+.comment-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.comment-author {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.comment-badge {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 2px 6px;
+  line-height: 1;
+}
+.comment-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-left: auto;
+}
+.comment-body {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #555;
+}
+.comment-body p { margin-bottom: 0.8em; }
+.comment-body p:last-of-type { margin-bottom: 0; }
+.comment-body em { font-style: italic; }
+.comment-body strong { font-weight: 400; color: var(--black); }
+.comment-replies {
+  margin-top: 22px;
+  padding-left: 28px;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.comment-replies .comment {
+  border-top: none;
+  padding: 0;
+}
+.comment-replies .comment:last-child {
+  border-bottom: none;
+}
+.comment-admin .comment-author { color: var(--accent); }
+
+.comments-form {
+  display: grid;
+  gap: 18px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  justify-items: center;
+}
+.comments-form-eyebrow {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+
 body.home-active {
   overflow: hidden;
 }
@@ -650,7 +859,7 @@ body.home-active {
     justify-content: center;
     text-align: center;
   }
-  #sl-contact {
+  #sl-journal {
     right: 0;
     justify-content: center;
     text-align: center;
@@ -689,7 +898,8 @@ body.home-active {
   .page.on { opacity: 1; pointer-events: all; }
   #pg-project,
   #pg-about,
-  #pg-contact {
+  #pg-journal,
+  #pg-article {
     width: calc(100vw - (var(--mobile-side-safe) * 2));
     margin: 0 auto;
     height: 100svh;
@@ -701,7 +911,8 @@ body.home-active {
   }
   #pg-project::-webkit-scrollbar,
   #pg-about::-webkit-scrollbar,
-  #pg-contact::-webkit-scrollbar {
+  #pg-journal::-webkit-scrollbar,
+  #pg-article::-webkit-scrollbar {
     display: none;
   }
   .h-slide-img-wrap {
