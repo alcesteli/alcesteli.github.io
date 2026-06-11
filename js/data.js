@@ -3,6 +3,15 @@ const DATA = {
     label: 'Stage Design',
     items: [
       {
+        title: 'Just Another Creation Myth',
+        desc: `
+        <p>As the first man and the first woman in the world, they were innocent and perplexed. They tried to understand, attempted to inhabit this vast and elusive earth. To bring meaning to chaos, they sought to establish rules, to lean on one another, to create — but instead of finding answers, they embarked on a long and absurd hallucination. Upon waking, the question stood before them, clearer than ever: In this vast and silent universe, how should a human being live?</p>
+        <p>This is a physical comedy about existence. For half of the play, we are without words; for the other half, we dream together the hundreds of thousands of years of Homo sapiens' history. By bearing witness together to the wonder, melancholy and astonishment of nascent life, we wish to explore with you these persistent perplexities — yours, mine, ours, those of humanity — those riddles that are at once eternal and beautiful.</p>
+        `,
+        type: 'Stage Design', client: 'Interrobang', year: '2026', imgs: 5,
+        images: ['images/SCENO/COW1.png','images/SCENO/COW2.png','images/SCENO/COW3.png','images/SCENO/COW4.png','images/GRAPHIC/INTERROBANG26.jpg']
+      },
+      {
         title: 'The Winter’s Tale',
         desc: `
         <p>This play is one of Shakespeare's final works, blending tragedy and comedy. In the end, the lost daughter is found, the lovers are reunited, and Leontes is forgiven. Yet this return to harmony feels almost too sudden, raising the question of whether such forgiveness was truly believable for audiences.</p>
@@ -167,12 +176,6 @@ const DATA = {
     label: 'Graphic',
     items: [
       {
-        title: 'Just Another Creation Myth',
-        desc: '<p>This poster was designed for a show in which I participated as a set designer. Created before the construction of the set, it combines reference images with the atmosphere of the performance to produce a manifesto image that captures the visual identity of the project.</p>',
-        type: 'Poster Design', client: 'Interrobang', year: '2026', imgs: 1,
-        images: ['images/GRAPHIC/INTERROBANG26.jpg']
-      },
-      {
         title: 'CAFArch 2015 Show',
         desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1,
@@ -262,10 +265,10 @@ const DATA = {
 // - Custom image slide: { image: 'images/path.jpg', title: 'My title', project: { cat: 'graphic', idx: 0 } } (project optional)
 // Add/remove entries freely; the home page adapts to any quantity.
 const HOME_SLIDES = [
-  { image: 'images/COVER/S-LCH0.png', project: { cat: 'stageDesign', idx: 0 } },
+  { image: 'images/COVER/S-LCH0.png', project: { cat: 'stageDesign', idx: 1 } },
   { image: 'images/INTERIOR/MH1.JPG', project: { cat: 'interior', idx: 2 } },
   { project: { cat: 'windowDisplay', idx: 0 } },
-  { project: { cat: 'graphic', idx: 0 } },
+  { image: 'images/GRAPHIC/INTERROBANG26.jpg', project: { cat: 'stageDesign', idx: 0 } },
   { project: { cat: 'architecture', idx: 0 } },
   { image: 'images/OTHERS/SP1.jpeg', project: { cat: 'others', idx: 0 } }
 ];

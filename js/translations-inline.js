@@ -90,6 +90,10 @@ window.INLINE_TRANSLATIONS = {
       "stageDesign": {
         "items": [
           {
+            "title": "Just Another Creation Myth",
+            "desc": "<p>Premiers homme et femme du monde, ils étaient innocents et perplexes. Ils tentaient de comprendre, cherchaient à habiter cette terre vaste et insaisissable. Pour donner un sens au chaos, ils ont cherché à établir des règles, à s'appuyer l'un sur l'autre, à créer — mais au lieu de trouver des réponses, ils se sont engagés dans une longue et absurde hallucination. Au réveil, la question se dressait devant eux, plus claire que jamais : dans cet univers vaste et silencieux, comment un être humain doit-il vivre ?</p><p>C'est une comédie physique sur l'existence. Pendant la moitié de la pièce, nous sommes sans mots ; pendant l'autre moitié, nous rêvons ensemble les centaines de milliers d'années de l'histoire d'Homo sapiens. En témoignant ensemble de l'émerveillement, de la mélancolie et de l'étonnement de la vie naissante, nous souhaitons explorer avec vous ces perplexités persistantes — les vôtres, les miennes, les nôtres, celles de l'humanité — ces énigmes à la fois éternelles et belles.</p>"
+          },
+          {
             "title": "Le Conte d'Hiver",
             "desc": "<p>Cette pièce est l'une des dernières œuvres de Shakespeare, mêlant tragédie et comédie. À la fin, la fille perdue est retrouvée, les amoureux sont réunis, et Leontes est pardonné. Pourtant, ce retour à l'harmonie semble presque trop soudain, soulevant la question de savoir si ce pardon était véritablement crédible pour le public.</p><p>L'histoire se déploie entre deux mondes imaginaires : la Sicile, un palais lié par les règles et les apparences du pouvoir, et la Bohême, une utopie pastorale remplie de paysans joyeux et de nature abondante. Après le monologue du Temps, la pièce bascule dans un ton plus léger, presque magique. Pourtant, à la fin, les amoureux doivent quitter la Bohême et revenir en Sicile pour trouver la paix, remettant subtilement en question l'idée d'utopie.</p><p>Ce paradoxe m'intéresse. La scène elle-même peut-elle devenir une utopie imaginaire—un lieu où tout est possible ? En même temps, le théâtre de style italien reflète une hiérarchie spatiale stricte, presque comme une monarchie. J'explore aussi la folie de Leontes à travers l'image d'un labyrinthe, représentant ses pensées désordonnées et invitant le public à expérimenter son état d'esprit changeant à travers la scénographie.</p>"
           },
@@ -177,10 +181,6 @@ window.INLINE_TRANSLATIONS = {
       },
       "graphic": {
         "items": [
-          {
-            "title": "Just Another Creation Myth",
-            "desc": "<p>Cette affiche a été conçue pour un spectacle auquel j'ai participé en tant que scénographe. Créée avant la construction du décor, elle combine des images de référence avec l'atmosphère de la performance pour produire une image manifeste qui capture l'identité visuelle du projet.</p>"
-          },
           {
             "title": "CAFArch 2015 Show",
             "desc": "<p>Inspiré par le bloc de jouet qui a formé un cube, chaque pièce est différente l'une de l'autre.</p>"
@@ -415,10 +415,6 @@ window.INLINE_TRANSLATIONS = {
       },
       "graphic": {
         "items": [
-          {
-            "title": "Just Another Creation Myth",
-            "desc": "<p>This poster was designed for a show in which I participated as a set designer. Created before the construction of the set, it combines reference images with the atmosphere of the performance to produce a manifesto image that captures the visual identity of the project.</p>"
-          },
           {
             "title": "CAFArch 2015 Show",
             "desc": "<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>"
