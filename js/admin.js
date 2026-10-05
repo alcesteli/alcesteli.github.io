@@ -426,7 +426,7 @@
   postPublishBtn.addEventListener('click', () => savePost(true));
 
   // Cloudflare Access handles email OTP before this page is served.
-  loginForm.addEventListener('submit', e => { e.preventDefault(); window.location.reload(); });
+  loginForm.addEventListener('submit', e => { e.preventDefault(); window.location.assign('/admin.html'); });
   logoutBtn.addEventListener('click', () => { window.location.assign('/cdn-cgi/access/logout'); });
   adminRequest('session').then(({ data, error }) => {
     if (error) { showLogin(); setLoginStatus(error.message, 'is-error'); return; }

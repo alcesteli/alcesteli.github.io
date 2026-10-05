@@ -150,7 +150,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url), origin = request.headers.get('Origin');
     const allowed = (env.PUBLIC_ORIGINS || '').split(',').map(s => s.trim());
-    const admin = url.pathname.startsWith('/api/admin/') || url.pathname === '/admin.html' || url.pathname === '/';
+    const admin = url.pathname.startsWith('/api/admin/') || url.pathname.startsWith('/admin') || url.pathname === '/admin.html' || url.pathname === '/';
     let response;
     try {
       if (request.method === 'OPTIONS') {
