@@ -1,0 +1,15 @@
+{
+  "name": "alceste-journal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ../scripts/build-admin.mjs",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "test": "node --test test/*.test.mjs",
+    "db:local": "wrangler d1 migrations apply journal --local",
+    "db:remote": "wrangler d1 migrations apply journal --remote"
+  },
+  "dependencies": { "jose": "^6.1.0" },
+  "devDependencies": { "wrangler": "4.147.0" }
+}

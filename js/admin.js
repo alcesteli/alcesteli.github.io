@@ -2,7 +2,6 @@
   const loginShell = document.getElementById('admin-login');
   const dashboardShell = document.getElementById('admin-dashboard');
   const loginForm = document.getElementById('login-form');
-  const loginEmail = document.getElementById('login-email');
   const loginStatus = document.getElementById('login-status');
   const accountEl = document.getElementById('admin-account');
   const logoutBtn = document.getElementById('logout-btn');
@@ -10,23 +9,12 @@
   const approvedListEl = document.getElementById('approved-list');
   const actionStatus = document.getElementById('action-status');
 
-  function isConfigured() {
-    return typeof SUPABASE_URL === 'string'
-      && typeof SUPABASE_ANON_KEY === 'string'
-      && !SUPABASE_URL.startsWith('REPLACE')
-      && !SUPABASE_ANON_KEY.startsWith('REPLACE');
-  }
-
-  if (!isConfigured()) {
-    setLoginStatus("Configurez d'abord SUPABASE_URL et SUPABASE_ANON_KEY dans js/config.js.", 'is-error');
+  if (window.location.origin !== new URL(JOURNAL_ADMIN_URL).origin) {
+    window.location.replace(JOURNAL_ADMIN_URL);
     return;
   }
-  if (!window.supabase || typeof window.supabase.createClient !== 'function') {
-    setLoginStatus("SDK Supabase non chargé.", 'is-error');
-    return;
-  }
-
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentUser = null;
+  const adminRequest = (path, options = {}) => JournalAPI.request(path, { ...options, admin: true });
 
   function setLoginStatus(msg, type = '') {
     if (!loginStatus) return;
@@ -181,8 +169,8 @@
 
   async function refreshLists() {
     const [{ data: pending, error: pendingErr }, { data: approved, error: approvedErr }] = await Promise.all([
-      client.from('comments').select('*').eq('approved', false).order('created_at', { ascending: false }),
-      client.from('comments').select('*').eq('approved', true).order('created_at', { ascending: false }).limit(50)
+      adminRequest('comments?approved=false'),
+      adminRequest('comments?approved=true')
     ]);
     if (pendingErr || approvedErr) {
       setActionStatus(`Erreur de chargement: ${(pendingErr || approvedErr).message}`, 'is-error');
@@ -193,7 +181,7 @@
   }
 
   async function approveComment(id) {
-    const { error } = await client.from('comments').update({ approved: true }).eq('id', id);
+    const { error } = await adminRequest(`comments/${encodeURIComponent(id)}`, { method: 'PATCH', data: { approved: true } });
     if (error) { setActionStatus(`Erreur: ${error.message}`, 'is-error'); return; }
     setActionStatus('Commentaire approuvé.', 'is-success');
     refreshLists();
@@ -201,25 +189,16 @@
 
   async function deleteComment(id) {
     if (!confirm('Supprimer ce commentaire ? Les réponses qui en dépendent seront aussi supprimées.')) return;
-    const { error } = await client.from('comments').delete().eq('id', id);
+    const { error } = await adminRequest(`comments/${encodeURIComponent(id)}`, { method: 'DELETE' });
     if (error) { setActionStatus(`Erreur: ${error.message}`, 'is-error'); return; }
     setActionStatus('Commentaire supprimé.', 'is-success');
     refreshLists();
   }
 
   async function postAdminReply(parentComment, text) {
-    const { data: { session } } = await client.auth.getSession();
-    const adminName = session && session.user && session.user.email
-      ? session.user.email.split('@')[0]
-      : 'Auteur';
-    const { error } = await client.from('comments').insert({
-      post_slug: parentComment.post_slug,
-      parent_id: parentComment.id,
-      author_name: adminName,
-      body: text,
-      approved: true,
-      is_admin: true
-    });
+    const { error } = await adminRequest('comments', { method: 'POST', data: {
+      parent_id: parentComment.id, body: text
+    }});
     if (error) { setActionStatus(`Erreur: ${error.message}`, 'is-error'); return; }
     setActionStatus('Réponse publiée.', 'is-success');
     refreshLists();
@@ -327,9 +306,9 @@
 
     let result;
     if (id) {
-      result = await client.from('posts').update(payload).eq('id', id).select().single();
+      result = await adminRequest(`posts/${encodeURIComponent(id)}`, { method: 'PATCH', data: payload });
     } else {
-      result = await client.from('posts').insert(payload).select().single();
+      result = await adminRequest('posts', { method: 'POST', data: payload });
     }
 
     postSaveDraftBtn.disabled = false;
@@ -349,7 +328,7 @@
 
   async function deletePost(id) {
     if (!confirm('Supprimer cet article ? (Les commentaires associés ne seront pas supprimés.)')) return;
-    const { error } = await client.from('posts').delete().eq('id', id);
+    const { error } = await adminRequest(`posts/${encodeURIComponent(id)}`, { method: 'DELETE' });
     if (error) { setPostStatus(`Erreur : ${error.message}`, 'is-error'); return; }
     setPostStatus('Article supprimé.', 'is-success');
     refreshPosts();
@@ -359,7 +338,7 @@
     const next = !post.published;
     const update = { published: next };
     if (next && !post.published_at) update.published_at = new Date().toISOString();
-    const { error } = await client.from('posts').update(update).eq('id', post.id);
+    const { error } = await adminRequest(`posts/${encodeURIComponent(post.id)}`, { method: 'PATCH', data: update });
     if (error) { setPostStatus(`Erreur : ${error.message}`, 'is-error'); return; }
     setPostStatus(next ? 'Article publié.' : 'Article dépublié.', 'is-success');
     refreshPosts();
@@ -425,11 +404,7 @@
   }
 
   async function refreshPosts() {
-    const { data, error } = await client
-      .from('posts')
-      .select('*')
-      .order('published', { ascending: true })
-      .order('created_at', { ascending: false });
+    const { data, error } = await adminRequest('posts');
     if (error) {
       setPostStatus(`Erreur de chargement : ${error.message}`, 'is-error');
       return;
@@ -450,36 +425,12 @@
   postSaveDraftBtn.addEventListener('click', () => savePost(false));
   postPublishBtn.addEventListener('click', () => savePost(true));
 
-  // --- Auth flow ---
-  loginForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const email = (loginEmail.value || '').trim();
-    if (!email) return;
-    setLoginStatus('Envoi du lien...');
-    const { error } = await client.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: window.location.href }
-    });
-    if (error) {
-      setLoginStatus(`Erreur: ${error.message}`, 'is-error');
-      return;
-    }
-    setLoginStatus('Vérifiez votre boîte mail et cliquez le lien magique pour vous connecter.', 'is-success');
-  });
-
-  logoutBtn.addEventListener('click', async () => {
-    await client.auth.signOut();
-    showLogin();
-    setLoginStatus('Déconnecté.', 'is-success');
-  });
-
-  client.auth.getSession().then(({ data }) => {
-    if (data && data.session) showDashboard(data.session);
-    else showLogin();
-  });
-
-  client.auth.onAuthStateChange((event, session) => {
-    if (session) showDashboard(session);
-    else showLogin();
+  // Cloudflare Access handles email OTP before this page is served.
+  loginForm.addEventListener('submit', e => { e.preventDefault(); window.location.reload(); });
+  logoutBtn.addEventListener('click', () => { window.location.assign('/cdn-cgi/access/logout'); });
+  adminRequest('session').then(({ data, error }) => {
+    if (error) { showLogin(); setLoginStatus(error.message, 'is-error'); return; }
+    currentUser = data.user;
+    showDashboard({ user: currentUser });
   });
 })();

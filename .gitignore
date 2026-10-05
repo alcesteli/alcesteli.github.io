@@ -1,1 +1,9 @@
 .DS_Store
+node_modules/
+.wrangler/
+backend/public/
+.migration/
+.dev.vars
+.env
+.env.*
+Supabase Snippet*.csv

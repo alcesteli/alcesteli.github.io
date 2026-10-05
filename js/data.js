@@ -273,7 +273,7 @@ const HOME_SLIDES = [
   { image: 'images/OTHERS/SP1.jpeg', project: { cat: 'others', idx: 0 } }
 ];
 
-// Journal articles. Loaded asynchronously from Supabase (table `posts`).
+// Journal articles. Loaded asynchronously from the Cloudflare journal API.
 // Shape after load: { slug, title, body, published_at, created_at }
 let JOURNAL_ARTICLES = [];
 

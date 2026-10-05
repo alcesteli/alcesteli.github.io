@@ -1,36 +1,10 @@
-// --- Supabase client (lazy init) ---
-let _supabaseClient = null;
 let _commentsInteractedFields = new Set();
 let _commentsCurrentSlug = null;
 let _commentsCurrentToken = 0;
 
-function isSupabaseConfigured() {
-  return typeof SUPABASE_URL === 'string'
-    && typeof SUPABASE_ANON_KEY === 'string'
-    && SUPABASE_URL.length > 0
-    && SUPABASE_ANON_KEY.length > 0
-    && !SUPABASE_URL.startsWith('REPLACE')
-    && !SUPABASE_ANON_KEY.startsWith('REPLACE');
-}
-
-function getSupabaseClient() {
-  if (_supabaseClient) return _supabaseClient;
-  if (!isSupabaseConfigured()) return null;
-  if (!window.supabase || typeof window.supabase.createClient !== 'function') return null;
-  _supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  return _supabaseClient;
-}
-
 // --- Data ---
 async function loadComments(slug) {
-  const client = getSupabaseClient();
-  if (!client) return [];
-  const { data, error } = await client
-    .from('comments')
-    .select('id, post_slug, parent_id, author_name, body, created_at, is_admin')
-    .eq('post_slug', slug)
-    .eq('approved', true)
-    .order('created_at', { ascending: true });
+  const { data, error } = await JournalAPI.request(`comments?slug=${encodeURIComponent(slug)}`);
   if (error) {
     console.error('Failed to load comments', error);
     return [];
@@ -169,8 +143,6 @@ function validateCommentInputs({ name, body, website, botcheck, dynamicHoneypotV
 }
 
 async function submitComment(form) {
-  const client = getSupabaseClient();
-  if (!client) return;
 
   const submitBtn = document.getElementById('comments-submit');
   if (!form.reportValidity()) return;
@@ -201,12 +173,11 @@ async function submitComment(form) {
   setCommentsStatus(getUiText('comments.sending'));
 
   try {
-    const { error: insertError } = await client.from('comments').insert({
+    const { error: insertError } = await JournalAPI.request('comments', { method: 'POST', data: {
       post_slug: _commentsCurrentSlug,
-      author_name: name,
-      body,
-      parent_id: null
-    });
+      author_name: name, body, website, botcheck,
+      honeypot: dynamicHoneypotValue, started_at: startedAt
+    }});
     if (insertError) throw insertError;
     safeWriteStorage(COMMENTS_LAST_SENT_KEY, String(Date.now()));
     form.reset();
@@ -241,7 +212,7 @@ window.initComments = async function(slug) {
   const container = document.getElementById('comments-container');
   if (!container) return;
 
-  if (!isSupabaseConfigured()) {
+  if (typeof JOURNAL_API_URL !== 'string' || !JOURNAL_API_URL) {
     container.innerHTML = '';
     return;
   }

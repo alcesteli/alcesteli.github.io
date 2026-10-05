@@ -92,16 +92,9 @@ let _journalLoading = false;
 
 async function loadJournalArticles() {
   if (_journalLoading) return;
-  if (typeof getSupabaseClient !== 'function') return;
-  const client = getSupabaseClient();
-  if (!client) return;
   _journalLoading = true;
   try {
-    const { data, error } = await client
-      .from('posts')
-      .select('slug, title, body, published_at, created_at')
-      .eq('published', true)
-      .order('published_at', { ascending: false });
+    const { data, error } = await JournalAPI.request('posts');
     if (error) {
       console.error('Failed to load journal articles', error);
       return;

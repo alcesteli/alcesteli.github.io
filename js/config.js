@@ -20,9 +20,9 @@ const VALIDATION = {
   MESSAGE_MIN_LENGTH: 20
 };
 
-// Supabase (journal comments). Paste your values from Project Settings → API.
-const SUPABASE_URL = 'https://gpncrwzvhcgglymttujw.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_IQbRFty8FSuRaTnw4klPfQ_kd6GO3Br';
+// Cloudflare journal API. Set to the deployed Worker origin before publishing.
+const JOURNAL_API_URL = 'https://alceste-journal.alcesteli-journal.workers.dev';
+const JOURNAL_ADMIN_URL = JOURNAL_API_URL + '/admin.html';
 
 // Comments — anti-spam & validation
 const COMMENTS_LAST_SENT_KEY = 'comments:lastSentAt';

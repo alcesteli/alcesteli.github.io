@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "alceste-journal",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-06-01",
+  "workers_dev": true,
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "journal",
+    "database_id": "4908c904-e23b-4c00-b892-8decac34b897",
+    "migrations_dir": "migrations"
+  }],
+  "vars": {
+    "PUBLIC_ORIGINS": "https://alcesteli.com,https://www.alcesteli.com,https://alcesteli.github.io",
+    "ACCESS_TEAM_DOMAIN": "aged-pond-4844.cloudflareaccess.com",
+    "ACCESS_AUD": "82b26771516b94bc2986708e236602a8eb744965627ead87ca4d2b9636cb4bae",
+    "ADMIN_EMAIL": "alceste.li@outlook.fr"
+  }
+}
