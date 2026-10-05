@@ -1,9 +1,8 @@
 # Journal migration: Supabase → Cloudflare
 
-Status: implementation and automated checks are ready; production is NOT switched.
-Cloudflare and Supabase administrator sign-in is required to finish deployment and
-the complete export. Do not push the frontend changes until the backend and data
-have been verified.
+Status: production is switched to Cloudflare Workers + D1. The 4 published
+articles and 1 approved comment were imported and verified field by field. The
+original Supabase project remains intact as a rollback copy.
 
 ## Architecture
 
