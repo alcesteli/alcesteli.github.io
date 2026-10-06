@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — Alceste Li</title>
+<script>
+// Only application routes redirect. Missing assets and standalone pages remain 404s.
+if (/^\/(?:about\/?|journal(?:\/.*)?|projects(?:\/.*)?)$/.test(location.pathname)) {
+  const original = location.pathname + location.search + location.hash;
+  location.replace('/?__spa_route=' + encodeURIComponent(original));
+}
+</script>
+</head>
+<body><p>Page not found. <a href="/">Return to Alceste Li</a></p></body>
+</html>

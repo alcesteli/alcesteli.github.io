@@ -95,13 +95,17 @@ function loadAndRenderImages(images, renderToken) {
 }
 
 function openProject(cat, idx) {
+  const project = DATA[cat]?.items[idx];
+  navigateRoute(project ? `/projects/${project.slug}` : '/');
+}
+
+function renderProject(cat, idx) {
   currentProjectState = { cat, idx };
   currentProjImages = DATA[cat].items[idx].images || [];
   projectRenderToken += 1;
   closeLightbox();
   highlightSidebarItem(cat, idx);
   renderProjectInfo(cat, idx);
-  showPage('project');
   loadAndRenderImages(currentProjImages, projectRenderToken);
 }
 

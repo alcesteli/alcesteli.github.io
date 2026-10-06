@@ -103,6 +103,7 @@ async function loadJournalArticles() {
     _journalLoaded = true;
     renderJournalList();
     if (currentArticleSlug) renderArticlePage(currentArticleSlug);
+    updateRouteMetadata();
   } catch (err) {
     console.error('Journal load failed', err);
   } finally {
@@ -129,7 +130,7 @@ function renderJournalList() {
   listEl.innerHTML = articles.map(article => {
     const excerpt = extractPostExcerpt(article.body, 180);
     return `
-      <div class="journal-item" onclick="openJournalArticle('${escapeHtml(article.slug)}')">
+      <div class="journal-item" data-slug="${escapeHtml(article.slug)}" onclick="openJournalArticle(this.dataset.slug)">
         <div class="journal-date">${escapeHtml(formatArticleDate(article.published_at))}</div>
         <div class="journal-title">${escapeHtml(article.title || '')}</div>
         ${excerpt ? `<div class="journal-excerpt">${escapeHtml(excerpt)}</div>` : ''}
@@ -149,6 +150,10 @@ function renderArticlePage(slug) {
   }
   const article = (JOURNAL_ARTICLES || []).find(a => a.slug === slug);
   if (!article) {
+    if (_currPage === 'article' && currentArticleSlug === slug) {
+      navigateRoute('/journal' + location.search + location.hash, { replace: true });
+      return;
+    }
     block.innerHTML = `<p class="journal-empty">${escapeHtml(getUiText('journal.empty'))}</p>`;
     const emptyContainer = document.getElementById('comments-container');
     if (emptyContainer) emptyContainer.innerHTML = '';
@@ -221,7 +226,11 @@ window.switchLanguage = function(lang) {
   renderSidebarNav();
   renderHomeSlider();
   initContactForm();
-  if (currentProjectState.cat !== null) openProject(currentProjectState.cat, currentProjectState.idx);
+  if (currentProjectState.cat !== null) {
+    renderProjectInfo(currentProjectState.cat, currentProjectState.idx);
+    highlightSidebarItem(currentProjectState.cat, currentProjectState.idx);
+  }
+  updateRouteMetadata();
 };
 
 let _prevPage = 'home';
@@ -253,69 +262,39 @@ function _renderPage(id) {
   if (id === 'home') setHomeExpandedState(false);
 }
 
-function _closeActivePanel() {
-  if (_activePanel === 'menu') {
-    document.getElementById('sidebar').classList.remove('open');
-  } else if (_activePanel === 'about' || _activePanel === 'journal' || _activePanel === 'article') {
-    const back = (_prevPage === 'about' || _prevPage === 'journal' || _prevPage === 'article' || !_prevPage) ? 'home' : _prevPage;
-    _prevPage = _currPage;
-    _currPage = back;
-    _renderPage(back);
-  }
-  _activePanel = null;
-}
-
+// Existing navigation entry points delegate to the same router.
 function openPanel(panel) {
-  if (_activePanel === panel) {
-    _closeActivePanel();
-  } else {
-    _closeActivePanel();
-    _activePanel = panel;
-    if (panel === 'menu') {
-      document.getElementById('sidebar').classList.add('open');
-    } else {
-      _prevPage = _currPage;
-      _currPage = panel;
-      _renderPage(panel);
-    }
+  if (panel === 'menu') {
+    const open = _activePanel !== 'menu';
+    _activePanel = open ? 'menu' : (['about', 'journal', 'article'].includes(_currPage) ? _currPage : null);
+    document.getElementById('sidebar').classList.toggle('open', open);
+    refreshNavButtons();
+    return;
   }
-  refreshNavButtons();
+  navigateRoute(_currPage === panel ? panelReturnPath : '/' + panel);
 }
 
 function showPage(id) {
-  _activePanel = null;
-  document.getElementById('sidebar').classList.remove('open');
-  _prevPage = _currPage;
-  _currPage = id;
-  _renderPage(id);
-  refreshNavButtons();
+  if (id === 'project') {
+    openProject(currentProjectState.cat, currentProjectState.idx);
+  } else if (id === 'article' && currentArticleSlug) {
+    openJournalArticle(currentArticleSlug);
+  } else {
+    navigateRoute(id === 'home' ? '/' : '/' + id);
+  }
 }
 
 window.toggleAbout = function() { openPanel('about'); };
 window.toggleJournal = function() {
-  if (_activePanel === 'article') {
-    // "Retour": go from article view back to journal list. Don't touch _prevPage.
-    currentArticleSlug = null;
-    _activePanel = 'journal';
-    _currPage = 'journal';
-    renderJournalList();
-    _renderPage('journal');
-    refreshNavButtons();
-  } else {
-    openPanel('journal');
-  }
+  if (_currPage === 'article') navigateRoute('/journal');
+  else openPanel('journal');
   loadJournalArticles();
 };
 window.openJournalArticle = function(slug) {
-  currentArticleSlug = slug;
-  _activePanel = 'article';
-  _currPage = 'article';
-  renderArticlePage(slug);
-  _renderPage('article');
-  refreshNavButtons();
+  navigateRoute('/journal/' + encodeURIComponent(slug));
 };
 function toggleMenu() { openPanel('menu'); }
-function goHome() { showPage('home'); }
+function goHome() { navigateRoute('/'); }
 
 // Init
 siteLang = normalizeSiteLanguage(safeReadStorage(LANGUAGE_STORAGE_KEY) || 'fr');
@@ -323,6 +302,6 @@ applyDataTranslations(siteLang);
 applyStaticTranslations(siteLang);
 renderSidebarNav();
 renderHomeSlider();
-document.body.classList.add('home-active');
+initRouter();
 initContactForm();
 loadJournalArticles();

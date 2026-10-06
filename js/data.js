@@ -3,6 +3,7 @@ const DATA = {
     label: 'Stage Design',
     items: [
       {
+        slug: 'just-another-creation-myth',
         title: 'Just Another Creation Myth',
         desc: `
         <p>As the first man and the first woman in the world, they were innocent and perplexed. They tried to understand, attempted to inhabit this vast and elusive earth. To bring meaning to chaos, they sought to establish rules, to lean on one another, to create — but instead of finding answers, they embarked on a long and absurd hallucination. Upon waking, the question stood before them, clearer than ever: In this vast and silent universe, how should a human being live?</p>
@@ -12,6 +13,7 @@ const DATA = {
         images: ['images/SCENO/COW1.png','images/SCENO/COW2.png','images/SCENO/COW3.png','images/SCENO/COW4.png','images/GRAPHIC/INTERROBANG26.jpg']
       },
       {
+        slug: 'the-winters-tale',
         title: 'The Winter’s Tale',
         desc: `
         <p>This play is one of Shakespeare's final works, blending tragedy and comedy. In the end, the lost daughter is found, the lovers are reunited, and Leontes is forgiven. Yet this return to harmony feels almost too sudden, raising the question of whether such forgiveness was truly believable for audiences.</p>
@@ -23,6 +25,7 @@ const DATA = {
         images: ['images/SCENO/S-LCH1.jpg','images/SCENO/S-LCH2.jpg','images/SCENO/S-LCH4.jpg','images/SCENO/S-LCH5.jpg','images/SCENO/S-LCH6.jpg','images/SCENO/S-LCH7.jpg','images/SCENO/S-LCH8.jpg','images/SCENO/S-LCH9.jpg','images/SCENO/S-LCH10.jpg','images/SCENO/S-LCH11.jpg','images/SCENO/S-LCH13.jpg','images/SCENO/S-LCH14.jpg','images/SCENO/S-LCH16.jpg','images/SCENO/S-LCH17.jpg','images/SCENO/S-LCH18.jpg','images/SCENO/S-LCH19.jpg','images/SCENO/S-LCH20.jpg','images/SCENO/S-LCH21.jpg','images/SCENO/S-LCH22.jpg','images/SCENO/S-LCH23.jpg','images/SCENO/S-LCH25.jpg']
       },
       {
+        slug: 'quai-ouest',
         title: 'Quai Ouest',
         desc: `
         <p>For me, <em>Quai Ouest</em> is a play that deeply questions the notion of limits—physical, moral, and existential. What interests me most are the gestures of the characters at the moment of choosing—or not choosing. At every instant, they are confronted with a decision: to cross or not to cross, to leave or to stay, to live or to die.</p>
@@ -39,6 +42,7 @@ const DATA = {
     label: 'Window Display',
     items: [
       {
+        slug: 'loewe-x-ghibli-window-display',
         title: 'Loewe X Ghibli Window Display',
         desc: '<p>Light as a second body on stage. Precise control of beam angles, colour temperature, and shadow geometry to sculpt the sensation of weight and weightlessness.</p>',
         type: 'Window Display', client: 'Personal', year: '2026', imgs: 3,
@@ -46,6 +50,7 @@ const DATA = {
         images: ['images/SCENO/loewejungle.jpg','images/SCENO/loewejungle2.jpg','images/SCENO/loewejungle3.png']
       },
       {
+        slug: 'hermes-window-display-the-winters-tale',
         title: 'Hermes Window Display - The Winter’s Tale',
         desc: '<p>The Winter’s Tale inspired Hermes window display series draws from the poetic worlds of the story, transforming the store windows into theatrical landscapes of imagination and travel. Each scene evokes a chapter through handcrafted paper sets, where architecture, nature, and stage-like compositions create a sense of wonder and narrative.</p><p>Within these dreamlike environments, Hermes objects appear as precious discoveries, highlighting the craftsmanship while inviting viewers into a visual journey between theatre, fantasy, and storytelling.</p>',
         type: 'Window Display', client: 'Personal', year: '2026', imgs: 5,
@@ -53,6 +58,7 @@ const DATA = {
         images: ['images/SCENO/hermes1.jpg','images/SCENO/hermes2.jpg','images/SCENO/hermes3.png','images/SCENO/hermes4.jpg','images/SCENO/hermes5.PNG']
       },
       {
+        slug: 'hermes-window-display-year-of-the-goat',
         title: 'Hermes Window Display - Year of the Goat',
         desc: '<p>A jumping sheep leads us to the year of goat.</p>',
         type: 'Window Display', client: 'Personal', year: '2026', imgs: 1,
@@ -64,6 +70,7 @@ const DATA = {
     label: 'Architecture',
     items: [
       {
+        slug: 'monument-valley',
         title: 'Monument Valley',
         desc: `
         <p>Located in a valley crossed by a river, the Ninfeo Bramante is hidden near the center of the town. It is one of the most well-known architectural landmarks for its Renaissance style. However, the monument has not been well preserved: the structure has been deformed over time, and graffiti can be found on some walls. This project aims to transform the ruin into a theater surrounded by a garden.</p>
@@ -76,6 +83,7 @@ const DATA = {
         images: ['images/ARCHI/ROMA1.png','images/ARCHI/ROMA2.png','images/ARCHI/ROMA3.png','images/ARCHI/ROMA4.png','images/ARCHI/ROMA5.png','images/ARCHI/ROMA6.png','images/ARCHI/ROMA7.png']
       },
       {
+        slug: 'rehabilitation-of-saint-ouen-flea-market',
         title: 'Rehabilitation of Saint-Ouen Flea Market',
         desc: `
         <p>The Saint-Ouen Flea Market, located north of Paris, is composed of seven distinct markets. The construction of the Paris ring road divided the urban fabric and exposed many buildings along its edge. Unlike planned developments, the flea market grew spontaneously over time, forming a collection of individual markets established mainly in the late 20th century.</p>
@@ -88,24 +96,28 @@ const DATA = {
         images: ['images/ARCHI/ST1.png','images/ARCHI/ST2.png','images/ARCHI/ST3.png','images/ARCHI/ST4.png','images/ARCHI/ST5.png','images/ARCHI/ST6.png','images/ARCHI/ST7.png','images/ARCHI/ST8.png']
       },
       {
+        slug: 'bobigny-lhistoire-sur-une-dalle',
         title: 'Bobigny - L’Histoire Sur Une Dalle',
         desc: '<p>Since the 1960s, slab urbanism in Paris has served as a field of experimentation where urban layers are separated, recomposed, and reinterpreted. Projects such as Les Olympiades, Front de Seine, and Montparnasse embody this ambition to stack flows, liberate the ground plane, and invent new forms of inhabitation. Suspended between modernist utopia and contemporary critique, these urban structures oscillate between fragmentation and intensified use.</p><p>Bobigny-La Folie represents an extreme condition of this stratification: a node where heterogeneous infrastructures converge, including the canal, road network, metro, and tramway, producing a dense and complex territorial thickness. Here, the ground is no longer continuous, but fragmented into a succession of planes, thresholds, and discontinuities.</p><p>The project proposes to engage this thickness by connecting the different levels, not through simple superposition, but through a logic of inhabited continuity. The slab becomes a mediating device, capable of articulating circulation and use.</p><p>Structured by a modular grid, the project introduces a degree of programmatic indeterminacy in which public facilities, commercial spaces, and housing coexist within an evolving system. Spatial reversibility becomes a key principle, allowing the project to remain open-ended and adaptable in response to future urban transformations.</p>',
         type: 'Urbanism', client: 'Personal', year: '2021', imgs: 11,
         images: ['images/ARCHI/BOBIGNY1.png','images/ARCHI/BOBIGNY2.png','images/ARCHI/BOBIGNY3.png','images/ARCHI/BOBIGNY4.png','images/ARCHI/BOBIGNY5.png','images/ARCHI/BOBIGNY6.png','images/ARCHI/BOBIGNY7.png','images/ARCHI/BOBIGNY8.png','images/ARCHI/BOBIGNY9.png','images/ARCHI/BOBIGNY10.png','images/ARCHI/BOBIGNY11.png']
       },
       {
+        slug: 'cube',
         title: 'Cube',
         desc: '<p>A modular structure composed of 64 cubic units, integrating living, working, and exhibition spaces, located within the historic hutong district of Beijing. Two and a half levels rise above ground, while the rest are embedded below. Designed to be fully demountable, each unit can function independently and be placed within public spaces. Its bamboo-steel structure ensures lightness and ease of mobility.</p>',
         type: 'Mix', client: 'Personal', year: '2016', imgs: 4,
         images: ['images/ARCHI/CUBE1.png','images/ARCHI/CUBE2.png','images/ARCHI/CUBE3.png','images/ARCHI/CUBE4.png']
       },
       {
+        slug: 'plug-in',
         title: 'Plug-In',
         desc: '<p>Roubaix bears the traces of a brutal deindustrialization, marked by the decline of the textile industry and the lasting weakening of its urban and social fabric. In a dense city center, where possibilities for expansion are limited, the question is no longer how to build more, but how to reveal the potentials already embedded within the existing city.</p><p>The long and narrow plot structure, characterized by significant depth, produces underused block interiors. These voids, invisible from public space, constitute a latent resource.</p><p>The project proposes a plug-in strategy designed to activate these interstitial spaces. By linking plots together, it introduces new low-cost student housing while relying on the existing urban fabric. Rooftops become a collective ground plane, transforming the block interior into a shared space.</p><p>This urban graft makes it possible to densify without demolition, create new forms of sociability, and generate complementary economic value for local residents.</p>',
         type: 'Urbanism', client: 'Personal', year: '2020', imgs: 10,
         images: ['images/ARCHI/ROUBAIX1.png','images/ARCHI/ROUBAIX2.png','images/ARCHI/ROUBAIX3.png','images/ARCHI/ROUBAIX4.png','images/ARCHI/ROUBAIX5.png','images/ARCHI/ROUBAIX6.png','images/ARCHI/ROUBAIX7.png','images/ARCHI/ROUBAIX8.png','images/ARCHI/ROUBAIX9.png','images/ARCHI/ROUBAIX10.png']
       },
       {
+        slug: 'a-villa-in-mountains',
         title: 'A Villa In Mountains',
         desc: '<p>A two-story residence nestled in the mountainous outskirts of Beijing.</p>',
         type: 'Residential', client: 'Personal', year: '2014', imgs: 3,
@@ -117,6 +129,7 @@ const DATA = {
     label: 'Interior',
     items: [
       {
+        slug: 'underground-light',
         title: 'Underground Light',
         desc: `
         <p>As the capital of China, Beijing has long attracted a large population of migrant workers with relatively higher wages. Many of them are employed in low-end sectors and, to reduce living costs, often reside in poorly conditioned basements. On November 18, 2017, a major basement fire caused 19 deaths and 8 injuries. In response, the city launched a 40-day safety campaign, leading to the eviction of many migrant residents from underground spaces. Since then, numerous basements once used for housing have remained vacant.</p>
@@ -127,12 +140,14 @@ const DATA = {
         images: ['images/INTERIOR/SS0.png','images/INTERIOR/SS1.png','images/INTERIOR/SS2.png','images/INTERIOR/SS3.png','images/INTERIOR/SS4.png','images/INTERIOR/SS5.png','images/INTERIOR/SS6.png','images/INTERIOR/SS7.png','images/INTERIOR/SS8.png']
       },
       {
+        slug: 'private-apartment',
         title: 'Private Apartment',
         desc: '<p>Complete interior of a 80sqm apartment. The brief called for restraint: a home that feels quietly refined, where every surface and joint is considered.</p>',
         type: 'Residential Interior', client: 'Private Client', year: '2022', imgs: 2,
         images: ['images/INTERIOR/PP1.png','images/INTERIOR/PP2.png']
       },
       {
+        slug: 'personal-residence',
         title: 'Personal Residence',
         desc: '<p>Interior design for a 24 m² apartment located in the 19th arrondissement of Paris. The challenge was to create a functional and comfortable living space within a very limited area, while maintaining a sense of openness and light. The design features a custom-built mezzanine bed to maximize vertical space, integrated storage solutions to reduce clutter, and a minimalist aesthetic that enhances the apartment\'s natural light and creates an airy atmosphere.</p>',
         type: 'Residential Interior', client: 'Private Client', year: '2025', imgs: 7,
@@ -144,6 +159,7 @@ const DATA = {
     label: 'Event',
     items: [
       {
+        slug: 'inside-festival-everybody',
         title: 'INSIDE - Festival Everybody',
         desc: `
         <p>This project is inspired by a bodily exploration of the intestines—essential yet often overlooked organs that work continuously inside our bodies. Although largely invisible, they play a fundamental role in everyday life. In this installation, the intestines become a metaphor for transformation: they digest and assimilate, just as we constantly process emotions, experiences, and our surrounding environment.</p>
@@ -153,18 +169,21 @@ const DATA = {
         images: ['images/EVENT/EVERYBODY1.png','images/EVENT/EVERYBODY2.png','images/EVENT/EVERYBODY3.png','images/EVENT/EVERYBODY4.png','images/EVENT/EVERYBODY5.png']
       },
       {
+        slug: 'wood-pavillon',
         title: 'Wood Pavillon',
         desc: '<p>A temporary structure made from reclaimed wood, setting at a corridor for the graduation show of CAFA.</p>',
         type: 'Temporary Installation', client: 'CAFA', year: '2018', imgs: 3,
         images: ['images/EVENT/DOOR1.jpg','images/EVENT/DOOR2.jpg','images/EVENT/DOOR3.png']
       },
       {
+        slug: 'moutai-coktail-stand',
         title: 'Moutai Coktail Stand',
         desc: '<p>Built entirely from reclaimed timber.</p>',
         type: 'Temporary Installation', client: 'Moutai', year: '2019', imgs: 1,
         images: ['images/EVENT/MOUTAI.jpg']
       },
       {
+        slug: 'poster-pavillon',
         title: 'Poster Pavillon',
         desc: '<p>A wooden pavilion for a poster exhibition.</p>',
         type: 'Temporary Installation', client: 'CAFA', year: '2013', imgs: 2,
@@ -176,6 +195,7 @@ const DATA = {
     label: 'Graphic',
     items: [
       {
+        slug: 'cafarch-2015-show',
         title: 'CAFArch 2015 Show',
         desc: '<p>Inspired by the toy block which formed a cube, each piece is different from each other.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1,
@@ -183,42 +203,49 @@ const DATA = {
         images: ['images/GRAPHIC/GR-CAFAEXPO2015.jpg']
       },
       {
+        slug: 'cafarch-2016-show',
         title: 'CAFArch 2016 Show',
         desc: '<p>A series of twelve posters for an urban culture festival. Chinese character deconstruction as the central visual motif, released quarterly over one year.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2016', imgs: 1,
         images: ['images/GRAPHIC/GR-CAFAEXPO2016.jpg']
       },
       {
+        slug: 'cafarch-welcome',
         title: 'CAFArch Welcome',
         desc: '<p>Typography and layout system for a journal on contemporary architecture. A flexible grid structure that balances reading rhythm with visual tension across 128 pages.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1,
         images: ['images/GRAPHIC/GR-CAFARCH.jpg']
       },
       {
+        slug: 'cafarch-2015-party',
         title: 'CAFArch 2015 Party',
         desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2015', imgs: 1,
         images: ['images/GRAPHIC/GR-FETE.jpg']
       },
       {
+        slug: 'cafa-fashion-show',
         title: 'CAFA Fashion Show',
         desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
         type: 'Poster Design', client: 'CAFA', year: '2015', imgs: 1,
         images: ['images/GRAPHIC/GR-MODE.jpg']
       },
       {
+        slug: 'cafarch-conference',
         title: 'CAFArch Conference',
         desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
         type: 'Poster Design', client: 'CAFA Architecture School', year: '2013-2018', imgs: 1,
         images: ['images/GRAPHIC/GR-YZ1.jpg']
       },
       {
+        slug: 'loc-typeface',
         title: 'LOC Typeface',
         desc: '<p>Handmade candies in a transparent strcture, concept for a candy store.</p>',
         type: 'Typeface Design', client: 'LOC', year: '2014', imgs: 1,
         images: ['images/GRAPHIC/LOC.jpg']
       },
       {
+        slug: 'invision-conference',
         title: 'InVision Conference',
         desc: '<p>A complete wayfinding and signage system for a contemporary art centre. Information hierarchy is established without competing with the architecture or the work on display.</p>',
         type: 'Poster Design', client: 'InVision Education', year: '2020', imgs: 1,
@@ -230,12 +257,14 @@ const DATA = {
     label: 'Others',
     items: [
       {
+        slug: 'floating',
         title: 'Floating',
         desc: '<p>This series of screen prints is inspired by a dream in which I felt as if I were floating inside a bottle of eye drops. The mint essence created a refreshing sensation, evoking the calm of a summer moment. In this work, I imagine a scaled world where a human figure floats inside everyday objects, transforming ordinary spaces into surreal environments.</p>',
         type: 'Screen printing', client: 'Self-initiated', year: '2015', imgs: 3,
         images: ['images/OTHERS/SP1.jpeg','images/OTHERS/SP2.jpeg','images/OTHERS/SP3.jpeg']
       },
       {
+        slug: 'louis-vuitton-conquest',
         title: 'Louis Vuitton Conquest',
         desc: `
         <p>Today, online shopping has become an essential part of everyday life. Products ordered online can be delivered within days, supported by global infrastructures connecting the world through maritime routes and air traffic. These networks reveal how closely our economies and societies are interconnected.</p>
@@ -245,12 +274,14 @@ const DATA = {
         images: ['images/OTHERS/LVMONO1.png','images/OTHERS/LVMONO2.png','images/OTHERS/LVMONO3.png']
       },
       {
+        slug: 'louis-vuitton-express',
         title: 'Louis Vuitton Express',
         desc: '<p>Louis Vuitton is a luxury brand that offers almost everything a wealthy lifestyle might require. Today, however, the meaning of luxury is evolving: the possession of goods is no longer the only symbol of wealth. The ability to travel quickly and reach new horizons has become a new form of luxury. Based on this idea, we imagined a rocket service through which Louis Vuitton could take its clients on a journey to the Moon.</p>',
         type: 'Fiction Poster', client: 'Personal', year: '2020', imgs: 1,
         images: ['images/OTHERS/LVEXPRESS.jpg']
       },
       {
+        slug: 'paris-plage-ii',
         title: 'Paris Plage II',
         desc: '<p>Parisien cafe used to heating outside terrasse for that people can enjoy outside space in winter, but it caused a lot of energy consumption. Heating the cold for warmth is not a sustainable solution. So I came up with this ironic concept to warning people about the environmental impact of such practices.</p>',
         type: 'Fiction Poster', client: 'Personal', year: '2019', imgs: 1,
