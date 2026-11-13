@@ -16,7 +16,6 @@ const CONTACT_REPEAT_CHAR_LIMIT = 6;
 // Contact form — field validation
 const VALIDATION = {
   NAME_MIN_LENGTH: 2,
-  SUBJECT_MIN_LENGTH: 3,
   MESSAGE_MIN_LENGTH: 20
 };
 

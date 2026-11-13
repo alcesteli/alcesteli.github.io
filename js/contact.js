@@ -60,7 +60,8 @@ function validateFormInputs({ name, message, website, botcheck, dynamicHoneypotV
   const remainingMs = getRemainingCooldownMs();
   if (remainingMs > 0) return { key: 'status.waitBeforeResend', replacements: { seconds: Math.ceil(remainingMs / 1000) } };
 
-  if (name.length < VALIDATION.NAME_MIN_LENGTH || message.length < VALIDATION.MESSAGE_MIN_LENGTH) return 'status.fillMoreFields';
+  if (name.length < VALIDATION.NAME_MIN_LENGTH) return { key: 'status.nameTooShort', replacements: { min: VALIDATION.NAME_MIN_LENGTH } };
+  if (message.length < VALIDATION.MESSAGE_MIN_LENGTH) return { key: 'status.messageTooShort', replacements: { min: VALIDATION.MESSAGE_MIN_LENGTH } };
   if (interactedCount < CONTACT_MIN_INTERACTIONS)                          return 'status.manualCompletion';
   if (/(https?:\/\/|www\.)/i.test(name))                                   return 'status.linksNotAllowed';
   if (countUrls(message) > CONTACT_MAX_URLS_IN_MESSAGE)                   return 'status.tooManyLinks';
